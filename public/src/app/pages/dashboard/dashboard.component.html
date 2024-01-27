@@ -1,0 +1,287 @@
+<nb-card>
+    <nb-card-body>
+      <mat-tab-group mat-stretch-tabs (selectedTabChange)="selectedTab($event)">
+        <mat-tab label="Overview">
+            <div>
+          <div style="margin-top:10px;" class="invoice-button-container">
+              <button class="invoice-button" mat-raised-button [disabled]="buttonClicked=='Duties'" (click)="viewDuties()">Duties</button>
+              <button class="invoice-button" mat-raised-button [disabled]="buttonClicked=='Hotels'" (click)="viewHotels()">Hotels</button>
+              <button class="invoice-button" mat-raised-button [disabled]="buttonClicked=='Flights'" (click)="viewFlights()">Flights</button>
+              <button class="invoice-button" mat-raised-button [disabled]="buttonClicked=='Duties Monthly'" (click)="viewDutiesPieChart()">Duties(Monthly)</button>
+          </div>
+          <div align="center" style="padding-top: 5px;">
+            <mat-form-field>
+              <input matInput [formControl]="customerCtrl" placeholder="Select Customer" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let element of customer | async" [value]="element.name" (click)="selectCustomer(element)">
+                  {{element.name}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field *ngIf="dutiesView==true">
+                <mat-select [value]="month" placeholder="Select Month" (selectionChange)="viewDutiesPieChart($event.value)">
+                    <mat-option value="1">January</mat-option>
+                    <mat-option value="2">February</mat-option>
+                    <mat-option value="3">March</mat-option>
+                    <mat-option value="4">April</mat-option>
+                    <mat-option value="5">May</mat-option>
+                    <mat-option value="6">June</mat-option>
+                    <mat-option value="7">July</mat-option>
+                    <mat-option value="8">August</mat-option>
+                    <mat-option value="9">September</mat-option>
+                    <mat-option value="10">October</mat-option>
+                    <mat-option value="11">November</mat-option>
+                    <mat-option value="12">December</mat-option>
+                </mat-select>
+            </mat-form-field>
+          </div>  
+        </div>
+        <div *ngIf="dutiesView==false">
+                    <canvas baseChart
+                      [datasets]="barChartData"
+                      [labels]="barChartLabels"
+                      [options]="chartOptions"
+                      [legend]="barChartLegend"
+                      [chartType]="barChartType"
+                      class="graph-height">
+                  </canvas>
+        </div>
+        <div *ngIf="dutiesView==true && pieChartData.length>0">
+                  <canvas baseChart  
+                     [data]="pieChartData"
+                     [labels]="Labels"
+                     [chartType]="pieChartType"
+                     [options]="options"
+                     height="100">
+                   </canvas>
+        </div>
+        <div align="center" style="display: block;margin-top: 10px" *ngIf="dutiesView==true && pieChartData.length<=0">
+            <h3>There are no duties for this combination !</h3>
+        </div>
+  
+        </mat-tab>
+
+<!------------------------------------------------------------------------------------------------------------------->
+        
+        <mat-tab label="Finances">
+          <div>
+            <div style="margin-top:10px;" class="invoice-button-container">
+                <button class="invoice-button" mat-raised-button [disabled]="financesButtonClicked=='Sales'" (click)="getDutySales()">Sales</button>
+                <button class="invoice-button" mat-raised-button [disabled]="financesButtonClicked=='Expenses'" (click)="getExpenses()">Expenses</button>
+                <button class="invoice-button" mat-raised-button [disabled]="financesButtonClicked=='Hotels'" (click)="getHotelPrices()">Hotels</button>
+                <button class="invoice-button" mat-raised-button [disabled]="financesButtonClicked=='Flights'" (click)="getFlightPrices()">Flights</button>
+                <button class="invoice-button" mat-raised-button [disabled]="financesButtonClicked=='Purchase Payments'" (click)="getPurchasePayments()">Purchase Payments</button>
+                <b style="float: right; font-size: 12px; font-weight: 100;">*All figures in Rs.</b>
+            </div>
+            </div>
+            <div style="display: block;" *ngIf="financesButtonClicked == 'Sales'">
+              <mat-form-field>
+                <mat-select value="Monthly" (selectionChange)="selectSalesReport($event.value)">
+                  <mat-option value="Monthly">Monthly</mat-option>
+                  <mat-option value="Quarterly">Quarterly</mat-option>
+                  <mat-option value="Yearly">Yearly</mat-option>
+                </mat-select>                            
+              </mat-form-field>
+              <canvas baseChart
+                [datasets]="salesChartData"
+                [labels]="salesChartLabels"
+                [options]="chartOptions"
+                [legend]="chartLegend"
+                [chartType]="barChartType"              
+                *ngIf="salesReportMonthly"
+                class="graph-height">
+              </canvas>
+              <canvas baseChart
+                [datasets]="quarterlySalesPieChartData"
+                [labels]="quarterlySalesPieChartLabels"
+                [options]="pieChartOptions"
+                [chartType]="pieChartType"
+                *ngIf="salesReportQuarterly"
+                height="100">
+              </canvas>
+              <canvas baseChart
+                [datasets]="salesYearlyChartData"
+                [labels]="salesYearlyChartLabels"
+                [options]="chartOptions"
+                [legend]="chartLegend"
+                [chartType]="barChartType"              
+                *ngIf="salesReportYearly && yearlySalesAmount.length>0"
+                class="graph-height">
+              </canvas>
+            </div>
+            <div style="display: block" *ngIf="financesButtonClicked == 'Expenses'">
+              <mat-form-field>
+                <mat-select value="Fuel Expenses" (selectionChange)="selectExpensesReport($event.value)">
+                  <mat-option value="Fuel Expenses">Fuel Expenses</mat-option>
+                  <mat-option value="Vehicle Breakdown Expenses">Vehicle Breakdown Expenses</mat-option>
+                  <mat-option value="Vehicle Maintenance Expenses">Vehicle Maintenance Expenses</mat-option>
+                  <mat-option value="Office Expenses">Office Expenses</mat-option>
+                </mat-select>                          
+              </mat-form-field>
+              <div *ngIf="vehicleFuelCost.length>0;" >
+              <canvas baseChart
+                [datasets]="fuelExpensesChartData"
+                [labels]="fuelExpensesChartLabels"
+                [options]="chartOptions"
+                [legend]="chartLegend"
+                [chartType]="barChartType"
+                *ngIf="fuelExpenses"
+                class="graph-height">
+              </canvas>
+            </div>
+            <div *ngIf="vehicleBreakdownCost.length>0;">
+              <canvas baseChart
+                [datasets]="vehicleBreakdownExpensesChartData"
+                [labels]="vehicleBreakdownExpensesChartLabels"
+                [options]="chartOptions"
+                [legend]="chartLegend"
+                [chartType]="barChartType"
+                *ngIf="vehicleBreakdownExpenses"
+                class="graph-height">
+              </canvas>
+            </div>
+            <div *ngIf="vehicleMaintenanceCost.length>0">
+              <canvas baseChart
+                [datasets]="vehicleMaintenanceExpensesChartData"
+                [labels]="vehicleMaintenanceExpensesChartLabels"
+                [options]="chartOptions"
+                [legend]="chartLegend"
+                [chartType]="barChartType"
+                *ngIf="vehicleMaintenanceExpenses"
+                class="graph-height">
+              </canvas>
+            </div>
+            <div *ngIf="OfficeExpensesName.length>0">
+              <canvas baseChart
+                [datasets]="officeExpensesChartData"
+                [labels]="officeExpensesChartLabels"
+                [options]="chartOptions"
+                [legend]="chartLegend"
+                [chartType]="barChartType"
+                *ngIf="officeExpenses"
+                class="graph-height">
+              </canvas>     
+            </div>       
+              <!-- <canvas baseChart
+                [data]="doughnutChartData"
+                [labels]="doughnutChartLabels"
+                [chartType]="doughnutChartType">
+              </canvas> -->
+            </div>
+            <div style="display: block" *ngIf="financesButtonClicked == 'Hotels'">
+              <mat-form-field>
+                <mat-select value="Monthly" (selectionChange)="selectHotelReport($event.value)">
+                  <mat-option value="Monthly">Monthly</mat-option>
+                  <mat-option value="Quarterly">Quarterly</mat-option>
+                  <mat-option value="Yearly">Yearly</mat-option>
+                </mat-select>                           
+              </mat-form-field>
+              <canvas baseChart
+                [datasets]="hotelsChartData"
+                [labels]="hotelsChartLabels"
+                [options]="chartOptions"
+                [legend]="chartLegend"
+                [chartType]="barChartType"
+                *ngIf="hotelReportMonthly"
+                class="graph-height">
+              </canvas>
+              <canvas baseChart
+                [datasets]="quarterlyHotelsPieChartData"
+                [labels]="quarterlyHotelsPieChartLabels"
+                [options]="pieChartOptions"
+                [chartType]="pieChartType"
+                *ngIf="hotelReportQuarterly"
+                height="100">
+              </canvas>
+              <div *ngIf="yearlyHotelsAmount.length>0;">
+              <canvas baseChart
+                [datasets]="hotelsYearlyChartData"
+                [labels]="hotelsYearlyChartLabels"
+                [options]="chartOptions"
+                [legend]="chartLegend"
+                [chartType]="barChartType"
+                *ngIf="hotelReportYearly"
+                class="graph-height">
+              </canvas> 
+            </div>           
+            </div>
+            <div style="display: block" *ngIf="financesButtonClicked == 'Flights'">
+              <mat-form-field>
+                <mat-select value="Monthly" (selectionChange)="selectFlightsReport($event.value)">
+                  <mat-option value="Monthly">Monthly</mat-option>
+                  <mat-option value="Quarterly">Quarterly</mat-option>
+                  <mat-option value="Yearly">Yearly</mat-option>
+                </mat-select>                          
+              </mat-form-field>
+              <canvas baseChart
+                [datasets]="flightsChartData"
+                [labels]="flightsChartLabels"
+                [options]="chartOptions"
+                [legend]="chartLegend"
+                [chartType]="barChartType"
+                *ngIf="flightsReportMonthly"
+                class="graph-height">
+              </canvas>
+              <canvas baseChart
+                [datasets]="quarterlyFlightsPieChartData"
+                [labels]="quarterlyFlightsPieChartLabels"
+                [options]="pieChartOptions"
+                [chartType]="pieChartType"
+                *ngIf="flightsReportQuarterly"
+                height="100">
+              </canvas>
+              <div *ngIf="yearlyFlightsAmount.length>0">
+              <canvas baseChart
+                [datasets]="flightsYearlyChartData"
+                [labels]="flightsYearlyChartLabels"
+                [options]="chartOptions"
+                [legend]="chartLegend"
+                [chartType]="barChartType"
+                *ngIf="flightsReportYearly"
+                class="graph-height">
+              </canvas>   
+            </div>         
+            </div>
+            <div style="display: block" *ngIf="financesButtonClicked == 'Purchase Payments'">           
+              <!-- <canvas baseChart
+                [datasets]="purchasePaymentsChartData"
+                [labels]="purchasePaymentsChartLabels"
+                [options]="chartOptions"
+                [legend]="chartLegend"
+                [chartType]="barChartType"
+                class="graph-height">
+              </canvas>                         -->
+              <nb-card>
+                <nb-card-body>
+                  <div class="row">
+                    <div class="col-lg-6 col-6">
+                      Purchase Duties
+                      <canvas baseChart
+                        [data]="purchaseDutyChartData"
+                        [labels]="purchaseDutyChartLabels"
+                        [chartType]="doughnutChartType">
+                      </canvas>
+                    </div>
+                    <div class="col-lg-6 col-6">
+                      Purchase Payments
+                      <canvas baseChart
+                        [data]="purchaseDuty2ChartData"
+                        [labels]="purchaseDuty2ChartLabels"
+                        [chartType]="doughnutChartType">
+                      </canvas>
+                    </div>
+                    <!-- <div class="col-lg-4 col-4">
+                      <canvas baseChart
+                        [data]="doughnutChartData"
+                        [labels]="doughnutChartLabels"
+                        [chartType]="doughnutChartType">
+                      </canvas>
+                    </div> -->
+                  </div>                  
+                </nb-card-body>
+              </nb-card>
+            </div>
+        </mat-tab>
+      </mat-tab-group>
+    </nb-card-body>
+  </nb-card>

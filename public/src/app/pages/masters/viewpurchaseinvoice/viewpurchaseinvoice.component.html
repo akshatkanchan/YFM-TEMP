@@ -1,0 +1,539 @@
+<div class="row">
+  <div class="col-lg-12" >
+    <nb-card>
+      <nb-card-body class="hide-overflow">
+        <mat-tab-group>
+          <mat-tab label="Invoice">
+            <div class="row">
+              <div class="col-lg-12" id="print-section">
+              <!-- <nb-card>
+              <nb-card-header>Invoice</nb-card-header>
+              <nb-card-body class="box"> -->
+                <div id="demo" style="padding: 0 5px 0 5px">
+                  <div class="col-lg-12" style="padding:10px;"> 
+                    <table *ngIf="!businessSettings.HideBusinessLetterHead" style="width: 100%;" border-spacing="0">
+                      <tr>
+                        <td rowspan="3" style="border-bottom: 1px solid darkgrey; width: 10%; padding-left: 5%; padding-bottom: 10px;">
+                          <img alt="" [src]="companyLogo" height="70px" width="auto" />
+                        </td>
+                        <td style="text-align:left; padding-left: 10%;">
+                          <b style="font-size: 18px; font-weight: 600 ;">{{user.companyName}}</b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="text-align: left; padding-left: 10%;">
+                          <b>{{companyProfile.address}}</b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="border-bottom: 1px solid darkgrey; text-align: left; padding-bottom: 10px; padding-left: 10%;">
+                          <b><b>Email:</b> {{companyProfile.email}} <b>Mobile:</b> {{companyProfile.phone}}</b>
+                        </td>
+                      </tr>
+                    </table>
+                    <table style="width:100%">
+                      <tr>
+                        <td style="border-bottom: 1px solid darkgrey; text-align: center;"><b style="font-size: medium;">Tax Invoice</b></td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="box2" style="display: flex; flex-direction: row; border-bottom: 0.1px solid; border-bottom-color: darkgrey;">
+                    <div class="col-lg-6 vl" style="border-right: 0.1px solid; border-right-color: darkgrey;">
+                      <table cellpadding=8px>
+                        <tr>
+                          <td>
+                            <b>
+                              Customer Name:
+                            </b>
+                          </td>
+                          <td>
+                            {{customerDetails.name}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <b>
+                              Customer No:
+                            </b>
+                          </td>
+                          <td>
+                            {{customerDetails.phone}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <b>
+                              State:
+                            </b>
+                          </td>
+                          <td>
+                            {{customerDetails.state}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <b>
+                              Pan:
+                            </b>
+                          </td>
+                          <td>
+                            {{customerDetails.panNo}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <b>GSTIN:</b>
+                          </td>
+                          <td>
+                            {{customerDetails.gstin}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <b>Billing Address:</b>
+                          </td>
+                          <td>
+                            {{customerDetails.billingAddress}}
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div class="col-lg-6">
+                      <table cellpadding=2px>
+                        <tr>
+                          <td><b>&nbsp;Invoice Number:</b></td>
+                          <td>
+                            {{invoiceDetails.invoiceNumber}}
+                          </td>
+                        </tr>
+                        <tr><td><b>&nbsp;Invoice Date:</b></td>
+                          <td>
+                            {{invoiceDetails.invoiceDate | date: 'dd/MM/yyyy'}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <b>&nbsp;Invoice Period From:</b>
+                          </td>
+                          <td>
+                            {{invoiceDetails.invoicePeriodFrom | date: 'dd/MM/yyyy'}}
+                          </td>
+                        </tr>
+                        <tr>  
+                          <td>
+                            <b>&nbsp;Invoice Period From:</b>
+                          </td>
+                          <td>
+                            {{invoiceDetails.invoicePeriodFrom | date: 'dd/MM/yyyy'}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <b>
+                              &nbsp;CC Number:
+                            </b>
+                          </td>
+                          <td>
+                            {{invoiceDetails.CCNumber}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <b>
+                              &nbsp;PO Number
+                            </b>
+                          </td>
+                          <td>
+                            {{invoiceDetails.PONumber}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                          </td>
+                          <td>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">                    
+                    <table style="width:100%" cellpadding="4">
+                      <tr class="invoiceTable" style="border-bottom:1px solid;">
+                        <th>Sr.</th>
+                        <th>Description</th>
+                        <th>Rate</th>
+                        <th>Quantity</th>
+                        <th>Amount</th>              
+                      </tr>
+                      <tbody style="page-break-inside: avoid" *ngFor="let temp of selectedBookings; let i=index">
+                        <tr class="invoiceTable">
+                          <td>{{i+1}}</td>
+                          <td class="tdleft" style="text-align: left;">
+                            ReportingAddress:
+                            <b>
+                              {{temp.reportingAddress}}
+                            </b><br>
+                            DutyType:
+                            <b>
+                              {{temp.dutyType}}
+                            </b><br>
+                            Vehicle Group:
+                            <b>
+                              {{temp.vehicleGroup}}
+                            </b><br>
+                            Passenger Name:
+                            <b>
+                              {{temp.passenger}}
+                            </b>
+                          </td>
+                          <td>{{temp.totalPrice}}</td>
+                          <td>1</td>
+                          <td>{{temp.totalPrice}}</td>              
+                        </tr>
+                        <tr style="text-align:center;" class="invoiceTable" *ngFor="let element of temp.extras">
+                          <td colspan="3" style="text-align: center;" *ngIf="temp.extras">{{element.name}}</td>
+                          <td *ngIf="temp.extras">1</td>
+                          <td *ngIf="temp.extras">{{element.charges}}</td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                      <tbody style="page-break-inside: avoid">
+                        <tr class="invoiceTable" *ngIf="invoiceDetails.taxableAmount != null">
+                          <td colspan="2" class="tdright" style="text-align: right; align-content: right; place-content: right;">
+                            
+                          </td>
+                          <td class="tdright" style="text-align: center; align-content: right; place-content: right;">
+                            Taxable Amount
+                          </td>
+                          <td>&nbsp;</td>
+                          <td class="tdright" style="text-align: center;">
+                            <b>{{invoiceDetails.taxableAmount}}</b>
+                          </td>
+                        </tr>
+                        <tr *ngIf="invoiceDetails.taxType == 'CGST+SGST'" style="border-bottom:1px solid; border-top:1px solid;" class="invoiceTable">
+                          <td colspan="2" class="tdright" style="text-align: right; align-content: right; place-content: right;">
+                            Tax Type:
+                              
+                          </td>
+                          <td class="tdright" style="text-align: center; align-content: right; place-content: right;">
+                            <b>
+                              &nbsp;CGST
+                            </b>
+                            <br>
+                            <b>
+                              SGST
+                            </b>
+                          </td>
+                          <td class="tdright" style="text-align: center; align-content: right; place-content: right;">
+                            <b>
+                              &nbsp;{{invoiceDetails.taxRate/2}}%
+                            </b>
+                            <br>
+                            <b>
+                              {{invoiceDetails.taxRate/2}}%
+                            </b>
+                          </td>
+                          <td class="tdright" style="text-align: center; align-content: right; place-content: right;">
+                            <b>
+                              &nbsp;{{invoiceDetails.taxAmount/2}}
+                            </b>
+                            <br>
+                            <b>
+                              {{invoiceDetails.taxAmount/2}}
+                            </b>
+                          </td>
+                        </tr>
+                        <tr *ngIf="invoiceDetails.taxType != 'CGST+SGST'" style="border-bottom:1px solid; border-top:1px solid;" class="invoiceTable">
+                          <td colspan="3" class="tdright" style="text-align: right;">
+                            Tax Type:
+                            <b>
+                              {{invoiceDetails.taxType}}
+                            </b>
+                          </td>
+                          <td class="tdright" style="text-align: center; align-content: right; place-content: right;">
+                            <b>
+                              {{invoiceDetails.taxRate}}%
+                            </b>
+                          </td>
+                          <td class="tdright" style="text-align: center; align-content: right; place-content: right;">
+                            <b>
+                              {{invoiceDetails.taxAmount}}
+                            </b>
+                          </td>
+                        </tr>
+                        <tr style="border-bottom:1px solid;" class="invoiceTable">
+                          <td colspan="3" class="tdright" style="text-align: right; align-content: right; place-content: right;">
+                            Discount Type:
+                            <b>
+                              {{invoiceDetails.discountType}}
+                            </b>
+                          </td>
+                          <td></td>
+                          <td class="tdright" style="text-align: center; align-content: right; place-content: right;">
+                            <b>
+                              {{invoiceDetails.discountAmount}}
+                            </b>
+                          </td>
+                        </tr>
+                        <tr class="invoiceTable" *ngIf="invoiceDetails.nonTaxableAmount > 0">
+                          <td colspan="2" class="tdright" style="text-align: right; align-content: right; place-content: right;">
+                            
+                          </td>
+                          <td class="tdright" style="text-align: center; align-content: right; place-content: right;">
+                            Non Taxable Amount
+                          </td>
+                          <td>&nbsp;</td>
+                          <td class="tdright" style="text-align: center;">
+                            <b>{{invoiceDetails.nonTaxableAmount}}</b>
+                          </td>
+                        </tr>
+                        <tr class="invoiceTable">
+                          <td colspan="2" style="text-align: left; border-bottom:2px solid black;">
+                            In Words: <b style="text-transform:capitalize;">{{totalInWords}}</b>
+                          </td>
+                          <td class="tdright" style="text-align: center; border-bottom:2px solid black;">
+                            Total:
+                          </td>
+                          <td style="border-bottom:2px solid black;">&nbsp;</td>
+                          <td class="tdright" style="text-align: center; border-bottom:2px solid black;">
+                            <b>{{invoiceDetails.totalAmount}}</b>
+                          </td>
+                        </tr>                  
+                      </tbody>
+                      <!-- <tr class="trcenter" style="text-align: center;"><td colspan="4"></td>
+                      <td></td>
+                      </tr>                     -->
+                    </table>  
+                  </div>
+                </div>
+              </div>              
+            </div>
+            <div style="margin-top: 15px;text-align: center;">
+              <button mat-raised-button color="primary" (click)="print()" >Print</button>                
+            </div>
+          </mat-tab>
+          <mat-tab label="Duty Summary">
+            <div class="row">
+              <div class="col-lg-12">
+                <nb-card>
+                  <nb-card-header>
+                    Duty Summary
+                  </nb-card-header>
+                  <nb-card-body>
+                    <table border="1" class="dutyTable">
+                      <tr>
+                        <th>Sr.</th>
+                        <th *ngIf="businessSettings.ShowPurchaseDutyID">Duty Id</th>            
+                        <th *ngIf="businessSettings.ShowPurchaseBookedByName">Booked By</th>
+                        <th *ngIf="businessSettings.ShowPurchasePassengerNames">Passenger</th>
+                        <th *ngIf="businessSettings.ShowPurchaseVehicleGroupName">Veh.Group</th>
+                        <th *ngIf="businessSettings.ShowPurchaseVehicleNumber">Veh.Num.</th>
+                        <th *ngIf="businessSettings.ShowPurchaseDutyType">Duty Type</th>
+                        <th *ngIf="businessSettings.ShowPurchasePrice">Price</th>
+                        <th>Qty</th>
+                        <th *ngIf="businessSettings.ShowPurchasePrice">Total Price</th>
+                        <th *ngIf="businessSettings.ShowPurchaseStartDate">S.Date</th>
+                        <th *ngIf="businessSettings.ShowPurchaseEndDate">E.Date</th>
+                        <th *ngIf="businessSettings.ShowPurchaseStartTime">S.Time</th>
+                        <th *ngIf="businessSettings.ShowPurchaseEndTime">E.Time</th>
+                        <th>T.Time</th>
+                        <th>Ex.Time</th>
+                        <th *ngIf="businessSettings.ShowPurchaseStartKM">S.Km</th>
+                        <th *ngIf="businessSettings.ShowPurchaseEndKM">E.Km</th>
+                        <th *ngIf="businessSettings.ShowPurchaseTotalKm">T.Km</th>
+                        <th *ngIf="businessSettings.ShowPurchaseExtraKM">Ex.Km</th>
+                        <th *ngIf="businessSettings.ShowPurchaseExtraHourRate">Ex.Hr Rate</th>
+                        <th *ngIf="businessSettings.ShowPurchaseExtraKMRate">Ex.Km Rate</th>
+                        <th *ngIf="businessSettings.ShowPurchaseExtraHourCost">Ex.Hr Cost</th>
+                        <th *ngIf="businessSettings.ShowPurchaseExtraKMCost">Ex.Km Cost</th>
+                        <th>Ex.Charges</th>
+                        <!-- <th *ngIf="">Ex.Ch.</th>
+                        <th *ngIf="">Parking</th>
+                        <th *ngIf="">Out.Day</th>
+                        <th *ngIf="">Sun</th>
+                        <th *ngIf="">Late</th>
+                        <th *ngIf="">Car Hire Ch.</th> -->
+                        <th *ngIf="businessSettings.ShowPurchaseDutySubtotal">Sub.Total</th>
+                        <!-- <th *ngIf="businessSettings.ShowPurchaseDutySubtotalIncludingAllowances">Sub.Total (incl. Allowances)</th> -->
+                      </tr>
+                      <tr *ngFor="let element of dutySummary; let i=index;">
+                        <td>{{i+1}}.</td>
+                        <td *ngIf="businessSettings.ShowPurchaseDutyID">{{element.dutyId}}</td>                
+                        <td *ngIf="businessSettings.ShowPurchaseBookedByName">{{element.bookBy}}</td>
+                        <td *ngIf="businessSettings.ShowPurchasePassengerNames">{{element.passenger}}</td>
+                        <td *ngIf="businessSettings.ShowPurchaseVehicleGroupName">{{element.vehicleGroup}}</td>
+                        <td *ngIf="businessSettings.ShowPurchaseVehicleNumber">{{element.number}}</td>
+                        <td *ngIf="businessSettings.ShowPurchaseDutyType">{{element.dutyType}}</td>
+                        <td *ngIf="businessSettings.ShowPurchasePrice">{{element.price}}</td>
+                        <td>1</td>
+                        <td *ngIf="businessSettings.ShowPurchasePrice">{{element.price}}</td>
+                        <td *ngIf="businessSettings.ShowPurchaseStartDate">{{element.startDate | date: 'dd-MM-yyyy'}}</td>
+                        <td *ngIf="businessSettings.ShowPurchaseEndDate">{{element.endDate | date: 'dd-MM-yyyy'}}</td>
+                        <td *ngIf="businessSettings.ShowPurchaseStartTime">{{element.startTime | date:'HH:mm a'}}</td>
+                        <td *ngIf="businessSettings.ShowPurchaseEndTime">{{element.endTime | date:'HH:mm a'}}</td>
+                        <td>{{element.totalTime}}</td>
+                        <td>{{element.extraTime}}</td>
+                        <td *ngIf="businessSettings.ShowPurchaseStartKM">{{element.startKm}}</td>
+                        <td *ngIf="businessSettings.ShowPurchaseEndKM">{{element.endKm}}</td>
+                        <td *ngIf="businessSettings.ShowPurchaseTotalKm">{{element.totalKm}}</td>
+                        <td *ngIf="businessSettings.ShowPurchaseExtraKM">{{element.extraKm}}</td>
+                        <td *ngIf="businessSettings.ShowPurchaseExtraHourRate">{{element.extraHrs}}</td>
+                        <td *ngIf="businessSettings.ShowPurchaseExtraKMRate">{{element.extraKm}}</td>
+                        <td *ngIf="businessSettings.ShowPurchaseExtraHourCost">{{element.extraHrRate}}</td>
+                        <td *ngIf="businessSettings.ShowPurchaseExtraKMCost">{{element.extraKmRate}}</td>
+                        <td>{{element.charges}}</td>
+                        <!-- <td *ngIf="">Ex.Ch.</td>
+                        <td *ngIf="">Parking</td> -->
+                        <!-- <td *ngIf="">Out.Day</td>
+                        <td *ngIf="">Sun</td>
+                        <td *ngIf="">Late</td>
+                        <td *ngIf="">Car Hire Ch.</td> -->
+                        <td *ngIf="businessSettings.ShowPurchaseDutySubtotal">{{element.finalPrice}}</td>
+                        <!-- <td *ngIf="businessSettings.ShowPurchaseDutySubtotalIncludingAllowances">Sub.Total (incl. Allowances)</td> -->
+                      </tr>
+                    </table>
+                  </nb-card-body>
+                </nb-card>
+              </div>      
+            </div>
+            <div class="row">
+              <div class="col-lg-12" style="text-align:center;">
+                <button mat-raised-button color="primary" (click)="printDutySummary()">Print</button>
+              </div>
+            </div>
+          </mat-tab>
+          <!-- <mat-tab label="Duties">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-12" *ngFor="let element of dutySummary; let i=index;">
+                  <nb-card>
+                    <nb-card-header>
+                      Duty #{{element.dutyId}}
+                    </nb-card-header>
+                    <nb-card-body>
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="row">
+                            <div class="col-lg-6">
+                              Date
+                            </div>
+                            <div class="col-lg-6">
+                              {{element.startDate}}
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-lg-6">
+                              vehicle Group
+                            </div>
+                            <div class="col-lg-6">
+                              {{element.vehicleGroup}}
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-lg-6">
+                              Vehicle
+                            </div>
+                            <div class="col-lg-6">
+                              {{element.vehicle}}
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-lg-6">
+                              Driver
+                            </div>
+                            <div class="col-lg-6">
+                              {{element.driver}}
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-lg-6">
+                              Passengers
+                            </div>
+                            <div class="col-lg-6">
+                              {{element.passenger}}
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-lg-6">
+                              Reporting Address
+                            </div>
+                            <div class="col-lg-6">
+                              {{element.reportingAddress}}
+                            </div>
+                          </div>    
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <table border="1" style="width: 100%;">
+                            <tr>
+                              <th></th>
+                              <th>Start</th>
+                              <th>End</th>
+                              <th>Total</th>
+                              <!-/- <th>Extra</th> -/->
+                            </tr>                  
+                            <tr>
+                              <td>KM</td>
+                              <td>{{element.startKm}}</td>
+                              <td>{{element.endKm}}</td>
+                              <td>
+                                {{element.endKm - element.startKm}}
+                              </td>
+                              <!-/- <td></td> -/->
+                            </tr>
+                            <tr>
+                              <td>Time</td>
+                              <td>{{element.startTime}}</td>
+                              <td>{{element.endTime}}</td>
+                              <td>{{element.endTime - element.startTime}}</td>
+                              <!-/- <td></td> -/->
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                      <!-/- <div class="row">
+                        <div class="col-lg-6">
+                          Additional Charges:
+                          <table border="1">
+                            <tr>
+                              <th>Charges</th>
+                              <th>Amount</th>
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td></td>
+                            </tr>
+                          </table>
+                        </div>
+                        <div class="col-lg-6">
+                          Driver Allowances:
+                          <table border="1">
+                            <tr>
+                              <th>Charges</th>
+                              <th>Amount</th>
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td></td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div> -/->
+                    </nb-card-body>
+                  </nb-card>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <button mat-raised-button color="warn" (click)="closeDialog()">Close</button>
+              </div>
+            </div>
+          </mat-tab> -->
+        </mat-tab-group>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

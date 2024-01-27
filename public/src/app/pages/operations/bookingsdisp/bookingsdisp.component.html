@@ -1,0 +1,144 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+
+        <nb-card-header>Bookings<button style="float: right;margin-top: -10px;" mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>settings</mat-icon></button>
+          <mat-menu #menu="matMenu" class="mat-menu-panel">
+              <button mat-menu-item (click)="openImport()">Import</button>
+              <button *ngIf="permission.exportBookings" (click)="exportBookings()" mat-menu-item>Export</button>
+          </mat-menu>
+        </nb-card-header>
+          <nb-card-body>
+          <div align="center">
+            <mat-form-field class="filter-field">
+              <input matInput   placeholder="Filter"   #input>
+            </mat-form-field> 
+        
+            <mat-form-field class="filter-date">
+              <input matInput [(ngModel)]="filterStart" [matDatepicker]="pickerStart" (click)="pickerStart.open()" readonly placeholder="From">
+              <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+              <mat-datepicker #pickerStart></mat-datepicker>
+            </mat-form-field>            
+              
+            <mat-form-field class="filter-date">
+              <input matInput [(ngModel)]="filterEnd" [matDatepicker]="pickerEnd" (click)="pickerEnd.open()" readonly placeholder="To">
+              <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+              <mat-datepicker #pickerEnd></mat-datepicker>
+            </mat-form-field>
+            
+      
+              <button matTooltip="Search" mat-icon-button (click)="filterByDate()"><mat-icon class="filter-icon">search</mat-icon></button>
+              <button matTooltip="Clear All" mat-icon-button (click)="clear()"><mat-icon class="filter-icon">highlight_off</mat-icon></button>
+              <mat-form-field class="mobile-select">
+                <mat-select [value]="status" (selectionChange)="filter($event.value)">
+                  <mat-option value="Booked">Booked</mat-option>
+                  <mat-option value="Completed">Completed</mat-option>
+                  <mat-option value="Cancelled">Cancelled</mat-option>
+                  <mat-option value="Billed">Billed</mat-option>
+                  <mat-option value="Unconfirmed">Unconfirmed</mat-option>
+                  <mat-option value="Review Needed">Review Needed</mat-option>
+                  <mat-option value=''>All</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+        <mat-table [hidden]="isLoading" #table [dataSource]="dataSource" matSort matSortActive="startDate" matSortDirection="asc" matSortDisableClear >
+      
+        <ng-container matColumnDef="startDate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Date </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.startDate | date: 'dd-MM-yyyy'}} </mat-cell>
+        </ng-container>
+
+          <ng-container matColumnDef="Customer">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Customer </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.cname}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Booked by">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Booked by </mat-header-cell>
+            <mat-cell *matCellDef="let element" [matTooltip]="element.bookByNo"> {{element.bookBy}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Passenger">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Passenger </mat-header-cell>
+            <mat-cell *matCellDef="let element" [matTooltip]="element.passengerNo"> {{element.passenger}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="dutyType">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Duty Type </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.dutyType}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="vehicleGroup">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Vehicle Group </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.vehicleGroup}} </mat-cell>
+          </ng-container>
+          
+          <ng-container matColumnDef="fromLoc">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> From </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.fromLoc}} </mat-cell>
+          </ng-container>
+          
+          <ng-container matColumnDef="toLoc">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> To </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.toLoc}} </mat-cell>
+            </ng-container>
+
+          <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <mat-chip-list>
+                  <mat-chip color="primary" selected="true"> {{element.status}} </mat-chip>
+                </mat-chip-list> 
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Duties">
+            <mat-header-cell *matHeaderCellDef> Completed Duties </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.duties_completed}}/{{element.number_of_duties}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Options">
+            <mat-header-cell *matHeaderCellDef> Options </mat-header-cell>
+            <mat-cell *matCellDef="let element ;let row" (click)="$event.stopPropagation()">
+              <button *ngIf="element.status!='Cancelled'" mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
+              <mat-menu #menu="matMenu">
+              <button *ngIf="element.status==='Completed'" mat-menu-item (click)="createInvoice(row)">Create Invoice</button>
+              <button *ngIf="element.status=='Booked' && permission.manageBooking" mat-menu-item (click)="selectRow(row)">Edit</button>
+              <button *ngIf="element.status=='Review Needed' && permission.manageBooking" mat-menu-item (click)="reviewNeededRow(row)">Review</button>
+              <button mat-menu-item (click)="uploadFiles(row)">Upload Files</button>
+              <button *ngIf="element.status=='Booked'" mat-menu-item (click)="extendBooking(row)">Extend Booking</button>
+              <button *ngIf="element.status=='Booked'" mat-menu-item (click)="advancePayment(row)">Advance Payment</button>
+              <button *ngIf="element.status=='Booked' && permission.smsEmailCallBookings" mat-menu-item (click)="sendConfirmation(row)">Send Confirmation</button>
+              <button *ngIf="element.status=='Booked' && permission.manageBooking" (click)="cancelBooking(row)" mat-menu-item>Cancel</button>
+              </mat-menu>
+            </mat-cell>
+          </ng-container>
+      
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row [ngStyle]="{'background-color':rowColors(row.startDate,row.status)}" (click)="viewDuties(row)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+        <div *ngIf="isLoading" 
+        style="display: flex; justify-content: center; align-items: center">
+       <mat-progress-spinner 
+         color="primary" 
+         mode="indeterminate">
+       </mat-progress-spinner>
+       </div>
+
+        <mat-paginator [length]="length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        ></mat-paginator>
+
+    </nb-card-body>
+  </nb-card>
+  </div>
+  <div class="col-lg-12" align="right">
+    
+    <a *ngIf="permission.addBookings" (click)="addBooking()" class="float">
+        <i style="color: ghostwhite" class="fa fa-plus my-float"></i>
+    </a>
+        
+  </div>
+</div>

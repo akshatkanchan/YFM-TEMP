@@ -1,0 +1,94 @@
+
+<style>
+  mat-card {
+  max-width: 400px;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 3px 24px -1px rgba(0,0,0,.2), 0 3px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12) !important;
+}
+.signin-content {
+  padding: 0px 0rem;
+}
+.full-width-input {
+  width: 100%;
+}
+
+.mat-form-field{
+  margin-top: 20px;
+}
+</style>
+<div class="row">
+  <div class="col-lg-12" >
+    <nb-card>
+      <nb-card-header>My Profile</nb-card-header>
+      <nb-card-body>
+          <div class="row" style="padding-bottom: 20px;">
+            <div class="col-lg-5 col-12" style="padding-left: 50px;">
+            <div style="margin-bottom: 10px;">
+              <img [src]="imgUrl" alt="" height="150px" width="120px"><button mat-icon-button *ngIf="isProfileImage==true" (click)="removeImage()"><mat-icon>clear</mat-icon></button><br><br>
+              <button (click)="profilePhoto.click();profilePhoto.value = null" mat-raised-button color="primary"> <mat-icon>cloud_upload</mat-icon>Browse</button>
+              <input type="file" accept="image/*" #profilePhoto name="driverPhoto" hidden (change)="selectFile($event)">
+            </div>
+              <b>Name</b><br> 
+              <mat-form-field style="width:250px" class="my-form">
+                <input matInput readonly [(ngModel)]="currUser.name">
+              </mat-form-field><br>
+              <b>Email</b><br>
+              <mat-form-field style="width:250px" class="my-form">
+                <input matInput readonly [(ngModel)]="currUser.email">
+              </mat-form-field><br>
+              <b>Contact Number</b><br>
+              <mat-form-field style="width:250px" class="my-form">
+                <input matInput [(ngModel)]="currUser.phone">
+              </mat-form-field><br>
+              <div *ngIf='isOwner==false'>
+              <b>Contact Number</b><br>
+              <mat-form-field style="width:250px" class="my-form">
+                <input matInput [(ngModel)]="currUser.mobilenumber">
+              </mat-form-field><br>
+              <b>Blood Group</b><br>
+              <mat-form-field style="width:250px" class="my-form">
+                <input matInput [(ngModel)]="currUser.bloodGroup">
+              </mat-form-field><br>
+              <b>Address</b><br>
+              <mat-form-field style="width:250px" class="my-form">
+                <textarea matInput [(ngModel)]="currUser.currentAddress"></textarea>
+              </mat-form-field><br>
+              </div>
+              <div>                        
+                  <button (click)="save()" mat-raised-button color="primary">Save</button>
+              </div>
+        </div>
+        <div class="col-lg-6 col-12">
+        <div class="signin-content" id="test">
+            <mat-card>
+              <mat-card-content>
+                <form #formData='ngForm'>
+                  <h5>CHANGE PASSWORD</h5>
+                  <p *ngIf="isError" style="color:brown;">{{error}}</p>
+                  <mat-form-field class="full-width-input">
+                    <input type="password" matInput [(ngModel)]="oldPassword" id="oldPassword" name="oldPassword" placeholder="Old Password">
+                  </mat-form-field>
+                  <mat-form-field class="full-width-input">
+                    <input matInput type="password" [(ngModel)]="newPassword" id="newPassword" name="newPassword" placeholder="New Password">
+                  </mat-form-field>
+                  <mat-form-field class="full-width-input">
+                    <input matInput type="password" [(ngModel)]="confirmPassword" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password">
+                  </mat-form-field>
+                  <button style="margin-top:50px; width:200px;" type="submit" [disabled]="!formData.valid" mat-raised-button color="primary" (click)="changePassword()">Confirm</button>
+                  <mat-progress-bar [hidden]="!loader" style="max-width:200px; margin:auto; margin-bottom: 20px"
+                      color="primary"
+                      mode="indeterminate">
+                  </mat-progress-bar>
+                </form>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

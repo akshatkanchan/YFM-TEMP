@@ -1,0 +1,202 @@
+<div class="row">
+  <div class="col-lg-12 col-12">    
+    <nb-card>      
+      <nb-card-body>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              <mat-select [(ngModel)]="predefined"  placeholder="Preset" >
+                <mat-option *ngFor="let element of presets" [value]="element.name" (click)="predefinedRoles(element)"> 
+                  {{element.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6 col-12">
+            <form [formGroup]="preset">
+              <mat-form-field>
+                <input matInput placeholder="Preset Name" formControlName="permissionName">
+                <mat-error>
+                  Enter a Permission Name to save as a preset
+                </mat-error>  
+              </mat-form-field>
+              <button mat-raised-button color="primary" [disabled]="preset.invalid" (click)="savePreset()">Save Preset</button>
+            </form>
+            <!-- <button mat-icon-button class="close-button" color="warn" (click)="close()"><mat-icon style="font-size: 25px;">close</mat-icon></button> -->      
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-lg-8 col-12">
+            Customer Name:
+            <mat-form-field class="w-100">
+              <!-- <input aria-placeholder="Pick one" (change)="setCustomer(option)" name="cname" [(ngModel)]="bookings.cname" matInput [matAutocomplete]="custauto"> -->
+              <input aria-placeholder="Pick one"  name="cname" [formControl]="customerCtrl" matInput [matAutocomplete]="custauto" >
+              <mat-autocomplete #custauto="matAutocomplete">
+                <mat-option *ngFor="let option of customer |async" [value]="option.name" (onSelectionChange)="setCustomer(option,$event)">
+                  {{ option.name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>      
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <mat-form-field class="w-100">
+              Start Date
+              <input matInput [(ngModel)]="bookings.startDate" [matDatepicker]="startDate" (click)="startDate.open()" readonly name="startDate">
+              <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+              <mat-datepicker #startDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6 col-12">
+            <mat-form-field class="w-100">
+              End Date
+              <input matInput [(ngModel)]="bookings.endDate" [matDatepicker]="endDate" (click)="endDate.open()" readonly name="endDate">         
+              <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+              <mat-datepicker #endDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <mat-checkbox [ngModel]="exportBookings.id" (ngModelChange)="change($event,&quot;d.bid as 'Booking ID'&quot;)">
+              BookingId
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.dutyId" (change)="change($event,&quot;d.id as 'Duty ID'&quot;)">
+              Duty Id
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.cname" (change)="change($event,&quot;d.cname as 'Customer Name'&quot;)">
+              Customer Name
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.bookBy" (change)="change($event,&quot;d.bookBy as 'Booked By'&quot;)">
+              Booked by
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.bookByNo" (change)="change($event,&quot;d.bookByNo as 'Booked By No'&quot;)">
+              Booked by Phone
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.bookByEmail" (change)="change($event,&quot;d.bookByEmail as 'Booked By Email'&quot;)">
+              Booked by Email
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.ccId" (change)="change($event,&quot;bo.ccId as 'CCID'&quot;)">
+              CCID
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.passenger" (change)="change($event,&quot;d.passenger as 'Passenger'&quot;)"> 
+              Passenger Name
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.passengerNo" (change)="change($event,&quot;d.passengerNo as 'PassengerNo'&quot;)">
+              Passenger Phone
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.passengerEmail" (change)="change($event,&quot;d.passengerEmail as 'Passenger Email'&quot;)">
+              Passenger Email
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.fromLoc" (change)="change($event,&quot;d.fromLoc as 'From Location'&quot;)">
+              From city
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.toLoc" (change)="change($event,&quot;d.toLoc as 'To Location'&quot;)">
+              To city
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.startDate" (change)="change($event,&quot;d.startDate as 'Start Date'&quot;)">
+              Start Date
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.endDate" (change)="change($event,&quot;d.endDate as 'End Date'&quot;)">
+              End Date
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.reportingTime" (change)="change($event,&quot;d.reportingTime as 'Reporting Time'&quot;)">
+              Reporting Time
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.startFromGarage" (change)="change($event,&quot;d.startFromGarage as 'Start From Garage'&quot;)">
+              Start From Garage
+            </mat-checkbox><br>      
+          </div>
+          <div class="col-lg-6 col-12">
+            <mat-checkbox [(ngModel)]="exportBookings.reportingAddress" (change)="change($event,&quot;d.reportingAddress as 'Reporting Address'&quot;)">
+              Reporting Address
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.shortReportingAddress" (change)="change($event,&quot;d.shortReportingAddress as 'Short Reporting Address'&quot;)">
+              Short reporting Address
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.dropAddress" (change)="change($event,&quot;d.dropAddress as 'Drop Address'&quot;)">
+              Drop Address
+            </mat-checkbox><br>        
+            <mat-checkbox [(ngModel)]="exportBookings.flightTrainNo" (change)="change($event,&quot;d.flightTrainNo as 'Flight/Train No'&quot;)">
+              Flight/Train Number            
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.poNumber" (change)="change($event,&quot;bo.poNumber as 'PO Number'&quot;)">
+              PO Number
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.dispatchCenter" (change)="change($event,&quot;d.dispatchCenter as 'Dispatch Center'&quot;)">
+              Dispatch Center
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.billTo" (change)="change($event,&quot;d.billTo as 'Billed To'&quot;)">
+              Bill To
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.price" (change)="change($event,&quot;d.price as 'Price'&quot;)">
+              Duty price
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.remarks" (change)="change($event,&quot;d.remarks as 'Remarks'&quot;)">
+              Remarks
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.operatorNotes" (change)="change($event,&quot;d.operatorNotes as 'Operator Notes'&quot;)">
+              Operator Notes
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.label" (change)="change($event,&quot;d.label as 'Label'&quot;)">
+              Label
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.vehicleGroup" (change)="change($event,&quot;d.vehicleGroup as 'Vehicle Group'&quot;)">
+              Vehicle Group
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.dutyType" (change)="change($event,&quot;d.dutyType as 'Duty Type'&quot;)">
+              Duty Type
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.totalPrice" (change)="change($event,&quot;bo.totalPrice as 'Total Price'&quot;)">
+              Total Price
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.extraHours" (change)="change($event,&quot;d.extraHours as 'Extra Hours'&quot;)">
+              Extra Hours
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.extraKms" (change)="change($event,&quot;d.extraKms as 'Extra Kms'&quot;)">
+              Extra Kms 
+            </mat-checkbox><br>  
+            <mat-checkbox [(ngModel)]="exportBookings.startKm" (change)="change($event,&quot;c.startKm as 'Start Km'&quot;)">
+              Start Km
+            </mat-checkbox><br>
+            <mat-checkbox [(ngModel)]="exportBookings.endKm" (change)="change($event,&quot;c.endKm as 'End Km'&quot;)">
+              End Km 
+            </mat-checkbox><br>      
+            <mat-checkbox [(ngModel)]="exportBookings.taxableAmount" (change)="change($event,&quot;sum(i.taxableAmount) as 'Taxable Amount'&quot;)">
+              Taxable Amount 
+            </mat-checkbox><br>   
+            <mat-checkbox [(ngModel)]="exportBookings.nonTaxableAmount" (change)="change($event,&quot;sum(i.nonTaxableAmount) as 'Non Taxable Amount'&quot;)">
+              Non Taxable Amount
+            </mat-checkbox><br>   
+            <mat-checkbox [(ngModel)]="exportBookings.extraChargesTotal" (change)="change($event,&quot;sum(b.extraChargesTotal) as 'Extra Charges Total'&quot;)">
+              Extra Charges Total
+            </mat-checkbox><br>   
+            <mat-checkbox [(ngModel)]="exportBookings.extraCharges" (change)="change($event,&quot;e.name as 'Extra Charges Name'&quot;)">
+              Extra Charges
+            </mat-checkbox><br>   
+            <mat-checkbox [(ngModel)]="exportBookings.extraChargesAmount" (change)="change($event,&quot;e.charges as 'Extra Charges'&quot;)">
+              Extra Charges Amount
+            </mat-checkbox><br>   
+            <mat-checkbox [(ngModel)]="exportBookings.driverNumber" (change)="change($event,&quot;dr.mobileNumber as 'Driver Number'&quot;)">
+              Driver Number
+            </mat-checkbox><br>  
+            <mat-checkbox [(ngModel)]="exportBookings.invoiceTotal" (change)="change($event,&quot;sum(i.totalAmount) as 'Invoice Total'&quot;)">
+              Invoice Total
+            </mat-checkbox><br>    
+            <mat-checkbox [(ngModel)]="exportBookings.dutyCreatedAt" (change)="change($event,&quot;l.message as 'Duty Created At'&quot;)">
+              Duty Created at
+            </mat-checkbox><br>   
+          </div>                             
+        </div>
+      </nb-card-body>
+    </nb-card>    
+  </div>
+</div>
+<div class="row ptb-10">
+  <div class="col-lg-12 col-12">
+    <button mat-raised-button color="primary" (click)="getDuties()">Export</button>
+    <button mat-raised-button color="warn" (click)="closeDialog()">Close</button>
+  </div>
+</div>

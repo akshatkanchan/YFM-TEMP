@@ -1,0 +1,254 @@
+<div class="row">
+    <div class="col-lg-12">
+        <nb-card>
+            <nb-card-header>
+                New Receipt
+                <b style="float: right; font-size: 12px; font-weight: 100;">*All figures in Rs.</b>
+            </nb-card-header>
+            <nb-card-body>
+                <div class="row">
+                    <div class="col-lg-6 col-12">
+                        <!-- <nb-card>
+                        <nb-card-body> -->
+                        <div class="row">
+                            <div class="col-lg-12 col-12">
+                                <mat-form-field>
+                                    Customer Group
+                                    <mat-select>                                
+                                        <mat-option *ngFor="let element of customerGroup" [value]="element.name" (onSelectionChange)="setCustomerGroupId(element,$event)">
+                                            {{element.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-12">
+                                <mat-form-field style="width:90%">
+                                    Customer
+                                    <input matInput [(ngModel)]="cname" [matAutocomplete]="customer" name="cname">
+                                    <mat-autocomplete #customer="matAutocomplete">
+                                        <mat-option *ngFor="let element of customersObs" [value]="element.name" (onSelectionChange)="getInvoices(element,$event)">
+                                            {{element.name}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </div>
+                        </div>                
+                        <!-- </nb-card-body>
+                        </nb-card> -->
+                    </div>
+                    <div class="col-lg-6 col-12">
+                        <!-- <nb-card>
+                        <nb-card-body> -->
+                        <div class="row">
+                            <div class="col-lg-12 col-12">
+                                <mat-form-field>
+                                    Receipt Number:
+                                    <input [(ngModel)]="receipt.number" matInput>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-12">
+                                <mat-form-field>
+                                    Receipt Date:
+                                    <input [matDatepicker]="receiptDate" [(ngModel)]="receipt.date" matInput readonly (click)="receiptDate.open()">
+                                    <mat-datepicker-toggle matSuffix [for]="receiptDate"></mat-datepicker-toggle>
+                                    <mat-datepicker #receiptDate></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>                                                
+                        <!-- </nb-card-body>
+                        </nb-card> -->
+                    </div>
+                </div>
+                <div class="row" style="margin-top:10px;">
+                    <div class="col-lg-12 col-12">
+                        <!-- <nb-card>
+                        <nb-card-header>Invoices</nb-card-header>
+                        <nb-card-body>                 -->
+                            <!-- Selected invoices -->
+                        <h5>Invoices</h5>
+                        <table style="width:100%">
+                            <tr>
+                                <th>
+                                    Invoice Number
+                                </th>
+                                <th>
+                                    Invoice Date
+                                </th>
+                                <th>
+                                    TDS
+                                </th>
+                                <th>
+                                    Adjustment
+                                </th>
+                                <th>
+                                    Advance
+                                </th>
+                                <th>
+                                    Invoice Amount
+                                </th>
+                                <th>
+                                    Total
+                                </th>
+                            </tr>
+                            <tr *ngFor="let element of selectedInvoices">
+                                <td>
+                                    {{element.invoiceNumber}}
+                                </td>
+                                <td>
+                                    {{element.invoiceDate | date: 'dd-MM-yyyy'}}
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <input matInput type="number"  [(ngModel)]="element.tdsAmount" (ngModelChange)="changeTdsAmount($event)" >
+                                    </mat-form-field>
+                                    <!-- <mat-form-field>
+                                        <input matInput type="number" [(ngModel)]="element.tdsPercent" (ngModelChange)="changeTdsPercent($event)" >
+                                    </mat-form-field> -->
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <input matInput type="number"  [(ngModel)]="element.adjustment" (ngModelChange)="changeAdjustment($event)" >
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    {{element.advanceReceived}}
+                                </td>
+                                <td>
+                                    {{element.totalAmount - element.advanceReceived }}
+                                </td>
+                                <td>
+                                    {{element.totalAmount-element.tdsAmount-element.adjustment}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><b>Total:</b></td>
+                                <td>{{tdsAmountTotal}}</td>
+                                <td>{{adjustmentTotal}}</td>
+                                <!-- <td colspan="2">{{semiFinalTotal}}</td> -->
+                                <td colspan="2"></td>
+                                <td>{{finalTotal}}</td>
+                            </tr>
+                        </table>
+                        <!-- </nb-card-body>
+                        </nb-card> -->
+                    </div> 
+                </div>
+                <div class="row ptb-10">
+                    <div class="col-lg-12">
+                        <button mat-raised-button color="primary" (click)="addInvoices()">Select Invoices</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- <div class="col-lg-12 col-12"> -->
+                    <!-- <nb-card>
+                        <nb-card-body> -->
+                            <!-- <div class="row"> -->
+                    <div class="col-lg-4 col-12">
+                        <mat-form-field style="width:90%">
+                            Payment Received
+                            <input [(ngModel)]="receipt.paymentReceived" matInput>
+                        </mat-form-field>
+                    </div>
+                    <!-- </div> -->
+                    <!-- <div class="row"> -->
+                    <div class="col-lg-4 col-12">
+                        <mat-form-field style="width:90%">
+                            TDS
+                            <input [(ngModel)]="receipt.tds" matInput>
+                        </mat-form-field>
+                    </div>
+                    <!-- </div> -->
+                    <!-- <div class="row"> -->
+                    <div class="col-lg-4 col-12">
+                        <mat-form-field style="width:90%">
+                            Adjustments
+                            <input [(ngModel)]="receipt.adjustment" matInput>
+                        </mat-form-field>
+                    </div>
+                    <!-- </div>                  -->
+                    <!-- </nb-card-body>
+                    </nb-card> -->
+                    <!-- </div> -->
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                    <!-- <nb-card class="paymentsCard">
+                        <nb-card-body> -->
+                        <div>
+                            <b>Payment Mode</b><br><br>
+                            <mat-radio-group [(ngModel)]="receipt.paymentMode" (change)="checkPaymentMode(receipt.paymentMode)">
+                                <mat-radio-button value="Credit Card">Credit Card</mat-radio-button>
+                                <mat-radio-button value="Cheque">Cheque</mat-radio-button>
+                                <mat-radio-button value="NEFT">NEFT</mat-radio-button>
+                                <mat-radio-button value="Cash">Cash</mat-radio-button>
+                                <mat-radio-button value="Others">Others</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        <div>
+                            <mat-form-field style="width:90%;">
+                                Received in Bank              
+                                <input matInput [formControl]="receivedInBankCtrl"  [matAutocomplete]="autoRIB">
+                                <mat-autocomplete #autoRIB="matAutocomplete">
+                                    <mat-option *ngFor="let option of bankAccount | async" [value]="option.bankName" (onSelectionChange)="setReceivedInBank(option,$event)">
+                                        {{ option.bankName }} ({{option.number}})
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field>
+                                Bank Credit Date
+                                <input matInput [(ngModel)]="receipt.bankCreditDate" [matDatepicker]="bankCreditDate" (click)="bankCreditDate.open()">
+                                <mat-datepicker-toggle matSuffix [for]="bankCreditDate"></mat-datepicker-toggle>
+                                <mat-datepicker #bankCreditDate></mat-datepicker>
+                            </mat-form-field>
+                        </div>        
+                        <!-- </nb-card-body>
+                        </nb-card> -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div *ngIf="cheque">
+                            <mat-form-field>
+                                Cheque Number
+                                <input matInput [(ngModel)]="receipt.chequeNumber">
+                            </mat-form-field>
+                            <br>
+                            <mat-form-field>
+                                Bank Name
+                                <input matInput [(ngModel)]="receipt.bankName">
+                            </mat-form-field>
+                            <br>
+                            <mat-form-field>
+                                Cheque Date
+                                <input matInput [(ngModel)]="receipt.chequeDate" [matDatepicker]="chequeDate" (click)="chequeDate.open()">
+                                <mat-datepicker-toggle matSuffix [for]="chequeDate"></mat-datepicker-toggle>
+                                <mat-datepicker #chequeDate></mat-datepicker>
+                            </mat-form-field>                        
+                        </div>
+                        <div *ngIf="neft">
+                            <mat-form-field>
+                                Transaction Number
+                                <input matInput [(ngModel)]="receipt.transactionNumber">
+                            </mat-form-field>
+                            <br>
+                            <mat-form-field>
+                                Bank Name
+                                <input matInput [(ngModel)]="receipt.neftBankName">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
+<div class="row ptb-10">
+    <div class="col-lg-12">
+        <button mat-raised-button color="primary" (click)="saveReceipt()">Save</button>
+        <!-- <button mat-raised-button color="warn"(click)="closeDialog()">Close</button> -->
+    </div>
+</div>

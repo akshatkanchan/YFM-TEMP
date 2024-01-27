@@ -1,0 +1,410 @@
+<div id="fab-dismiss" 
+  *ngIf="fabTogglerState==='active'" 
+  (click)="onToggleFab()">
+</div>
+<div>
+  <nb-card>
+    <nb-card-header>
+      Invoices        
+    </nb-card-header>      
+    <nb-card-body>
+      <mat-tab-group mat-stretch-tabs (selectedTabChange)="tabClick($event)">
+        <mat-tab *ngIf="permission.viewCabInvoices" label="Cab Bookings">
+          <div align="center">
+            <mat-form-field class="filter-field">
+              <input matInput  placeholder="Filter"  [(ngModel)]="searchTermInvoice" (keyup)="searchInvoice($event.target.value)">
+            </mat-form-field>
+        
+            <button mat-icon-button><mat-icon class="filter-icon">search</mat-icon></button>
+            <button mat-icon-button (click)="clear()"><mat-icon class="filter-icon">highlight_off</mat-icon></button>
+          </div>
+          <div>
+            <mat-table #sort1='matSort' [dataSource]="dataSource" matSort>
+        
+              <!-- Date Column -->
+              <!-- <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Name</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+              </ng-container> -->
+  
+              <ng-container matColumnDef="invoiceNumber">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Number</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.invoiceNumber}} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="invoiceDate">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Date</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.invoiceDate | date: 'dd-MM-yyyy'}} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="invoicePeriodFrom">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Period From</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.invoicePeriodFrom}} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="invoicePeriodTo">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Period To</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.invoicePeriodTo}} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="discountAmount">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Discount Amount</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.discountAmount}} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="taxAmount">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Tax Amount</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.taxAmount}} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="totalAmount">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Total Amount</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.totalAmount}} </mat-cell>
+              </ng-container>
+  
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Status</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <mat-chip-list>
+                    <mat-chip class="matChip" color="primary" selected="true">{{element.status}}</mat-chip>
+                  </mat-chip-list> 
+                </mat-cell>              
+              </ng-container>
+
+              <ng-container matColumnDef="stats">                
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <mat-icon *ngIf="element.isDownloaded" [matTooltip]="Downloaded">save</mat-icon>
+                  <mat-icon *ngIf="element.isPrinted" [matTooltip]="Printed">print</mat-icon>
+                  <mat-icon *ngIf="element.isMailed" [matTooltip]="Mailed">mail</mat-icon>
+                </mat-cell>              
+              </ng-container>
+  
+              <ng-container matColumnDef="Options">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Options</mat-header-cell>
+                <mat-cell *matCellDef="let element ;let row" (click)="$event.stopPropagation()">   
+                  <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>                 
+                  <mat-menu #menu="matMenu">
+                    <!-- <button *ngIf="permission.downloadInvoices" mat-menu-item (click)="viewInvoice(row)">View/Print</button>                       -->
+                    <button *ngIf="permission.emailCabInvoices" mat-menu-item (click)="mailInvoice(row)">Mail</button>
+                  </mat-menu>
+                </mat-cell>
+              </ng-container>
+                  
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="viewInvoice(row)"></mat-row>
+  
+            </mat-table>
+    
+            <mat-paginator [length]="lengthInvoice"
+              [pageSize]="pageSizeInvoice"
+              [pageSizeOptions]="pageSizeOptionsInvoice"></mat-paginator>
+      
+          </div>
+        </mat-tab>
+        <mat-tab *ngIf="permission.viewHotelInvoices" label="Hotels">
+          <div align="center">
+            <mat-form-field class="filter-field">
+              <input matInput  placeholder="Filter"  [(ngModel)]="searchTermHotels" (keyup)="searchHotelInvoice($event.target.value)">
+            </mat-form-field>
+      
+            <button mat-icon-button><mat-icon class="filter-icon">search</mat-icon></button>
+            <button mat-icon-button (click)="clear()"><mat-icon class="filter-icon">highlight_off</mat-icon></button>
+          </div>
+          <div>
+            <mat-table #sort2='matSort' [dataSource]="dataSourceHotels" matSort>
+      
+              <!-- Date Column -->
+              <!-- <ng-container matColumnDef="name">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Name</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+              </ng-container> -->
+  
+              <ng-container matColumnDef="invoiceNumber">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Number</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.invoiceNumber}} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="invoiceDate">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Date</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.invoiceDate}} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="invoicePeriodFrom">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Period From</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.invoicePeriodFrom}} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="invoicePeriodTo">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Period To</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.invoicePeriodTo}} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="discountAmount">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Discount Amount</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.discountAmount}} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="taxAmount">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Tax Amount</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.taxAmount}} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="totalAmount">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Total Amount</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.totalAmount}} </mat-cell>
+              </ng-container>
+  
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Status</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <mat-chip-list>
+                    <mat-chip class="matChip" color="primary" selected="true">{{element.status}}</mat-chip>
+                  </mat-chip-list> 
+                </mat-cell>              
+              </ng-container>
+
+              <ng-container matColumnDef="stats">                
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <mat-icon *ngIf="element.isDownloaded" [matTooltip]="Downloaded">save</mat-icon>
+                  <mat-icon *ngIf="element.isPrinted" [matTooltip]="Printed">print</mat-icon>
+                  <mat-icon *ngIf="element.isMailed" [matTooltip]="Mailed">mail</mat-icon>
+                </mat-cell>              
+              </ng-container>
+  
+              <ng-container matColumnDef="Options">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Options</mat-header-cell>
+                <mat-cell *matCellDef="let element ;let row" (click)="$event.stopPropagation()">
+                  <button mat-icon-button [matMenuTriggerFor]="hotelmenu"><mat-icon>more_vert</mat-icon></button>                 
+                  <mat-menu #hotelmenu="matMenu">
+                    <!-- <button *ngIf="permission.downloadInvoices" mat-menu-item (click)="viewHotelInvoice(row)">View/Print</button>                       -->
+                    <button *ngIf="permission.emailHotelInvoices" (click)="mailHotelInvoice(row)" mat-menu-item>Mail</button>
+                  </mat-menu>
+                </mat-cell>
+              </ng-container>
+              
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="viewHotelInvoice(row)"></mat-row>
+  
+            </mat-table>
+  
+            <mat-paginator [length]="lengthHotels"
+              [pageSize]="pageSizeHotels"
+              [pageSizeOptions]="pageSizeOptionsHotels"></mat-paginator>
+    
+          </div>
+        </mat-tab>
+        <mat-tab *ngIf="permission.viewFlightInvoices" label="Flights">
+
+          <div align="center">
+            <mat-form-field class="filter-field">
+              <input matInput  placeholder="Filter"  [(ngModel)]="searchTermFlights" (keyup)="searchFlightInvoice($event.target.value)">
+            </mat-form-field>
+    
+            <button mat-icon-button><mat-icon class="filter-icon">search</mat-icon></button>
+            <button mat-icon-button (click)="clear()"><mat-icon class="filter-icon">highlight_off</mat-icon></button>
+          </div>
+          <div>
+            <mat-table #sort3='matSort' [dataSource]="dataSourceFlights" matSort>
+    
+              <!-- Date Column -->
+              <!-- <ng-container matColumnDef="name">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Name</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+              </ng-container> -->
+  
+              <ng-container matColumnDef="invoiceNumber">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Number</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.invoiceNumber}} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="invoiceDate">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Date</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.invoiceDate}} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="invoicePeriodFrom">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Period From</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.invoicePeriodFrom}} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="invoicePeriodTo">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Period To</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.invoicePeriodTo}} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="discountAmount">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Discount Amount</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.discountAmount}} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="taxAmount">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Tax Amount</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.taxAmount}} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="totalAmount">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Total Amount</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.totalAmount}} </mat-cell>
+              </ng-container>
+  
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Status</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <mat-chip-list>
+                    <mat-chip class="matChip" color="primary" selected="true">{{element.status}}</mat-chip>
+                  </mat-chip-list> 
+                </mat-cell>              
+              </ng-container>
+
+              <ng-container matColumnDef="stats">           
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>     
+                <mat-cell *matCellDef="let element">
+                  <mat-icon *ngIf="element.isDownloaded" [matTooltip]="Downloaded">save</mat-icon>
+                  <mat-icon *ngIf="element.isPrinted" [matTooltip]="Printed">print</mat-icon>
+                  <mat-icon *ngIf="element.isMailed" [matTooltip]="Mailed">mail</mat-icon>
+                </mat-cell>              
+              </ng-container>
+  
+              <ng-container matColumnDef="Options">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Options</mat-header-cell>
+                <mat-cell *matCellDef="let element ;let row" (click)="$event.stopPropagation()">
+                  <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>                 
+                  <mat-menu #menu="matMenu">
+                    <!-- <button *ngIf="permission.downloadInvoices" mat-menu-item (click)="viewFlightInvoice(row)">View/Print</button>                       -->
+                    <button *ngIf="permission.emailFlightInvoices" (click)="mailFlightInvoice(row)" mat-menu-item>Mail</button>
+                  </mat-menu>
+                </mat-cell>
+              </ng-container>
+              
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="viewFlightInvoice(row)"></mat-row>
+  
+            </mat-table>
+  
+            <mat-paginator [length]="lengthFlights"
+              [pageSize]="pageSizeFlights"
+              [pageSizeOptions]="pageSizeOptionsFlights"></mat-paginator>  
+          </div>
+        </mat-tab>
+        <mat-tab *ngIf="permission.viewVisaInvoices" label="Visa">
+
+          <div align="center">
+            <mat-form-field class="filter-field">
+              <input matInput  placeholder="Filter"  [(ngModel)]="searchTermVisa" (keyup)="searchVisaInvoice($event.target.value)">
+            </mat-form-field>
+    
+            <button mat-icon-button><mat-icon class="filter-icon">search</mat-icon></button>
+            <button mat-icon-button (click)="clear()"><mat-icon class="filter-icon">highlight_off</mat-icon></button>
+          </div>
+          <div>
+            <mat-table #sort4='matSort' [dataSource]="dataSourceVisa" matSort>
+    
+              <!-- Date Column -->
+              <!-- <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Name</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+              </ng-container> -->
+  
+              <ng-container matColumnDef="invoiceNumber">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Number</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.invoiceNumber}} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="invoiceDate">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Date</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.invoiceDate | date:'dd-MM-yyyy'}} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="invoicePeriodFrom">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Period From</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.invoicePeriodFrom | date:'dd-MM-yyyy'}} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="invoicePeriodTo">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Period To</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.invoicePeriodTo | date:'dd-MM-yyyy'}} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="discountAmount">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Discount Amount</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.discountAmount}} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="taxAmount">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Tax Amount</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.taxAmount}} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="totalAmount">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Total Amount</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.totalAmount}} </mat-cell>
+              </ng-container>
+  
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Status</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <mat-chip-list>
+                    <mat-chip class="matChip" color="primary" selected="true">{{element.status}}</mat-chip>
+                  </mat-chip-list> 
+                </mat-cell>              
+              </ng-container>
+
+              <ng-container matColumnDef="stats">                
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <mat-icon *ngIf="element.isDownloaded" [matTooltip]="Downloaded">save</mat-icon>
+                  <mat-icon *ngIf="element.isPrinted" [matTooltip]="Printed">print</mat-icon>
+                  <mat-icon *ngIf="element.isMailed" [matTooltip]="Mailed">mail</mat-icon>
+                </mat-cell>              
+              </ng-container>
+  
+              <ng-container matColumnDef="Options">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Options</mat-header-cell>
+                <mat-cell *matCellDef="let element ;let row" (click)="$event.stopPropagation()">
+                  <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>                 
+                  <mat-menu #menu="matMenu">
+                    <!-- <button *ngIf="permission.downloadInvoices" mat-menu-item (click)="viewVisaInvoice(row)">View/Print</button>                       -->
+                    <button *ngIf="permission.emailVisaInvoices" (click)="mailVisaInvoice(row)" mat-menu-item>Mail</button>
+                  </mat-menu>
+                </mat-cell>
+              </ng-container>
+              
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="viewVisaInvoice(row)"></mat-row>
+  
+            </mat-table>
+  
+            <mat-paginator [length]="lengthVisa"
+              [pageSize]="pageSizeVisa"
+              [pageSizeOptions]="pageSizeOptionsVisa"></mat-paginator>  
+          </div>
+        </mat-tab>
+
+      </mat-tab-group>
+
+      <div class="col-lg-12" align="right">
+        <div class="fab-container">
+          <button mat-fab class="fab-toggler"
+            (click)="onToggleFab()">
+            <i class="material-icons" [@fabToggler]="{value: fabTogglerState}">add</i> <!-- Animation here -->
+          </button>
+          <div [@speedDialStagger]="buttons.length"> <!-- and here -->
+            <button *ngFor="let btn of buttons; let i = index"
+              mat-mini-fab
+              class="fab-secondary"
+              color="secondary"
+              (click)="openInvoice(i)">
+              <i class="material-icons" matTooltipPosition="left" [matTooltip]="btn.tooltip">{{btn.icon}}</i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</div>

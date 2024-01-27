@@ -1,0 +1,14 @@
+{
+    "type": "service_account",
+    "project_id": "yourfleetman-bd7ec",
+    "private_key_id": "6e936180ad8526d8f90530a30fa78a1f7221de1e",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDdlpZDZN2BTdoe\nkbCtwfCk3saQaL4NVNgpshI3qNJ6Zx/JJ1M9AJgaCo4aSvovyxmAeszfR/SYqhmc\nX7sRuJFFhUC+e3hbCIhJFmTOzoi3Rc1nOrmrLYA86jmkBnPpuE1m7Ab2cd65DuJm\nPepVDW0AvYquqx+SxnLsi4mSI63p0pO3g8vzZ3nwHc/ZuETylSWUzsu9xJ5ptTK5\ndaN+NofNBwsQQ5d6LCvznXdHmaXGNGJBWLkhm+D5cwgYu5QV+U2e/etP3NOjUzbB\nsqyF4eOQUAThWHnPuZsfLMegKG8UU3g+/runw0IsRrCNmosn3GbQE5DJ9snUF5d3\n51Qaox/HAgMBAAECggEAHxO0NfYleAcFJO27Nlimzq33xzUJbTE4XSX+QWl0liTJ\nuRps0CIPMvJxWjqoZUo6D2IpmCmtTOPo/PISzbocQFXJ7he+73V+N6c5CCVrLdj6\nT79VXtkzd6zvMek9xHT2q2Ka2gwU99CglppEYnKkQPWpnN70afoEZYHEZNyK0un/\nacUuNBPYB1w8ho5dk/3nnKhhNdwC0xpiRPWUuH1j9cx5csjyIeBdq75jSi/tR5eS\n2tM5gSim7nVwcglvl82APpzU8/OdVIWDrUo0/mbur6HxiIawylGw/X4WFBiVX3fz\nlRRAKRlIMnn3N9zoGBY4QCwXjTdCEHTMIsieOP/M8QKBgQDzTY2iV5o6WMycJHNf\n2Cf0PDh5yu3oLAYwyqW8/7O1oIwt0XO3R6SKiew9FlLC2fn2R2gWADsfYrNamvR0\n9FXYZpW6nngjomzPfI33XzEQn1Ew1F9VbeAEafw2rGT+boCN7QUjVM1kRdJYsVmi\ngjuj/Ua7xHvjVMMRjIsySiqOkwKBgQDpJu6uJo+LExElEqR2OPLSGBAYGhhU21TN\nVC4f2XR+C5Cg61Y/OaVocUj5oiNE0+rOsUMD5bICGd3+NBC3vweFTBixddRIr6i7\nmmSvkE8M84pRQvte6xMAloDsPz5NWR5r6o3+q++vQ3oImPC2vr31nXsyAwGrg50u\nwNYUI+W2fQKBgQCBzVpGxh3OCxn+I6Q5+gQ21Pn8YDtUpkgXN8X8cx7ZQ3IF77yg\nh2RNVQ/n90ToF4q3zZjGRBFGyU2OhSTuUHyMGw6+pVTLDhinCXhkBTEUASs7tdG2\nrgvZzwFz2b130FRdY5peIxwA5w81qkh73qca8kEOY+EEg3AeqLCKf+78aQKBgQCk\nw9ikxadnVyAknNoQmgovosWs4rQTM7ToLfcyltAWS0H4FpeqsqhL+NLjZ0uZVlF3\npBmB5Y84oOMaw9yUnbFI6BADSQuuGkUZ3vAMieTzeCBlcPqHh4S0Q6f0THVQ4Av5\no5aZRRRrPTo+XSavXniL3LC1FR7XAHnSEoC3Vu79WQKBgQCHf1w1k2TOMkO1JIEP\npTBhyetCGsZNKEgnnCOrvY3Ap6+S8JVvHpNrbt3xX6oXkFX9mKp0S0m1RuMN07yz\nGjzNr7dC/f5LnatnogGI4MUC8dTYawcnXcvqEm0Qm1wAkx/zeTZ6ROs9P3GmJFyT\nQIiU6Vq/3pwXFTx9gELC7hF1uA==\n-----END PRIVATE KEY-----\n",
+    "client_email": "firebase-adminsdk-vv97n@yourfleetman-bd7ec.iam.gserviceaccount.com",
+    "client_id": "116400351611370149254",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-vv97n%40yourfleetman-bd7ec.iam.gserviceaccount.com"
+  }
+  
+  

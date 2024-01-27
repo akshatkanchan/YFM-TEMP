@@ -1,0 +1,234 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>
+        Close Duty
+      </nb-card-header>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-body>
+        <table cellpadding="4">
+          <tr>
+            <td>
+              <b>Customer Name:</b>
+            </td>
+            <td>{{details.cname}}</td>
+            <td>
+              <b>Passenger:</b>
+            </td>
+            <td>{{details.passenger}}</td>
+          </tr>
+          <tr>
+            <td>
+              <b>Vehicle:</b>
+            </td>
+            <td>{{details.vehicle}}</td>
+            <td>
+              <b>Price:</b>
+            </td>
+            <td>{{details.price}}</td>
+          </tr>
+          <tr>
+            <td>
+              <b>Driver:</b>
+            </td>
+            <td>{{details.driver}}</td>
+          </tr>
+          <br>
+        </table>
+        <mat-divider></mat-divider>
+        <table>
+          <tr>
+            <td>
+              <b>Duty Type:</b>
+            </td>
+            <td>
+              <mat-form-field>
+                <input type="text" placeholder="Pick one" matInput [ngModel]="details.dutyType" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let items of dutyType" [value]="items.name">
+                    {{items.name}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </td>  
+          </tr>
+          <tr>
+            <td>
+             <b>Per Extra KM Rate:</b>
+            </td>
+            <td>
+              <b>Extra HR Rate:</b>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field>
+                <input matInput [(ngModel)]="closeDuty.extraHrRate">
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field>
+                <input matInput [(ngModel)]="closeDuty.extraKmRate">
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td><b>Price:</b></td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field>
+                <input matInput [(ngModel)]="closeDuty.finalPrice">
+              </mat-form-field>
+            </td>
+            <td>
+              <button mat-raised-button color="primary" (click)="calculatePrice()">
+                Get Price
+              </button>
+            </td>
+          </tr>
+        </table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-body>
+        <table>
+          <tr>
+            <td><b>Duty Start Date:</b></td>
+            <td><b>Duty Start Time:</b></td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field>
+                <input name="startDate" [(ngModel)]="details.startDate" matInput [matDatepicker]="startDate" [disabled]>
+                <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+                <mat-datepicker #startDate></mat-datepicker>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field>
+                <input type="time" [(ngModel)]="closeDuty.startTime" matInput>
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td><b>Duty End Date:</b></td>
+            <td><b>Duty End Time:</b></td>
+          </tr> 
+          <tr>
+            <td>
+              <mat-form-field>
+                <input name="endDate" [(ngModel)]="closeDuty.endDate" matInput [matDatepicker]="endDate" (click)="endDate.open()" readonly>
+                <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                <mat-datepicker #endDate></mat-datepicker>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field>
+                <input matInput type="time" [(ngModel)]="closeDuty.endTime">
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td><b>Start KM:</b></td>
+            <td><b>End KM:</b></td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field>
+                <input matInput [(ngModel)]="closeDuty.startKm">
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field>
+                <input matInput [(ngModel)]="closeDuty.endKm">
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <b>Driver Allowance:</b>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field>
+                <input matInput [(ngModel)]="driverAllowanceAmount" readonly>
+              </mat-form-field>              
+            </td>
+          </tr>
+        </table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-body>
+        <form [formGroup]="myForm">
+          <div formArrayName="rows">
+            <table style="width:100%">
+              <tr>
+                <th align="center">Sr. </th>
+                <th align="center">Items</th>
+                <th align="center">Amount</th>
+                <th align="center">Image</th>
+                <th>X</th>
+              </tr>
+              <tr *ngFor="let aRow of invoiceForms.controls; let i=index" [formGroupName]="i">                    
+                <td>{{i+1}}</td>
+                <td>
+                  <mat-form-field>
+                    <input matInput formControlName="name">
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field>
+                    <input matInput formControlName="charges">
+                  </mat-form-field>
+                </td>
+                <td>
+                  <button (click)="closeDutyImages.click()" mat-icon-button color="primary" matTooltip="Upload"><mat-icon>cloud_upload</mat-icon></button>
+                  <input hidden type="file" accept="images/*" formControlName="fileName" #closeDutyImages (change)="imageSelect($event,aRow,i)">
+                  <img alt="" *ngIf="imgUrl[i]!=null" style="padding-left:10px;" [src]="imgUrl[i]" height="100px" width="100px" />
+                </td>
+                <td>
+                  <button mat-icon-button color="primary" (click)="deleteRow(i)"><mat-icon>clear</mat-icon></button>
+                </td>
+              </tr>
+            </table>  
+            <button mat-raised-button color="primary" style="margin-top:15px;" (click)="addRow()">Add Row</button>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-body>
+        <tr><b>Remarks:</b></tr>
+        <td>
+          <mat-form-field>
+            <input matInput>
+          </mat-form-field>
+        </td>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row ptb-10">
+  <div class="col-lg-12 col-12">
+    <button mat-raised-button color="primary" (click)="close()">Close Duty</button>
+    <button mat-raised-button color="warn" (click)="closeDialog()">Close</button>
+  </div>
+</div>

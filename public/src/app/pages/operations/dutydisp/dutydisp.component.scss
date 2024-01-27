@@ -1,0 +1,18 @@
+@keyframes blink{
+    0%{opacity: 1;}
+    50%{opacity: .6;}
+    100%{opacity: 1;}
+}
+
+.mat-column-dropAddress
+{
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mat-column-startDate
+{
+  white-space: nowrap;
+}

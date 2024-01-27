@@ -1,0 +1,96 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>
+        Visa
+      </nb-card-header>
+      <nb-card-body>
+        <div class="container">
+          <div class="row ptb-10">
+            <div class="col-lg-8 col-12">
+              <b>Customer Name:</b> {{visaDetails.cname}}
+            </div>
+          </div>
+          <div class="row ptb-10">
+            <div class="col-lg-4 col-12">
+              <b>Name (Booked By):</b> {{visaDetails.bookBy}}
+            </div>
+            <div class="col-lg-4 col-12">
+              <b>Phone No (Booked By):</b> {{visaDetails.bookByNo}}
+            </div>
+            <div class="col-lg-4 col-12">
+              <b>Email Id (Booked By):</b> {{visaDetails.bookByEmail}}
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+    <nb-card>
+      <nb-card-header>VISA Details</nb-card-header>
+      <nb-card-body>
+        <div class="row ptb-10">
+          <div class="col-lg-3 col-12">
+            <b>Location:</b> {{visaDetails.location}}
+          </div>
+          <div class="col-lg-3 col-12">
+            <b>VISA Type:</b> {{visaDetails.visaType}}
+          </div>
+          <div class="col-lg-3 col-12">
+            <b>From:</b> {{visaDetails.from | date:'dd-MM-yyyy'}}
+          </div>
+          <div class="col-lg-3 col-12">
+            <b>To:</b> {{visaDetails.to | date:'dd-MM-yyyy'}}
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+    <nb-card>
+      <nb-card-header>Travellers</nb-card-header>
+      <nb-card-body>
+        <div class="row w-100">
+          <table class="table table-bordered">
+            <thead>
+              <th>Sr No.</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Email</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let element of travellers; let i=index">
+                <td>
+                  {{i+1}}
+                </td>
+                <td>
+                  {{element.name}}
+                </td>
+                <td>
+                  {{element.phone}}
+                </td>
+                <td>
+                  {{element.email}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row ptb-10">
+          <div class="col-lg-6 col-12">
+            <b>Visa Cost:</b> {{visaDetails.visaCost}}
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+    <div style="bottom: 5%" *ngIf="logs.length>0">
+      <ul>
+        <li *ngFor="let element of logs">
+          {{element.message}}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <button color="warn" mat-raised-button (click)="closeDialog()">Close</button>
+  </div>
+</div>

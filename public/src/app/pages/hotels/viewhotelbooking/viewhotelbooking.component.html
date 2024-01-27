@@ -1,0 +1,216 @@
+<div>
+  <div class="row">
+    <div class="col-lg-6 col-12">
+      <nb-card>
+        <nb-card-header>Booking Details</nb-card-header>
+        <nb-card-body>
+          <div class="container">            
+            <div class="row pb-10">
+              <div class="col-lg-6 col-12">
+                <b>Billed To:</b> {{bookHotelData.customerName}}
+              </div>
+              <div class="col-lg-6 col-12">                
+                <b>Name (Booked By):</b> {{bookHotelData.bookByName}}
+              </div>
+            </div>
+            <div class="row pb-10">
+              <div class="col-lg-6 col-12">                
+                <b>Phone No (Billed To):</b> {{bookHotelData.billedToNo}}
+              </div>
+              <div class="col-lg-6 col-12">                
+                <b>Email Id (Billed To):</b> {{bookHotelData.billedToEmail}}                                  
+              </div>
+            </div>
+            <div class="row pb-10">
+              <div class="col-lg-6 col-12">                
+                <b>Phone No (Booked By):</b> {{bookHotelData.bookByNo}}                                  
+              </div>
+              <div class="col-lg-6 col-12">
+                <b>Email Id (Booked By):</b> {{bookHotelData.bookByEmail}}                  
+              </div>
+            </div>
+            <div class="row pb-10">
+              <div class="col-lg-6 col-12">                
+                <b>Room:</b> {{bookHotelData.room}}                  
+              </div>
+              <div class="col-lg-6 col-12">                
+                <b>Occupancy:</b> {{bookHotelData.occupancy}}              
+              </div>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-lg-6 col-12">
+      <nb-card>
+        <nb-card-header>Guest Details</nb-card-header>
+        <nb-card-body>
+          <div class="container">
+            <div class="row pb-10">
+              <div class="col-lg-6 col-12">                
+                <b>Guest Name:</b> {{bookHotelData.guestName}}                  
+              </div>
+              <div class="col-lg-6 col-12">                
+                <b>Conf. No.:</b> {{bookHotelData.confNo}}                
+              </div>
+            </div>
+            <div class="row pb-10">
+              <div class="col-lg-6 col-12">
+                <b>Mobile No.:</b> {{bookHotelData.guestMobile}}                  
+              </div>
+              <div class="col-lg-6 col-12">                
+                <b>Email:</b> {{bookHotelData.guestEmail}}                  
+              </div>
+            </div>
+            <div class="row pb-10">
+              <div class="col-lg-6 col-12">                
+                <b>Check In Date:</b> {{bookHotelData.checkInDate | date:'dd-MM-yyyy'}}                  
+              </div>
+              <div class="col-lg-6 col-12">                
+                <b>Check Out Date:</b> {{bookHotelData.checkOutDate | date:'dd-MM-yyyy'}}
+              </div>
+            </div>
+            <div class="row pb-10">
+              <div class="col-lg-6 col-12">                  
+                <b>Check-in time:</b> {{bookHotelData.checkInTime | date:'hh:mm a'}}  
+              </div>
+              <div class="col-lg-6 col-12">                  
+                <b>Check-out time:</b> {{bookHotelData.checkOutTime | date:'hh:mm a'}}
+              </div>
+            </div>
+            <div class="row pb-10">
+              <div class="col-lg-6 col-12">                
+                <b>Nights:</b> {{bookHotelData.nights}}                
+              </div>
+              <div class="col-lg-6 col-12">                
+                <b>No. of People:</b> {{bookHotelData.noOfPeople}}                  
+              </div>
+            </div>            
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 col-12">
+      <nb-card>      
+        <nb-card-body>
+          <div class="container">
+            <div class="row pb-10">
+              <div class="col-lg-4 col-12">                
+                <b>Inclusion:</b> {{bookHotelData.inclusion}}                  
+              </div>
+              <div class="col-lg-4 col-12">                
+                <b>Rate:</b> {{bookHotelData.rate}}                  
+              </div>
+              <div class="col-lg-4 col-12">                
+                <b>Amount:</b> {{bookHotelData.amount}}                  
+              </div>
+            </div>
+            <div class="row pb-10">
+              <div class="col-lg-4 col-12">                
+                <b>Payment Mode:</b> {{bookHotelData.paymentMode}}                  
+              </div>
+              <div class="col-lg-4 col-12"></div>
+              <div class="col-lg-4 col-12">                
+                <b>Taxes:</b> {{bookHotelData.taxes}}                  
+              </div>
+            </div>
+            <div class="row pb-10">
+              <div class="col-lg-4 col-12">              
+                <b>Hotel Bill No.:</b> {{bookHotelData.hotelBillNo}}                  
+              </div>
+              <div class="col-lg-4 col-12">                
+                <b>Hotel Amount:</b> {{bookHotelData.hotelAmount}}                  
+              </div>
+              <div class="col-lg-4 col-12">                
+                <b>Total:</b> {{bookHotelData.total}}                  
+              </div>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 col-12">
+      <nb-card>
+        <nb-card-header>Internal</nb-card-header>
+        <nb-card-body>
+          <div class="container">
+            <div class="row pb-10">
+              <div class="col-lg-4 col-12">              
+                <b>Inclusion:</b> {{bookHotelData.intInclusion}}              
+              </div>
+              <div class="col-lg-4 col-12">                
+                <b>Hotel Rate:</b> {{bookHotelData.hotelRate}}                  
+              </div>
+              <div class="col-lg-4 col-12">                
+                <b>Amount:</b> {{bookHotelData.intAmount}}                
+              </div>
+            </div>
+            <div class="row pb-10">
+              <div class="col-lg-4 col-12">                
+                <b>Agents:</b> {{bookHotelData.agents}}                  
+              </div>
+              <div class="col-lg-4 col-12">                
+                <b>Commission:</b> {{bookHotelData.commission}}                
+              </div>
+              <div class="col-lg-4 col-12">                
+                <b>Taxes:</b> {{bookHotelData.intTaxes}}                  
+              </div>
+            </div>
+            <div class="row pb-10">
+              <div class="col-lg-4 col-12"></div>
+              <div class="col-lg-4 col-12"></div>
+              <div class="col-lg-4 col-12">                
+                <b>Total:</b> {{bookHotelData.intTotal}}                  
+              </div>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+  <div class="row" *ngIf="additionalCharges.length > 0">
+    <div class="col-lg-12 col-12">
+      <nb-card>
+        <nb-card-header>Additional Charges</nb-card-header>
+        <nb-card-body>                    
+          <div class="container">
+            <div class="row ptb-10">
+              <table class="table table-bordered">
+                <thead>
+                  <th>Description</th>
+                  <th>Quantity</th>
+                  <th>Rate</th>
+                  <th>Charges</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let element of additionalCharges">
+                    <td>{{element.description}}</td>
+                    <td>{{element.quantity}}</td>
+                    <td>{{element.additionalChargesRate}}</td>
+                    <td>{{element.charges}}</td>
+                  </tr>                  
+                </tbody>
+              </table>              
+            </div>            
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <div style="bottom: 5%" *ngIf="logs.length>0">
+        <ul>
+          <li *ngFor="let element of logs">
+            {{element.message}}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row ptb-10">
+    <div class="col-lg-12 col-12">
+      <button mat-raised-button color="warn" (click)="closeDialog()">Close</button>
+    </div>
+  </div>
+</div>

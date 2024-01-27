@@ -1,0 +1,1009 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>
+        Invoice
+      </nb-card-header>
+      <nb-card-body>
+        <mat-horizontal-stepper #stepper>
+          <mat-step label="Email To:">
+              <div class="row">
+                  <div class="col-lg-12 col-12">
+                    <b>To:</b>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6 col-12">
+                    <mat-checkbox [(ngModel)]="customer">
+                      Customer: <br> {{customerDetails.name}} &nbsp;
+                    </mat-checkbox>
+                  </div>
+                  <div class="col-lg-6 col-12">
+                    <mat-form-field>
+                      <input matInput [(ngModel)]="customerDetails.email" readonly>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6 col-12">
+                    <mat-checkbox [(ngModel)]="bookBy">
+                      Booked By: <br> {{bookedBy.name}} &nbsp;
+                    </mat-checkbox>
+                  </div>
+                  <div class="col-lg-6 col-12">
+                    <mat-form-field>                      
+                      <input matInput [(ngModel)]="bookedBy.email" readonly>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6 col-12">
+                    Custom:
+                  </div>
+                  <div class="col-lg-6 col-12">
+                    <mat-form-field>
+                      <input [(ngModel)]="customEmail" matInput>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-12">
+                      <mat-checkbox [(ngModel)]="singleMail">
+                        Send a single email to selected email IDs 
+                      </mat-checkbox>            
+                    </div>
+                </div>
+                <div class="row ptb-10">
+                  <div class="col-lg-12">
+                    <button style="float:right;" mat-button matStepperNext>Next</button>
+                  </div>
+                </div>
+          </mat-step>
+          <mat-step label="Attachments">
+              <div class="row">
+                  <div class="col-lg-12 col-12">
+                    <h5>Attachments:</h5><br>
+                    <mat-checkbox (change)="mailDocs('Invoice', $event)">Invoice</mat-checkbox><br>
+                    <mat-checkbox (change)="mailDocs('Duty Summary', $event)">Duty Summary</mat-checkbox><br>
+                  </div>
+                </div>
+                <div class="row" *ngFor="let element of extras; let i=index">
+                  <div class="col-lg-6 col-12" style="margin:auto;">
+                    <mat-checkbox [value]="element.name" (change)="mailImages(element, $event , i)">{{element.name}}<br></mat-checkbox>
+                  </div>
+                  <div class="col-lg-6 col-12">
+                    <img alt="" *ngIf="element.fileName != ''" [src]="imgUrl[i]"  width="150px" height="150px">
+                  </div>
+                </div> 
+                <div class="row ptb-10">
+                    <div class="col-lg-12">
+                      <button style="float:left;" mat-button matStepperPrevious>Back</button>
+                      <button style="float:right;" mat-button matStepperNext>Next</button>
+                  </div>
+                </div>
+          </mat-step>
+          <mat-step label="Mail">
+              <div class="row">
+                  <div id="template" #template>
+                    <!DOCTYPE html>
+                    <html lang="en">          
+                      <head>
+                        <title></title>
+                        <meta charset="utf-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1">
+                        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                        <style type="text/css">
+                          @font-face {font-family: 'sofia';  src: url('http://media.firebox.com/fonts/sofiapro_regular_macroman/SofiaProRegular-webfont.woff') format('woff');  mso-font-alt: 'Arial';  font-weight: normal !important;  font-style: normal !important;}
+                          body,table,td,a{
+                            -webkit-text-size-adjust:100%;
+                            -ms-text-size-adjust:100%;
+                            -webkit-font-smoothing: antialiased;
+                          }
+                          table,td{
+                            mso-table-lspace:0pt;
+                            mso-table-rspace:0pt;
+                          }
+                          img{
+                            -ms-interpolation-mode:bicubic;
+                          }
+                          body{
+                            margin:0;
+                            padding:0;
+                          }
+                          img{
+                            border:0;
+                            height:auto;
+                            line-height:100%;
+                            outline:none;
+                            text-decoration:none;
+                          }
+                          table{
+                            border-collapse:collapse !important;
+                          }
+                          body{
+                            height:100% !important;
+                            margin:0;
+                            padding:0;
+                            width:100% !important;
+                          }
+                        
+                          .appleBody a{
+                            color: #0087DB !important;
+                            text-decoration: underline !important;;
+                          }
+                        
+                          .appleFooter a{
+                            color: #343434 !important;
+                            text-decoration: none;
+                          }
+                          td[class=btn]{
+                            width:50% !important;
+                          }
+                        
+                          span.preheader { display: none !important; }
+                          @media screen and (max-width: 525px){
+                            table[class=wrapper]{
+                              width:100% !important;
+                            }
+                          
+                          }	/*@media screen and (max-width: 525px){
+                            td[class=wrapper]{
+                              width:100% !important;
+                            }*/
+                          
+                          @media screen and (max-width: 525px){
+                            td[class=mobile-hide]{
+                              display:none;
+                            }
+                          
+                          }
+                          @media screen and (max-width: 525px){
+                            img[class=mobile-show]{
+                              display:block !important;
+                              height:60px !important;
+                              width:60px !important;
+                              overflow:auto !important;
+                            }
+                          
+                          }
+                          @media screen and (max-width: 525px){
+                            img[class=mobile-hide]{
+                              display:none !important;
+                            }
+                          
+                          }	
+                          @media screen and (max-width: 525px){
+                            img[class=img-max]{
+                              max-width:100% !important;
+                              width:100% !important;
+                              height:auto !important;
+                            }
+                          
+                          }	
+                          @media screen and (max-width: 525px){
+                            img[class=img-picture]{
+                              max-width:60% !important;
+                              width:60% !important;
+                              height:auto !important;
+                              float:right !important;
+                            }
+                          
+                          }	
+                          @media screen and (max-width: 525px){
+                            table[class=responsive-table]{
+                              width:100%!important;
+                            }
+                          
+                          }	
+                          @media screen and (max-width: 525px){
+                            table[class=responsive-column]{
+                              width:100%!important;
+                              padding:0px 0px 15px 0px !important;
+                              display:block !important;
+                            }
+                          }	
+                          @media screen and (max-width: 525px){
+                            td[class=top-padding]{
+                              padding: 0px 0px 10px 0px !important;
+                            }
+                          
+                          } 
+                          @media screen and (max-width: 525px){
+                            td[class=slice-padding]{
+                              padding:0px 15px 0px 15px !important;
+                            }
+                          
+                          }	
+                          @media screen and (max-width: 525px){
+                            td[class=smaller-padding]{
+                              padding:15px 0px 15px 0px !important;
+                            }
+                          
+                          }
+                          @media screen and (max-width: 525px){
+                            td[class=section-padding]{
+                              padding: 0px 10px 20px 10px !important;
+                            }
+                          }
+                          @media screen and (max-width: 525px){
+                            .height {
+                              height: 100% !important;
+                            }        
+                          }
+                          @media screen and (max-width: 525px){
+                            td[class=mobile-wrapper]{
+                              padding:0 !important;
+                            }
+                          
+                          }	
+                          @media screen and (max-width: 525px){
+                            td[class=title]{
+                              font-size: 16px !important;
+                            }
+                          
+                          }	
+                          @media screen and (max-width: 525px){
+                            td[class=btn]{
+                              width:80% !important;
+                            }
+                          
+                          }
+                        </style>
+                        <!--[if gte mso 9]>
+                          <style type="text/css">
+                            .img-max {
+                                width: 246px !important;
+                            }
+                          </style>
+                        <![endif]-->
+                      </head>
+                    
+                      <body style="margin: 0; padding: 0;">
+                        <div style="display:none !important; font-size:1px; color:#FFFFFF;">
+                          <!-- It&#039;s on the way to XXXXX, Really Good Emails -->
+                        </div>
+                        <!-- HEADER LOGO -->
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td bgcolor="#00C186" style="background-color: #00C186;">
+                              <div align="center" style="padding: 0px 20px 0px 20px;">
+                                <table boidrder="0" cellpadding="0" cellspacing="0" width="100%">
+                                  <tr>
+                                    <td bgcolor="#00C186" style="background-color: #00C186;">
+                                      <div align="center" style="padding: 0px 20px 0px 20px;">
+                                        <table border="0" cellpadding="0" cellspacing="0" width="600" class="wrapper" align="center">
+                                          <tr align="center">
+                                            <td style="padding: 10px 0px 10px 0px; text-align: center; width: 400px;" class="logo" align="center">
+                                              <a>
+                                                <!-- <img alt="header" src="http://media.firebox.com/i/nl/fb_light.png" width="130" border="0"> -->
+                                                <img alt="header" [src]="companyLogo" width="70" border="0">
+                                              </a>
+                                            </td>
+                                          </tr>
+                                          <!-- <tr align="center">
+                                            <td style="padding: 0px 0px 15px 0px; text-align: center; width: 400px;" class="logo" align="center"> -->
+                                              <!-- <img src="https://media.firebox.com/i/transactional/header-dispatch.png" width="100%" class="img-max"> -->
+                                            <!-- </td>
+                                          </tr> -->
+                                        </table>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </table>   
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td bgcolor="#F6F6F6" align="center" style="padding: 10px 15px 10px 15px;" class="top-padding">
+                              <table border="0" cellpadding="0" cellspacing="0" width="600" class="responsive-table">
+                                <!-- LONGER WIDTH THAN 600 FOR OUTLOOK 07,10,11 -->
+                                <tr>
+                                  <td>
+                                    <!-- TWO COLUMNS -->
+                                    <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                                      <tr>
+                                        <td valign="top" style="padding: 0;" class="mobile-wrapper">
+                                          <table cellpadding="0" cellspacing="0" border="0" width="600" align="left" class="responsive-table">
+                                            <tr>
+                                              <td valign="top" align="left">
+                                                <table cellpadding="0" cellspacing="0" border="0" class="responsive-table">
+                                                  <tr>
+                                                    <td align="center" bgcolor="#FFFFFF" valign="middle" width="600" class="wrapper" style="padding: 10px; border: 1px solid #EFEFEF;">
+                                                      <table cellspacing="0" cellpadding="0" style="width: 100%;" class="responsive-table" width="300" valign="top">
+                                                        <tr cellspacing="0" cellpadding="0">
+                                                          <td cellspacing="0" cellpadding="0" width="33%" style="text-align: left; font-family:'sofia', Helvetica, Arial, sans-serif; color: #888888 !important; font-size: 16px; line-height: 20px; font-weight: normal;">
+                                                            <p>
+                                                              PFA The copy of invoice for the following bookings
+                                                            </p>
+                                                          </td>
+                                                        </tr>
+                                                      </table>
+                                                    </td>
+                                                  </tr>
+                                                </table>
+                                              </td>
+                                            </tr>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                        <!-- ORDER CONFIRMATION -->
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" *ngFor="let element of bookings">
+                          <tr>
+                            <td bgcolor="#F6F6F6" align="center" style="padding: 0px 15px 10px 15px;" class="top-padding">
+                              <table border="0" cellpadding="0" cellspacing="0" width="600" class="responsive-table">
+                                <!-- LONGER WIDTH THAN 600 FOR OUTLOOK 07,10,11 -->
+                                <tr>
+                                  <td>
+                                    <!-- TWO COLUMNS -->
+                                    <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                                      <tr>
+                                        <td valign="top" style="padding: 0;" class="mobile-wrapper">
+                                          <table cellpadding="0" cellspacing="0" border="0" width="600" align="left" class="responsive-table">
+                                            <tr>
+                                              <td valign="top" align="left">
+                                                <table cellpadding="0" cellspacing="0" border="0" class="responsive-table">
+                                                  <tr>
+                                                    <td align="center" bgcolor="#FFFFFF" valign="middle" width="600" class="wrapper" style="padding: 10px; border: 1px solid #EFEFEF;">
+                                                      <table cellspacing="0" cellpadding="0" style="width: 100%;" class="responsive-table" width="300" valign="top">
+                                                        <tr cellspacing="0" cellpadding="0">                                                  
+                                                          <td cellspacing="0" cellpadding="0" width="33%" style="text-align: left; font-family:'sofia', Helvetica, Arial, sans-serif; color: #888888 !important; font-size: 16px; line-height: 20px; font-weight: normal;">
+                                                            <span style="color: #343434; text-transform: uppercase; font-size: 14px; -webkit-font-smoothing: auto; font-weight: bold;" class="appleBody">
+                                                              Booking no.
+                                                            </span>
+                                                            
+                                                            <span style="color: #0087DB !important; font-size: 14px; display: inline; float: right;">
+                                                              {{element.id}}
+                                                            </span>
+                                                            <br />
+                                                            <span style="color: #343434; text-transform: uppercase; font-size: 14px; -webkit-font-smoothing: auto; font-weight: bold;" class="appleBody">
+                                                              Duty Type
+                                                            </span>
+                                                            
+                                                            <span style="color: #0087DB !important; font-size: 14px; display: inline; float: right;">
+                                                              {{element.dutyType}}
+                                                            </span>
+                                                            <br />
+                                                            <span style="color: #343434; text-transform: uppercase; font-size: 14px; -webkit-font-smoothing: auto; font-weight: bold;" class="appleBody">
+                                                              Booked By
+                                                            </span>
+                                                            
+                                                            <span style="color: #0087DB !important; font-size: 14px; display: inline; float: right;">
+                                                              {{element.bookedBy}}
+                                                            </span>
+                                                            <br />
+                                                            <span style="color: #343434; text-transform: uppercase; font-size: 14px; -webkit-font-smoothing: auto; font-weight: bold;" class="appleBody">
+                                                              Date
+                                                            </span>
+                                                            
+                                                            <span style="color: #0087DB !important; font-size: 14px; display: inline; float: right;">
+                                                              {{element.date}}
+                                                            </span>
+                                                          </td>
+                                                        </tr>
+                                                      </table>
+                                                    </td>
+                                                  </tr>
+                                                </table>
+                                              </td>
+                                            </tr>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                        <!-- END ORDER CONFIRMATION -->                                                                            
+                        <!-- ROW CS CONTACT SECTION-->
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td bgcolor="#F6F6F6" align="center" style="padding: 0px 15px 20px 15px;" class="section-padding">
+                              <table border="0" cellpadding="0" cellspacing="0" width="600" class="responsive-table">
+                                <!-- LONGER WIDTH THAN 600 FOR OUTLOOK 07,10,11 -->
+                                <tr>
+                                  <td>
+                                    <!-- TWO COLUMNS -->
+                                    <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                                      <tr>
+                                        <td valign="top" style="padding: 0;" class="mobile-wrapper">
+                                          <!-- LEFT COLUMN -->
+                                          <table cellpadding="0" cellspacing="0" border="0" width="290" align="left" class="responsive-table">
+                                            <tr>
+                                              <td valign="top" align="left">
+                                                <table cellpadding="0" cellspacing="0" border="0">
+                                                  <tr>
+                                                    <td align="center" bgcolor="#FFFFFF" valign="middle" height="310" width="290" class="wrapper" style="border: 1px solid #EFEFEF; width: 400px;">
+                                                      <table cellspacing="0" cellpadding="0" width="100%" style="width: 100%;" class="responsive-table">
+                                                        <tr cellspacing="0" cellpadding="0">
+                                                          <td cellspacing="0" cellpadding="0" colspan="4" style="font-family:'sofia', Helvetica, Arial, sans-serif; color: #333333; font-size: 18px; font-weight: bold; text-align: center; padding: 15px 20px 10px 20px; width: 400px;">
+                                                            <img alt="" src="https://media.firebox.com/i/transactional/icon-customer-service.png" width="100">
+                                                          </td>
+                                                        </tr>
+                                                        <tr cellspacing="0" cellpadding="0">
+                                                          <td cellspacing="0" cellpadding="0" colspan="4" style="font-family:'sofia', Helvetica, Arial, sans-serif; color: #333333; font-size: 16px; font-weight: bold; text-align: center; padding: 0px 20px 10px 20px; width: 400px; text-transform: uppercase;">
+                                                            Got a query?
+                                                            <br />
+                                                            Get in touch
+                                                          </td>
+                                                        </tr>                                          
+                                                      </table>
+                                                    </td>
+                                                  </tr>
+                                                </table>
+                                              </td>
+                                            </tr>
+                                          </table>
+                                          <!-- RIGHT COLUMN -->
+                                          <table cellpadding="0" cellspacing="0" border="0" width="290" align="right" class="responsive-table">
+                                            <tr>
+                                              <td valign="top" align="left">
+                                                <table cellpadding="0" cellspacing="0" border="0">
+                                                  <tr>
+                                                    <td align="center" bgcolor="#FFFFFF" valign="middle" height="310" width="290" class="wrapper" style="border: 1px solid #EFEFEF; width: 400px;">
+                                                      <table cellspacing="0" cellpadding="0" width="100%" style="width: 100%;" class="responsive-table">
+                                                        <!-- STYLE WIDTH FOR CHROME BROWSER -->
+                                                        <tr cellspacing="0" cellpadding="0">
+                                                          <td cellspacing="0" cellpadding="0" colspan="4" style="text-align: center; font-family:'sofia', Helvetica, Arial, sans-serif; padding: 10px 20px 10px 20px; color: #343434; text-transform: uppercase; width: 400px;">
+                                                            Phone
+                                                          </td>
+                                                        </tr>
+                                                        <tr cellspacing="0" cellpadding="0">
+                                                          <td cellspacing="0" cellpadding="0" colspan="4" style="font-family:'sofia', Helvetica, Arial, sans-serif; color: #0087DB; font-size: 18px; font-weight: bold; text-align: center; padding: 0px 20px 10px 20px;">
+                                                            <span class="appleBody">{{customerDetails.phone}}</span>                                              
+                                                          </td>
+                                                        </tr>
+                                                        <tr cellspacing="0" cellpadding="0">
+                                                          <td cellspacing="0" cellpadding="0" colspan="4" style="text-align: center; font-family:'sofia', Helvetica, Arial, sans-serif; padding: 10px 20px 10px 20px; color: #343434; text-transform: uppercase;">
+                                                            Email
+                                                          </td>
+                                                        </tr>
+                                                        <tr cellspacing="0" cellpadding="0">
+                                                          <td cellspacing="0" cellpadding="0" colspan="4" style="text-align: center; font-family:'sofia', Helvetica, Arial, sans-serif; color: #0087DB; padding: 0px 20px 20px 20px; font-weight: bold; font-size: 18px;">
+                                                            <span class="appleBody">
+                                                              <a href="mailto:info@firebox.com" style="color: #0087DB; text-decoration: none !important;">
+                                                                {{customerDetails.email}}
+                                                              </a>
+                                                            </span>
+                                                          </td>
+                                                        </tr>
+                                                      </table>
+                                                    </td>
+                                                  </tr>
+                                                </table>
+                                              </td>
+                                            </tr>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                        <!-- END CS CONTACT ROW SECTION-->
+                        
+                        <!-- FOOTER -->
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td bgcolor="#ffffff" align="center" style="padding: 20px 0px;">
+                                <!-- UNSUBSCRIBE COPY -->
+                                <table width="600" border="0" cellspacing="0" cellpadding="0" align="center" class="responsive-table">
+                                  <tr>
+                                    <td width="100%" align="center" style="padding: 0 0 20px 0; font-size: 14px; line-height: 18px; font-family: Helvetica, Arial, sans-serif; color:#888888;">
+                                      Until next time, <strong>Techsimians Team</strong>
+                                    </td>
+                                  </tr>
+                                  <!-- <tr>
+                                    <td>
+                                      <table border="0" cellpadding="0" cellspacing="0" align="center">
+                                        <tr width="183">
+                                          <td>
+                                            <table border="0" cellpadding="0" cellspacing="0" align="center">
+                                              <tr width="157">
+                                                <td width="16" align="center" style="padding: 0 10px 20px 10px;">
+                                                  <a href="https://www.facebook.com/Firebox" target="blank">
+                                                    <img src="http://media.firebox.com/i/nl/facebook_icon.png" width="16" height="16">
+                                                  </a>
+                                                </td>
+                                                <td width="19" align="center" style="padding: 0 10px 20px 10px;">
+                                                  <a href="https://twitter.com/Firebox" target="blank">
+                                                    <img src="http://media.firebox.com/i/nl/twitter_icon.png" width="19" height="16">
+                                                  </a>
+                                                </td>
+                                                <td width="16" align="center" style="padding: 0 10px 20px 10px;">
+                                                  <a href="https://www.instagram.com/Firebox/" target="blank">
+                                                    <img src="http://media.firebox.com/i/nl/instagram_icon.png" width="16" height="16">
+                                                  </a>
+                                                </td>
+                                                <td width="16" align="center" style="padding: 0 10px 20px 10px;">
+                                                  <a href="https://www.pinterest.com/firebox/" target="blank">
+                                                    <img src="http://media.firebox.com/i/nl/pinterest_icon.png" width="16" height="16">
+                                                  </a>
+                                                </td>
+                                              </tr>
+                                            </table>
+                                          </td>
+                                        </tr>
+                                      </table>
+                                    </td>
+                                  </tr> -->
+                                  <tr>
+                                    <td width="100%" align="center" style="padding: 0 10px 0 10px; font-family:'sofia', Helvetica, Arial, sans-serif; line-height: 24px; color: #888888; font-size: 12px;">
+                                      <span class="appleBody">
+                                        <strong>Techsimians</strong><br /> Mumbai, Maharashtra, India.
+                                      </span>
+                                    </td>
+                                  </tr>
+                                  <!-- <tr>
+                                    <td width="100%" align="center" style="padding: 0 10px 20px 10px; font-family:'sofia', Helvetica, Arial, sans-serif; line-height: 24px; color: #888888; font-size: 12px;">
+                                      <span class="appleBody">
+                                        VAT Reg. No.: 798 6593 41 Registered in England & Wales, No. 3874477
+                                      </span>
+                                    </td>
+                                  </tr> -->
+                                  <tr>
+                                    <td width="100%" align="center" style="padding: 0 10px 20px 10px; font-family:'sofia', Helvetica, Arial, sans-serif; line-height: 24px; color: #888888; font-size: 12px;">
+                                      <span class="appleBody" style="color:#888888;">
+                                        <a style="color:#888888 !important;">info@yourfleetman.com</a>
+                                      </span>
+                                      <span class="hide-mobile">&nbsp; | &nbsp;</span>
+                                      <span class="appleBody break" style="color:#888888;">
+                                        <a href="http://www.techsimians.com"
+                                          style="color: #888888 !important;">www.techsimians.com</a>
+                                      </span>
+                                      <span class="hide-mobile">&nbsp; | &nbsp;</span>
+                                      <span class="appleBody break" style="color:#888888;">
+                                        8080 425 120
+                                      </span>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </td>                
+                          </tr>
+                        </table>
+                      </body>
+                    </html>
+                  </div>
+                </div>
+                <div class="row ptb-10">
+                    <div class="col-lg-12">
+                      <button style="float:left;" mat-button matStepperPrevious>Back</button>
+                      <button style="float:right;" color="primary" (click)="sendMail(template)" mat-raised-button>Send Mail</button>
+                    </div>
+                  </div>
+          </mat-step>
+        </mat-horizontal-stepper>                      
+        
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row ptb-10">
+  <div class="col-lg-12" style="text-align: center;">
+    <!-- <button color="primary" (click)="sendMail(template)" mat-raised-button>Send Mail</button> -->
+    <button color="warn" (click)="closeDialog()" mat-raised-button>Close</button>
+  </div>
+</div>
+
+
+<!---------------------------------------------- Invoice -------------------------------------------------->
+<!---------------------------------------------- Invoice -------------------------------------------------->
+
+<div #demo id="demo" style="padding: 0 5px 0 5px" hidden>
+  <div class="col-lg-12" style="padding:10px;"> 
+    <table *ngIf="!businessSettings.HideBusinessLetterHead" style="width: 100%;" border-spacing="0">
+      <tr>
+        <td rowspan="3" style="border-bottom: 1px solid darkgrey; width: 10%; padding-left: 5%; padding-bottom: 10px;">
+          <img alt="" [src]="companyLogo" height="70px" width="auto" />
+        </td>
+        <td style="text-align:left; padding-left: 10%;">
+          <b style="font-size: 18px; font-weight: 600 ;">{{user.companyName}}</b>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: left; padding-left: 10%;">
+          <b>{{companyProfile.address}}</b>
+        </td>
+      </tr>
+      <tr>
+        <td style="border-bottom: 1px solid darkgrey; text-align: left; padding-bottom: 10px; padding-left: 10%;">
+          <b><b>Email:</b> {{companyProfile.email}} <b>Mobile:</b> {{companyProfile.phone}}</b>
+        </td>
+      </tr>
+    </table>
+    <table style="width:100%">
+      <tr>
+        <td style="border-bottom: 1px solid darkgrey; text-align: center;"><b style="font-size: medium;">Tax Invoice</b></td>
+      </tr>
+    </table>
+  </div>
+  <div class="box2" style="display: flex; flex-direction: row; border-bottom: 0.1px solid; border-bottom-color: darkgrey;">
+    <div class="col-lg-6 vl" style="border-right: 0.1px solid; border-right-color: darkgrey; width: 50%;">
+      <table cellpadding=2px>
+        <tr>
+          <td>
+            <b>
+              Customer Name:
+            </b>
+          </td>
+          <td>
+            {{customerDetails.name}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <b>
+              Customer No:
+            </b>
+          </td>
+          <td>
+            {{customerDetails.phone}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <b>
+              Address:
+            </b>
+          </td>
+          <td>
+            {{customerDetails.caddress}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <b>
+              State:
+            </b>
+          </td>
+          <td>
+            {{customerDetails.state}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <b>
+              PAN:
+            </b>
+          </td>
+          <td>
+            {{customerDetails.panNo}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <b>GSTIN:</b>
+          </td>
+          <td>
+            {{customerDetails.gstin}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <b>Billing Address:</b>
+          </td>
+          <td>
+            {{customerDetails.billingAddress}}
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-lg-6">
+      <table cellpadding=2px>
+        <tr>
+          <td><b>&nbsp;Invoice Number:</b></td>
+          <td>
+            {{invoiceDetails.invoiceNumber}}
+          </td>
+        </tr>
+        <tr><td><b>&nbsp;Invoice Date:</b></td>
+          <td>
+            {{invoiceDetails.invoiceDate | date: 'dd/MM/yyyy'}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <b>&nbsp;Invoice Period From:</b>
+          </td>
+          <td>
+            {{invoiceDetails.invoicePeriodFrom | date: 'dd/MM/yyyy'}}
+          </td>
+        </tr>
+        <tr>  
+          <td>
+            <b>&nbsp;Invoice Period To:</b>
+          </td>
+          <td>
+            {{invoiceDetails.invoicePeriodTo | date: 'dd/MM/yyyy'}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <b>
+              &nbsp;CC Number:
+            </b>
+          </td>
+          <td>
+            {{invoiceDetails.CCNumber}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <b>
+              &nbsp;PO Number
+            </b>
+          </td>
+          <td>
+            {{invoiceDetails.PONumber}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="col-lg-12">                  
+    <table style="width:100%" cellpadding="4">
+      <tr class="invoiceTable" style="border-bottom:1px solid;">
+        <th>Sr.</th>
+        <th>Description</th>
+        <th>Rate</th>
+        <th>Quantity</th>
+        <th>Amount</th>              
+      </tr>
+      <tbody style="page-break-inside: avoid" *ngFor="let temp of selectedBookings; let i=index">
+        <tr style="border-bottom:1px solid;" class="invoiceTable">
+          <td>{{i+1}}</td>
+          <td class="tdleft" style="text-align: left;">
+            ReportingAddress:
+            <b>
+              {{temp.reportingAddress}}
+            </b><br>
+            DutyType:
+            <b>
+              {{temp.dutyType}}
+            </b><br>
+            Vehicle Group:
+            <b>
+              {{temp.vehicleGroup}}
+            </b><br>
+            Passenger Name:
+            <b>
+              {{temp.passenger}}
+            </b>
+          </td>
+          <td style="text-align: center;">{{temp.totalPrice}}</td>
+          <td style="text-align: center;">1</td>
+          <td style="text-align: center;">{{temp.totalPrice}}</td>              
+        </tr>
+        <tr style="text-align:center;" class="invoiceTable" *ngFor="let element of temp.extras">
+          <td colspan="3" style="text-align: center;" *ngIf="temp.extras">{{element.name}}</td>
+          <td *ngIf="temp.extras">1</td>
+          <td *ngIf="temp.extras">{{element.charges}}</td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tbody style="page-break-inside: avoid">
+        <tr class="invoiceTable" *ngIf="invoiceDetails.taxableAmount != null">
+          <td colspan="2" class="tdright" style="text-align: right; align-content: right; place-content: right;">
+            
+          </td>
+          <td class="tdright" style="text-align: center; align-content: right; place-content: right;">
+            Taxable Amount
+          </td>
+          <td>&nbsp;</td>
+          <td class="tdright" style="text-align: center;">
+            <b>{{invoiceDetails.taxableAmount}}</b>
+          </td>
+        </tr>
+        <tr *ngIf="invoiceDetails.taxType == 'CGST+SGST'" style="border-bottom:1px solid; border-top:1px solid;" class="invoiceTable">
+          <td colspan="2" class="tdright" style="text-align: right; align-content: right; place-content: right;">
+            Tax Type:                        
+          </td>
+          <td class="tdright" style="text-align: center; align-content: right; place-content: right;">
+            <b>
+              &nbsp;CGST
+            </b>
+            <br>
+            <b>
+              SGST
+            </b>
+          </td>
+          <td class="tdright" style="text-align: center; align-content: right; place-content: right;">
+            <b>
+              &nbsp;{{invoiceDetails.taxRate/2}}%
+            </b>
+            <br>
+            <b>
+              {{invoiceDetails.taxRate/2}}%
+            </b>
+          </td>
+          <td class="tdright" style="text-align: center; align-content: right; place-content: right;">
+            <b>
+              &nbsp;{{invoiceDetails.taxAmount/2}}
+            </b>
+            <br>
+            <b>
+              {{invoiceDetails.taxAmount/2}}
+            </b>
+          </td>
+        </tr>
+        <tr *ngIf="invoiceDetails.taxType != 'CGST+SGST'" style="border-bottom:1px solid; border-top:1px solid;" class="invoiceTable">
+          <td colspan="3" class="tdright" style="text-align: right;">
+            Tax Type:
+            <b>
+              {{invoiceDetails.taxType}}
+            </b>
+          </td>
+          <td class="tdright" style="text-align: center; align-content: right; place-content: right;">
+            <b>
+              {{invoiceDetails.taxRate}}%
+            </b>
+          </td>
+          <td class="tdright" style="text-align: center; align-content: right; place-content: right;">
+            <b>
+              {{invoiceDetails.taxAmount}}
+            </b>
+          </td>
+        </tr>
+        <tr style="border-bottom:1px solid;" class="invoiceTable">
+          <td colspan="3" class="tdright" style="text-align: right; align-content: right; place-content: right;">
+            Discount Type:
+            <b>
+              {{invoiceDetails.discountType}}
+            </b>
+          </td>
+          <td></td>
+          <td class="tdright" style="text-align: center; align-content: right; place-content: right;">
+            <b>
+              {{invoiceDetails.discountAmount}}
+            </b>
+          </td>
+        </tr>
+        <tr class="invoiceTable" *ngIf="invoiceDetails.nonTaxableAmount > 0">
+          <td colspan="2" class="tdright" style="text-align: right; align-content: right; place-content: right;">
+            
+          </td>
+          <td class="tdright" style="text-align: center; align-content: right; place-content: right;">
+            Non Taxable Amount
+          </td>
+          <td>&nbsp;</td>
+          <td class="tdright" style="text-align: center;">
+            <b>{{invoiceDetails.nonTaxableAmount}}</b>
+          </td>
+        </tr>
+        <tr class="invoiceTable">
+          <td colspan="2" style="text-align: left; border-bottom:2px solid black;">
+            In Words: <b style="text-transform:capitalize;">{{totalInWords}}</b>
+          </td>
+          <td class="tdright" style="text-align: center; border-bottom:2px solid black;">
+            Gross Total:
+          </td>
+          <td style="border-bottom:2px solid black;">&nbsp;</td>
+          <td class="tdright" style="text-align: center; border-bottom:2px solid black;">
+            <b>{{invoiceDetails.totalAmount}}</b>
+          </td>
+        </tr>
+        <tr class="invoiceTable">
+          <td colspan="3" style="text-align: left; border-bottom:2px solid black;">
+            Advance Paid:
+          </td>                      
+          <td style="border-bottom:2px solid black;">&nbsp;</td>
+          <td class="tdright" style="text-align: center; border-bottom:2px solid black;">
+            <b>{{invoiceDetails.advanceReceived}}</b>
+          </td>
+        </tr>
+        <tr class="invoiceTable">
+          <td colspan="2" style="text-align: left; border-bottom:2px solid black;">
+            In Words: <b style="text-transform:capitalize;">{{totalInWords}}</b>
+          </td>
+          <td class="tdright" style="text-align: center; border-bottom:2px solid black;">
+            Net Total:
+          </td>
+          <td style="border-bottom:2px solid black;">&nbsp;</td>
+          <td class="tdright" style="text-align: center; border-bottom:2px solid black;">
+            <b>{{invoiceDetails.totalAmount - invoiceDetails.advanceReceived}}</b>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  
+
+  <!-------------------------------------------- Duty Summary ----------------------------------------------------------->
+  <!-------------------------------------------- Duty Summary ----------------------------------------------------------->
+
+  <div id="demo2" hidden>
+    <table border="1" style="font-size: 11px;">                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+      <tr>
+        <th>Sr.</th>
+        <th *ngIf="businessSettings.ShowDutyId">Duty Id</th>            
+        <th *ngIf="businessSettings.ShowBookedByName">Booked By</th>
+        <th *ngIf="businessSettings.ShowPassengerNames">Passenger</th>
+        <th *ngIf="businessSettings.ShowVehicleGroupName">Veh.Group</th>
+        <th *ngIf="businessSettings.ShowVehicleNumber">Veh.Num.</th>
+        <th *ngIf="businessSettings.ShowDutyType">Duty Type</th>
+        <th *ngIf="businessSettings.ShowPrice">Price</th>
+        <th *ngIf="businessSettings.ShowQuantityNumberOfDays">Qty</th>
+        <th *ngIf="businessSettings.ShowTotalPrice">Total Price</th>
+        <th *ngIf="businessSettings.ShowStartDate">S.Date</th>
+        <th *ngIf="businessSettings.ShowEndDate">E.Date</th>
+        <th *ngIf="businessSettings.ShowStartTime">S.Time</th>
+        <th *ngIf="businessSettings.ShowEndTime">E.Time</th>
+        <th>T.Time</th>
+        <th>Ex.Time</th>
+        <th *ngIf="businessSettings.ShowStartKM">S.Km</th>
+        <th *ngIf="businessSettings.ShowEndKM">E.Km</th>
+        <th *ngIf="businessSettings.ShowTotalKM">T.Km</th>
+        <th *ngIf="businessSettings.ShowExtraKM">Ex.Km</th>
+        <th *ngIf="businessSettings.ShowExtraHourRate">Ex.Hr Rate</th>
+        <th *ngIf="businessSettings.ShowExtraKMRate">Ex.Km Rate</th>
+        <th *ngIf="businessSettings.ShowExtraHourCost">Ex.Hr Cost</th>
+        <th *ngIf="businessSettings.ShowExtraKMCost">Ex.Km Cost</th>
+        <th>Ex.Charges</th>
+        <!-- <th *ngIf="">Ex.Ch.</th>
+        <th *ngIf="">Parking</th>
+        <th *ngIf="">Out.Day</th>
+        <th *ngIf="">Sun</th>
+        <th *ngIf="">Late</th>
+        <th *ngIf="">Car Hire Ch.</th> -->
+        <th *ngIf="businessSettings.ShowDutySubtotal">Sub.Total</th>
+        <!-- <th *ngIf="businessSettings.ShowDutySubtotalIncludingAllowances">Sub.Total (incl. Allowances)</th> -->
+      </tr>
+      <tr *ngFor="let element of dutySummary; let i=index;">
+        <td>{{i+1}}.</td>
+        <td *ngIf="businessSettings.ShowDutyId">{{element.dutyId}}</td>                
+        <td *ngIf="businessSettings.ShowBookedByName">{{element.bookBy}}</td>
+        <td *ngIf="businessSettings.ShowPassengerNames">{{element.passenger}}</td>
+        <td *ngIf="businessSettings.ShowVehicleGroupName">{{element.vehicleGroup}}</td>
+        <td *ngIf="businessSettings.ShowVehicleNumber">{{element.number}}</td>
+        <td *ngIf="businessSettings.ShowDutyType">{{element.dutyType}}</td>
+        <td *ngIf="businessSettings.ShowPrice">{{element.price}}</td>
+        <td *ngIf="businessSettings.ShowQuantityNumberOfDays">1</td>
+        <td *ngIf="businessSettings.ShowTotalPrice">{{element.price}}</td>
+        <td *ngIf="businessSettings.ShowStartDate">{{element.startDate | date: 'dd-MM-yyyy'}}</td>
+        <td *ngIf="businessSettings.ShowEndDate">{{element.endDate | date: 'dd-MM-yyyy'}}</td>
+        <td *ngIf="businessSettings.ShowStartTime">{{element.startTime | date:'HH:mm a'}}</td>
+        <td *ngIf="businessSettings.ShowEndTime">{{element.endTime | date:'HH:mm a'}}</td>
+        <td>{{element.totalTime}}</td>
+        <td>{{element.extraTime}}</td>
+        <td *ngIf="businessSettings.ShowStartKM">{{element.startKm}}</td>
+        <td *ngIf="businessSettings.ShowEndKM">{{element.endKm}}</td>
+        <td *ngIf="businessSettings.ShowTotalKM">{{element.totalKm}}</td>
+        <td *ngIf="businessSettings.ShowExtraKM">{{element.extraKm}}</td>
+        <td *ngIf="businessSettings.ShowExtraHourRate">{{element.extraHrs}}</td>
+        <td *ngIf="businessSettings.ShowExtraKMRate">{{element.extraKm}}</td>
+        <td *ngIf="businessSettings.ShowExtraHourCost">{{element.extraHrRate}}</td>
+        <td *ngIf="businessSettings.ShowExtraKMCost">{{element.extraKmRate}}</td>
+        <td>{{element.charges}}</td>
+        <!-- <td *ngIf="">Ex.Ch.</td>
+        <td *ngIf="">Parking</td> -->
+        <!-- <td *ngIf="">Out.Day</td>
+        <td *ngIf="">Sun</td>
+        <td *ngIf="">Late</td>
+        <td *ngIf="">Car Hire Ch.</td> -->
+        <td *ngIf="businessSettings.ShowDutySubtotal">{{element.finalPrice}}</td>
+        <!-- <td *ngIf="businessSettings.ShowDutySubtotalIncludingAllowances">Sub.Total (incl. Allowances)</td> -->
+      </tr>
+    </table>
+    </div>

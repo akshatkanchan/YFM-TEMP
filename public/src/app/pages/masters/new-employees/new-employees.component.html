@@ -1,0 +1,435 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card style="margin-bottom:5px;">
+      <nb-card-header>New Employees</nb-card-header>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-lg-3 col-12">
+            <mat-form-field>
+              Name
+              <input matInput [(ngModel)]="employee.name">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 col-12">
+            <mat-form-field>
+              Employee ID
+              <input matInput [(ngModel)]="employee.employeeId">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 col-12">
+            <mat-form-field>
+              Designation
+              <input matInput [(ngModel)]="employee.designation">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 col-12">
+            <mat-form-field>
+              E-Mail
+              <input matInput [(ngModel)]="employee.email">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-12">
+            <mat-form-field>
+              Mobile Number
+              <input matInput [(ngModel)]="employee.mobilenumber">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 col-12">
+            <mat-form-field>
+              Alternate Number
+              <input matInput [(ngModel)]="employee.alternateNumber">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 col-12">
+            <mat-form-field>
+              Badge Number
+              <input matInput [(ngModel)]="employee.badgeNumber">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 col-12">
+            <mat-form-field class="w-100">
+              Badge ExpiryDate
+              <input matInput [(ngModel)]="employee.badgeExpiry" [matDatepicker]="badgeExpiry" readonly (click)="badgeExpiry.open()">
+              <mat-datepicker-toggle matSuffix [for]="badgeExpiry"></mat-datepicker-toggle>
+              <mat-datepicker #badgeExpiry></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-12">
+            <mat-form-field class="w-100">
+              Date of Birth
+              <input matInput [(ngModel)]="employee.dateOfBirth" [matDatepicker]="birthDate" readonly (click)="birthDate.open()">
+              <mat-datepicker-toggle matSuffix [for]="birthDate"></mat-datepicker-toggle>
+              <mat-datepicker #birthDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 col-12">
+            <mat-form-field class="w-100">
+              Marriage Date
+              <input matInput  [(ngModel)]="employee.marriageDate" [matDatepicker]="marriageDate" readonly (click)="marriageDate.open()">
+              <mat-datepicker-toggle matSuffix [for]="marriageDate"></mat-datepicker-toggle>
+              <mat-datepicker #marriageDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 col-12">
+            <mat-form-field class="w-100">
+              Joining Date
+              <input matInput [(ngModel)]="employee.joiningDate" [matDatepicker]="joiningDate" readonly (click)="joiningDate.open()">
+              <mat-datepicker-toggle matSuffix [for]="joiningDate"></mat-datepicker-toggle>
+              <mat-datepicker #joiningDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 col-12">
+            <mat-form-field>
+              Blood Group
+              <input matInput [(ngModel)]="employee.bloodGroup">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-12">
+            <mat-form-field>
+              Father's Name
+              <input matInput [(ngModel)]="employee.fatherName">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 col-12">
+            <mat-form-field class="w-100">
+              Father's Date of Birth
+              <input matInput [(ngModel)]="employee.fatherDateOfBirth" [matDatepicker]="fatherBirthDate" readonly (click)="fatherBirthDate.open()">
+              <mat-datepicker-toggle matSuffix [for]="fatherBirthDate"></mat-datepicker-toggle>
+              <mat-datepicker #fatherBirthDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 col-12">
+            <mat-form-field>
+              Mother's Name
+              <input matInput [(ngModel)]="employee.motherName">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 col-12">
+            <mat-form-field class="w-100">
+              Mother's Date of Birth
+              <input matInput [(ngModel)]="employee.mothersDateOfBirth" [matDatepicker]="motherBD" readonly (click)="motherBD.open()">
+              <mat-datepicker-toggle matSuffix [for]="motherBD"></mat-datepicker-toggle>
+              <mat-datepicker #motherBD></mat-datepicker>
+            </mat-form-field>
+            <br><br>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <mat-form-field class="w-100">
+              Permanant Address
+              <textarea rows="4" matInput [(ngModel)]="employee.currentAddress"></textarea>              
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6 col-12">
+            <mat-form-field class="w-100">
+              Current Address
+              <textarea rows="4" *ngIf="!sameAsPermanent" matInput [(ngModel)]="employee.permanentAddress"></textarea>
+              <textarea rows="4" *ngIf="sameAsPermanent" matInput [(ngModel)]="employee.currentAddress"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 col-12">
+            <mat-checkbox name="sameAsPermanent" (change)="permanentAddress()">
+              Same as Permanant
+            </mat-checkbox>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-12">
+            <mat-form-field>
+              Pan Number
+              <input matInput [(ngModel)]="employee.panNumber">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 col-12">
+            <mat-form-field>
+              Aadhar Number
+              <input matInput [(ngModel)]="employee.aadharNumber">
+            </mat-form-field>
+          </div>        
+          <div class="col-lg-3 col-12">
+            <mat-form-field>
+              DL Number
+              <input matInput [(ngModel)]="employee.dlNumber">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 col-12">
+            <mat-form-field class="w-100">
+              DL ExpiryDate
+              <input matInput [(ngModel)]="employee.dlExpiry" [matDatepicker]="dlExpiry" readonly (click)="dlExpiry.open()">
+              <mat-datepicker-toggle matSuffix [for]="dlExpiry"></mat-datepicker-toggle>
+              <mat-datepicker #dlExpiry></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">        
+          <div class="col-lg-3 col-12">
+            <mat-form-field>
+              PF Number
+              <input matInput [(ngModel)]="employee.pfAcNumber">
+            </mat-form-field>
+          </div>        
+          <div class="col-lg-3 col-12">
+            <mat-form-field>
+              ESI
+              <input matInput [(ngModel)]="employee.esi">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 col-12">
+            <mat-form-field>
+              UAN Number
+              <input matInput [(ngModel)]="employee.uanNumber">
+            </mat-form-field>
+          </div>
+        </div> 
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-header>License</nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              Issued By
+              <input matInput [(ngModel)]="employee.licenseIssuedBy">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              City
+              <input matInput [(ngModel)]="employee.licenseCity">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              State
+              <input matInput [(ngModel)]="employee.licenseState">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6 col-12">
+            <mat-form-field class="w-100">
+              Date
+              <input matInput [(ngModel)]="employee.licenseDate" [matDatepicker]="licenseDate" readonly (click)="licenseDate.open()">
+              <mat-datepicker-toggle matSuffix [for]="licenseDate"></mat-datepicker-toggle>
+              <mat-datepicker #licenseDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>        
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-header>Police</nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              Display Card Number
+              <input matInput [(ngModel)]="employee.policeDisplayCardNumber">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6 col-12">
+            <mat-form-field class="w-100">
+              Display Card Expiry
+              <input matInput [(ngModel)]="employee.policeDisplayCardExpiry" [matDatepicker]="policeDisplayCardExpiry" readonly (click)="policeDisplayCardExpiry.open()">
+              <mat-datepicker-toggle matSuffix [for]="policeDisplayCardExpiry"></mat-datepicker-toggle>
+              <mat-datepicker #policeDisplayCardExpiry></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              Verification Number
+              <input matInput [(ngModel)]="employee.policeVerificationNumber">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6 col-12">
+            <mat-form-field class="w-100">
+              Verification ExpiryDate
+              <input matInput  [(ngModel)]="employee.policeVerificationExpiryDate" [matDatepicker]="policeVerificationExpiryDate" readonly (click)="policeVerificationExpiryDate.open()">
+              <mat-datepicker-toggle matSuffix [for]="policeVerificationExpiryDate"></mat-datepicker-toggle>
+              <mat-datepicker #policeVerificationExpiryDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>        
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-header>Bank</nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              Display Card Number
+              <input matInput [(ngModel)]="employee.bankDisplayCardNumber">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              Account Number
+              <input matInput [(ngModel)]="employee.bankAccountNumber">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              IFSC Code
+              <input matInput [(ngModel)]="employee.bankIfscCode">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6 col-12"></div>
+        </div>        
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              ESI Dispensary Code
+              <input matInput [(ngModel)]="employee.esiDispensaryCode">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              Branches
+              <input matInput  [formControl]="branchesCtrl" [matAutocomplete]="autobranch">
+              <mat-autocomplete #autobranch="matAutocomplete">
+                <mat-option *ngFor="let item of branch | async" [value]="item.name" (onSelectionChange)="setBranches(item,$event)">
+                  {{ item.name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            
+          </div>
+          <div class="col-lg-6 col-12"></div>
+        </div>        
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>Visible Customers(keep blank for all)</nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="myForm">
+          <div formArrayName="rows">
+            <div class="row" *ngFor="let aRow of customerForms.controls; let i=index" [formGroupName]="i">
+              <div class="col-lg-10 col-10">
+                <mat-form-field class="w-100">                  
+                  <input matInput formControlName="visibleCustomers" (keypress)="filterCust(i)" [matAutocomplete]="custauto">
+                  <mat-autocomplete #custauto="matAutocomplete">
+                    <mat-option *ngFor="let option of customer |async" [value]="option.name" (onSelectionChange)="setCustomer(option,$event, i)">
+                      {{ option.name }}
+                    </mat-option>
+                  </mat-autocomplete>
+                  <!-- <mat-select [(ngModel)]="employee.visibleCustomers">
+                    <mat-option value="option">Option</mat-option>
+                  </mat-select> -->
+                </mat-form-field>
+              </div>
+              <div class="col-lg-2 col-2">
+                <button mat-icon-button color="primary" (click)="deleteRow(i, aRow)"><mat-icon>clear</mat-icon></button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="row ptb-10">
+          <div class="col-lg-12 col-12">
+            <button mat-raised-button color="primary" style="margin-top:15px;" (click)="addRow()">Add Row</button>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>Files</nb-card-header>
+      <nb-card-body>
+        <div class="row ptb-10">
+          <div class="col-lg-4 col-12" style="text-align: center">
+            <b>Upload Employee Photo</b>
+            <br>
+            <button *ngIf="imgUrl==''" (click)="employeePhoto.click()" mat-raised-button color="primary"><mat-icon>cloud_upload</mat-icon>Browse</button>
+            <button *ngIf="imgUrl!=''" (click)="removeImage()" mat-raised-button color="primary"><mat-icon>clear</mat-icon>Remove</button>
+            <input type="file" accept="image/*" #employeePhoto name="employeePhoto" hidden (change)="uploadProfilePhoto($event)">
+            <br>
+            <img alt="" *ngIf="imgUrl!=''" [src]="imgUrl" width="125px" height="150px"/>
+          </div>
+          <div class="col-lg-4 col-12" style="text-align: center">
+            <b>Upload Aadhar Card Photo</b>
+            <br>
+            <button *ngIf="aadharImgUrl==''" (click)="aadharPhoto.click()" mat-raised-button color="primary"><mat-icon>cloud_upload</mat-icon>Browse</button>
+            <button *ngIf="aadharImgUrl!=''" (click)="removeAadharImage()" mat-raised-button color="primary"><mat-icon>clear</mat-icon>Remove</button>
+            <input type="file" #aadharPhoto name="aadharPhoto" hidden (change)="uploadAadharPhoto($event)">
+            <br>
+            <img alt="" *ngIf="aadharImgUrl!='' && aadharImgUrl.includes('data:image')" [src]="aadharImgUrl" width="125px" height="150px"/>
+            <p style="margin: 2rem;" *ngIf="!aadharImgUrl.includes('data:image')">{{imgAadharName}}</p>
+          </div>
+          <div class="col-lg-4 col-12" style="text-align: center">
+            <b>Upload PAN Card Photo</b>
+            <br>
+            <button *ngIf="panImgUrl==''" (click)="panPhoto.click()" mat-raised-button color="primary"><mat-icon>cloud_upload</mat-icon>Browse</button>
+            <button *ngIf="panImgUrl!=''" (click)="removePANImage()" mat-raised-button color="primary"><mat-icon>clear</mat-icon>Remove</button>
+            <input type="file" #panPhoto name="panPhoto" hidden (change)="uploadPanPhoto($event)">
+            <br>
+            <img alt="" *ngIf="panImgUrl!='' && panImgUrl.includes('data:image')" [src]="panImgUrl" width="125px" height="150px"/>
+            <p style="margin: 2rem;" *ngIf="!panImgUrl.includes('data:image')">{{imgPanName}}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div style="bottom: 5%" *ngIf="logs.length>0">
+            <ul>
+              <li *ngFor="let element of logs">
+                {{element.message}}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row ptb-10">
+  <div class="col-lg-12">
+    <button *ngIf="editState==false" mat-raised-button color="primary" (click)="saveEmployee()">Add</button>
+    <button *ngIf="editState==true" mat-raised-button color="primary" (click)="editEmployee()">Save</button>
+    <button mat-raised-button color="warn"(click)="closeDialog()">Close</button>
+  </div> 
+</div>

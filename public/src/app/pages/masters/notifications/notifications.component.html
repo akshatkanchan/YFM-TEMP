@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>
+        Notifications
+      </nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-lg-12">
+            <div style="margin-left:20px;display: inline-block;margin-top: 20px">
+              <i class="fa fa-hand-o-right" aria-hidden="true"></i><a>Unread</a>
+              <i class="fa fa-check" style="margin-left:40px;" aria-hidden="true"></i><a>Read</a>
+            </div>
+            <mat-form-field style="float: right;">
+              <mat-select [(ngModel)]="notificationOption" (selectionChange)="setNotification($event.value)">
+                <mat-option value="Today">Today</mat-option>
+                <mat-option value="Yesterday">Yesterday</mat-option>
+                <mat-option value="Past 7 days">Past 7 days</mat-option>
+              </mat-select>
+            </mat-form-field>            
+          </div>          
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div *ngIf="notifications.length>0">
+              <mat-list *ngFor="let item of notifications">
+                <mat-list-item>
+                    <div *ngIf="item.status=='Unread'"><i class="fa fa-hand-o-right" aria-hidden="true"></i><a style="padding-left:10px;" (click)="route(item.route,item.id)">{{item.Content}}</a></div>
+                    <div *ngIf="item.status=='Read'"><i class="fa fa-check" aria-hidden="true"></i><a style="padding-left:10px;" (click)="route(item.route,item.id)">{{item.Content}}</a></div>
+                    <!-- <mat-chip-list>
+                      <mat-chip color="primary" selected>{{item.status}}</mat-chip>
+                    </mat-chip-list> -->
+                </mat-list-item>
+              </mat-list>       
+            </div>
+            <div *ngIf="notifications.length==0 && notificationOption=='Today'" >
+              <h6>You do not have any notifications for today</h6>
+            </div>
+            <div *ngIf="notifications.length==0 && notificationOption=='Yesterday'" >
+                <h6>You do not have any notifications from yesterday</h6>
+            </div>
+            <div *ngIf="notifications.length==0 && notificationOption=='Past 7 days'" >
+                <h6>You do not have any notifications from the past 7 days</h6>
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+

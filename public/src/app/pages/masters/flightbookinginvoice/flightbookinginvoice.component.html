@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>
+          Flights
+      </nb-card-header>
+      <nb-card-body>
+        <mat-table #table [dataSource]="dataSource" matSort matSortActive="name" matSortDirection="asc" matSortDisableClear>
+
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Passenger Name</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.guestName}} </mat-cell>
+          </ng-container>
+                    
+          <ng-container matColumnDef="from">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>From</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.from}} </mat-cell>
+          </ng-container>
+        
+          <ng-container matColumnDef="to">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>To</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.to}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="departureDate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Departure Date</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.departureDate}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="arrivalDate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Arrival Date</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.arrivalDate}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="price">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.price}} </mat-cell>
+          </ng-container>
+        
+          <ng-container matColumnDef="Selector">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Selector</mat-header-cell>
+            <mat-cell *matCellDef="let element"><mat-checkbox (change)="chooseBooking(element,$event)" [checked]="isSelected(element.id)"></mat-checkbox>
+            </mat-cell>   
+          </ng-container>
+        
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        
+        </mat-table>
+          
+        <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row ptb-10">
+  <div class="col-lg-12">
+    <button mat-raised-button (click)="closeDialog()" color="primary">Close</button>    
+  </div>
+</div>
+
+

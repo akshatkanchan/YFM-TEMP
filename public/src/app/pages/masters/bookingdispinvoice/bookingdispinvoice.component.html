@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>
+        Customer
+      </nb-card-header>      
+      <nb-card-body>
+        <mat-table #table [dataSource]="dataSource" matSort>
+
+            <!-- Position Column -->
+          <!-- <ng-container matColumnDef="Date">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Date. </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.date}} </mat-cell>
+            </ng-container>
+          -->
+          <!-- Name Column -->
+          <ng-container matColumnDef="Date">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Date </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.startDate | date: 'dd-MM-yyyy'}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Customer">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Customer </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.cname}} </mat-cell>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="Booked by">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Booked by </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.bookBy}} </mat-cell>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="Passenger">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Passenger</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.passenger}} </mat-cell>    
+          </ng-container>
+
+          <ng-container matColumnDef="Price">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Price </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.totsPrice}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Selector">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Selector</mat-header-cell>
+            <mat-cell *matCellDef="let element"><mat-checkbox (change)="chooseBooking(element,$event)" [checked]="isSelected(element.id)"></mat-checkbox>
+            </mat-cell>   
+          </ng-container>
+          
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+        <div align="center" style="padding-top:10px">
+          <button mat-raised-button color="primary" (click)="selectBooking()">Close</button>
+          <!-- <button mat-fab color="warn"(click)="selectRow(null)">Add</button>-->
+          <br><br>
+          <!--  <input type="button" action="#"(click)="selectRow(null)" value="+" class="btn btn-success btn-semi-round btn-demo"> -->
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

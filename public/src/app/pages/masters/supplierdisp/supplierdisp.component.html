@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>
+        B2B Customers
+      </nb-card-header>
+      <nb-card-body>
+        <mat-table #table [dataSource]="dataSource" matSort>
+          <!-- Symbol Column --> 
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Customer Name </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+          </ng-container>
+               
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"(click)="selectRow(row)"></mat-row>
+        </mat-table>                
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>  

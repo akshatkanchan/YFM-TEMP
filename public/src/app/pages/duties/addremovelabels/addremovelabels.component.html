@@ -1,0 +1,72 @@
+<form [formGroup]="labelForm">
+  <fieldset>
+    <div class="modal-row" *ngIf="existingLabels">
+      <div class="col-lg-12 col-12">
+        <nb-card style="min-width:30vw;">
+          <nb-card-header>Existing Tags</nb-card-header>
+          <nb-card-body class="no-overflow">
+            <div class="modal-row">
+              <div class="col-lg-12 col-12">
+                  <mat-chip-list style="display: inline-block;">
+                    <mat-chip *ngFor="let element of labelArray; let i=index" style="font-size: 16px;padding: 7px 5px;border-radius: 0;" [ngStyle]="{'color': setTextColor(element.color)}" [style.background-color]="element.color">
+                      {{element.name}}
+                      <button class="w-21" mat-icon-button [ngStyle]="{'color': setTextColor(element.color)}" (click)="deleteChip(i, element.labelId, element.dutyId)">
+                        <mat-icon>clear</mat-icon>
+                      </button>
+                    </mat-chip>
+                  </mat-chip-list>      
+              </div>
+            </div>  
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+    <div class="modal-row">
+      <div class="col-lg-12 col-12">
+        <nb-card style="min-width:30vw;">
+          <nb-card-header>
+              Add New Tags
+          </nb-card-header>
+          <nb-card-body class="no-overflow">
+            <!-- <mat-form-field>
+              <input matInput   placeholder="Filter"  >
+            </mat-form-field> -->   
+            
+            <div formArrayName="labelField">
+              <div *ngFor=" let labelField of labelFormControl.controls ; let i=index" [formGroupName]="i">
+                <div class="modal-row">
+                  <div class="col-lg-12 col-12">
+                    <mat-form-field>
+                      Tag
+                      <mat-select formControlName="labelName">
+                        <mat-option *ngFor=" let element of labels" [value]="element">
+                          {{element.name}}
+                        </mat-option>                        
+                      </mat-select>
+                    </mat-form-field>                                    
+                    <button class="delete-button" *ngIf="i>0" (click)="deleteRow(i)" mat-icon-button color="primary">
+                      <mat-icon>clear</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>                
+            </div>
+            <div class="modal-row">
+              <div class="col-lg-12 col-12">
+                <button style="width: 40px;height: 40px;" mat-fab color="primary" (click)="addRow()">
+                  <mat-icon style="font-size: inherit;margin-top: -10px;">add</mat-icon>
+                </button>
+              </div>
+            </div>            
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+    <div class="modal-row">
+      <div class="col-lg-12 col-12" style="text-align:right;">
+        <button mat-raised-button color="primary" (click)="addLabels()" [disabled]="labelForm.invalid">Add Labels</button>
+        <button mat-raised-button color="warn" (click)="closeDialog()">Close</button>
+      </div>
+    </div>
+  </fieldset>
+</form>

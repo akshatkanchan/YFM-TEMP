@@ -1,0 +1,81 @@
+<div class="row" >
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-header>
+        New Bank Account
+      </nb-card-header>
+      <nb-card-body>
+        <table>
+          <tr>
+            <td>
+              Account Name* 
+            </td>
+            <td>
+              <mat-form-field><input matInput [(ngModel)]="bankAccount.name"></mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Account Number*
+            </td>
+            <td>
+              <mat-form-field><input matInput [(ngModel)]="bankAccount.number"></mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Bank Name*
+            </td>
+            <td>
+              <mat-form-field><input matInput [(ngModel)]="bankAccount.bankName"></mat-form-field>
+            </td>
+          </tr>
+        </table>
+        <br>
+        <br>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-header><br></nb-card-header>
+      <nb-card-body>
+        <table>
+          <tr>
+            <td>
+              Bank Branch*
+            </td>
+            <td>
+              <mat-form-field><input matInput [(ngModel)]="bankAccount.branch"></mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              IFSC Code
+            </td>
+            <td>
+              <mat-form-field><input matInput [(ngModel)]="bankAccount.ifscCode"></mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Cheques in the name of
+            </td>
+            <td>
+              <mat-form-field><input matInput [(ngModel)]="bankAccount.chequeInTheNameOf"></mat-form-field>
+            </td>
+          </tr>
+        </table>
+        <br>
+        <br>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row ptb-10">
+  <div class="col-lg-12">
+    <button *ngIf="!editData" mat-raised-button color="primary" (click)="saveBankAccount()">Submit</button>
+    <button *ngIf="editData" mat-raised-button color="primary" (click)="updateBankAccount()">Update</button>
+    <button mat-raised-button color="warn"(click)="closeDialog()">Close</button>
+  </div>
+</div>

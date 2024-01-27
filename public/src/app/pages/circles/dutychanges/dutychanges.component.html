@@ -1,0 +1,220 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-body>
+        <h3 style="display: inline-block;">Duty Details</h3>
+        <mat-chip-list style="float: right">Status:&nbsp;
+          <mat-chip color="primary" selected="true">&nbsp;{{detailsT.status}}</mat-chip>
+        </mat-chip-list>  
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-body>
+        <mat-list>
+          <mat-list-item>
+            <b>Customer:</b> &nbsp;
+            {{detailsT.cname}}
+            <button mat-icon-button *ngIf="valueChanges[0].cname!=null || valueChanges[0].cname!=''" matTooltip="Requested Change:{{valueChanges[0].cname}}">
+              <mat-icon style="color:red">warning</mat-icon>
+            </button>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <b>Book By:</b> &nbsp;
+            {{detailsT.bookBy}}
+            <button mat-icon-button *ngIf="valueChanges[0].bookBy!=null || valueChanges[0].bookBy!=''" matTooltip="Requested Change:{{valueChanges[0].bookBy}}">
+              <mat-icon style="color:red">warning</mat-icon>
+            </button>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <b>ID: </b> &nbsp;
+            {{detailsT.id}}
+            <!-- <button mat-icon-button *ngIf="valueChanges[0].id!=null" matTooltip="Requested Change:{{valueChanges[0].id}}">
+              <mat-icon style="color:red">warning</mat-icon>
+            </button> -->
+          </mat-list-item> 
+        </mat-list>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-body>
+        <mat-list>
+          <mat-list-item>
+            <b>Start from Garage:</b>&nbsp;
+            {{detailsT.startFromGarage}}
+            <button mat-icon-button *ngIf="valueChanges[0].startFromGarage!=null || valueChanges[0].startFromGarage!=''" matTooltip="Requested Change:{{valueChanges[0].startFromGarage}}">
+              <mat-icon style="color:red">warning</mat-icon>
+            </button>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <b>Reporting Time:</b>&nbsp;
+            {{detailsT.reportingTime}}
+            <button mat-icon-button *ngIf="valueChanges[0].reportingTime!=null" matTooltip="Requested Change:{{valueChanges[0].reportingTime}}">
+              <mat-icon style="color:red">warning</mat-icon>
+            </button>
+          </mat-list-item>  
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <b>Start Date:</b>&nbsp;
+            {{detailsT.startDate}}
+            <button mat-icon-button *ngIf="valueChanges[0].startDate!=null" matTooltip="Requested Change:{{valueChanges[0].startDate}}">
+              <mat-icon style="color:red">warning</mat-icon>
+            </button>
+          </mat-list-item>  
+        </mat-list>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-body>
+        <mat-list>
+          <mat-list-item>
+            <b>City:</b>&nbsp;
+            {{detailsT.fromLoc}}
+            <button mat-icon-button *ngIf="valueChanges[0].fromLoc!=null" matTooltip="Requested Change:{{valueChanges[0].fromLoc}}">
+              <mat-icon style="color:red">warning</mat-icon>
+            </button>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <b>To Location:</b>&nbsp;
+            {{detailsT.toLoc}}
+            <button mat-icon-button *ngIf="valueChanges[0].toLoc!=null" matTooltip="Requested Change:{{valueChanges[0].toLoc}}">
+              <mat-icon style="color:red">warning</mat-icon>
+            </button>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <b>Bill To:</b>&nbsp;
+            {{detailsT.billTo}}
+            <button mat-icon-button *ngIf="valueChanges[0].billTo!=null" matTooltip="Requested Change:{{valueChanges[0].billTo}}">
+              <mat-icon style="color:red">warning</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-list>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-body>
+        <mat-list>
+          <mat-list-item>
+            <b>Duty Type:</b>&nbsp;
+            {{detailsT.dutyType}}
+            <button mat-icon-button *ngIf="valueChanges[0].dutyType!=null" matTooltip="Requested Change:{{valueChanges[0].dutyType}}">
+              <mat-icon style="color:red">warning</mat-icon>
+            </button>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <b>Vehicle Group:</b>&nbsp;
+            {{detailsT.vehicleGroup}}
+            <button mat-icon-button *ngIf="valueChanges[0].vehicleGroup!=null" matTooltip="Requested Change:{{valueChanges[0].vehicleGroup}}">
+              <mat-icon style="color:red">warning</mat-icon>
+            </button>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <b>Customer:</b>&nbsp;
+            {{detailsT.cname}}
+            <button mat-icon-button *ngIf="valueChanges[0].cname!=null" matTooltip="Requested Change:{{valueChanges[0].cname}}">
+              <mat-icon style="color:red">warning</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-list>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-body>
+        <mat-list>
+          <mat-list-item>
+            <b>Booked By:</b>&nbsp;
+            {{detailsT.bookBy}}
+            <button mat-icon-button *ngIf="valueChanges[0].bookBy!=null" matTooltip="Requested Change:{{valueChanges[0].bookBy}}">
+              <mat-icon style="color:red">warning</mat-icon>
+            </button>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <b>Reporting Address:</b>&nbsp;
+            {{detailsT.reportingAddress}}
+            <button mat-icon-button *ngIf="valueChanges[0].reportingAddress!=null" matTooltip="Requested Change:{{valueChanges[0].reportingAddress}}">
+              <mat-icon style="color:red">warning</mat-icon>
+            </button>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <b>Drop Address:</b> &nbsp;
+            {{detailsT.dropAddress}}
+            <button mat-icon-button *ngIf="valueChanges[0].dropAddress!=null" matTooltip="Requested Change:{{valueChanges[0].dropAddress}}">
+              <mat-icon style="color:red">warning</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-list>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-body>
+        <mat-list>
+          <mat-list-item>
+            <b>Price:</b>&nbsp;
+            {{detailsT.price}}
+            <button mat-icon-button *ngIf="valueChanges[0].price!=null" matTooltip="Requested Change:{{valueChanges[0].price}}">
+              <mat-icon style="color:red">warning</mat-icon>
+            </button>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <b>Passenger:</b>&nbsp;
+            {{detailsT.passenger}}
+            <button mat-icon-button *ngIf="valueChanges[0].passenger!=null" matTooltip="Requested Change:{{valueChanges[0].passenger}}">
+              <mat-icon style="color:red">warning</mat-icon>
+            </button>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <b>Remarks:</b>&nbsp; 
+            {{detailsT.remarks}}
+            <button mat-icon-button *ngIf="valueChanges[0].remarks!=null" matTooltip="Requested Change:{{valueChanges[0].remarks}}">
+              <mat-icon style="color:red">warning</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-list>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-body>
+        <b>Operator Notes:</b>{{detailsT.operatorNotes}}
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row ptb-10">
+  <div class="col-lg-12">
+    <button mat-raised-button color="primary" *ngIf="valueChanges[0]!=null" (click)="save()">Save</button>
+    <button mat-raised-button color="primary" (click)="closeDialog()">Close</button>
+  </div>
+</div>
+  

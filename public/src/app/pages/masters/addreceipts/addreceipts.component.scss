@@ -1,0 +1,43 @@
+.full-width {
+    flex: 1;
+    min-width: 100px;
+  }
+  
+  nb-checkbox {
+    margin-bottom: 1rem;
+  }
+  
+  .form-inline > * {
+    margin: 0 1.5rem 1.5rem 0;
+  }
+  
+  nb-card.inline-form-card nb-card-body {
+    padding-bottom: 0;
+  }
+  th{
+    padding: 5px;
+    border: 1px solid lightgrey;
+  }
+  td{
+    padding: 5px;
+    border: 1px solid lightgrey;
+  }
+  .customerCard{
+    height: 181px;
+  }
+  .paymentsCard{
+    height: 241px;
+  }
+
+  .mat-dialog-container
+  {
+    width: 85% !important;
+  }
+  
+  input.mat-input-element {
+    margin-top: 5px;
+  }
+
+  .mat-radio-button {
+    margin-right: 10px;
+  }

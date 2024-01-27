@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>Send to Suppliers</nb-card-header>
+      <nb-card-body>        
+        <!-- <div class="row ptb-10">
+          <div class="col-lg-4 col-12" *ngFor="let element of supplierObs">
+            <mat-checkbox (change)="chooseSuppliers(element,$event)">
+              <b>Supplier Name:</b> {{element.supplierName}}
+              <br>
+              <b>Supplier Phone:</b> 9892456898
+              <br>
+              <b>Supplier Email:</b> email@email.com
+            </mat-checkbox>         -->
+            <!-- <div>
+              Supplier Email:{{supplierObs[0].email}}
+            </div>
+            <div>
+              Supplier Phone:{{supplierObs[0].phone}}
+            </div> -->
+            <!-- <div>
+              <button mat-icon-button (click)="makeCall('919167051541')" color="primary" matTooltip="Call {{duty.bookByNo}}"><mat-icon>call</mat-icon></button>
+              <button mat-icon-button color="primary" matTooltip="Message {{duty.bookBy}}"><mat-icon>chat</mat-icon></button>
+              <a style="padding-left:9px" matTooltip="Whatsapp {{duty.bookBy}}"><i class="fa fa-whatsapp"></i></a>
+              <button mat-icon-button (click)="mail(duty.bookByEmail)" color="primary" matTooltip="Mail {{duty.bookBy}}"><mat-icon>email</mat-icon></button>
+              <button mat-icon-button (click)="makeAppCall(duty.bookByNo)" color="primary" matTooltip="Call from app"><mat-icon>phonelink_ring</mat-icon></button>
+            </div>  -->
+            
+            <table align="center" style="width:90%">
+              <thead>
+                <th>Supplier Name</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>City</th>
+                <th>&#10004;</th>
+              </thead>
+              <tr *ngFor="let temp of supplierObs" >
+                <td class="supplier-td">
+                    {{temp.name}}
+                </td>
+                <td class="supplier-td">
+                    {{temp.phone}}
+                </td>
+                <td class="supplier-td">
+                    {{temp.email}}
+                </td>
+                <td class="supplier-td">
+                    {{temp.headOfficeCity}}
+                </td>
+                <td class="supplier-td">
+                  <mat-checkbox class="supplier-radio" (change)="chooseSuppliers(temp,$event)"></mat-checkbox>
+                </td>
+              </tr>
+            </table>
+          <!-- </div>       -->
+        <!-- </div>       -->
+      </nb-card-body>      
+    </nb-card>
+  </div>
+</div>
+<div class="row ptb-10">
+  <div class="col-lg-12">
+    <button mat-raised-button color="primary" *ngIf="selectedSuppliers.length >= 1" (click)="send()">Send</button>
+    <button mat-raised-button color="primary" *ngIf="selectedSuppliers.length == 0" disabled>Send</button>
+    <button mat-raised-button color="warn"(click)="closeDialog()">Close</button>
+  </div>
+</div>  

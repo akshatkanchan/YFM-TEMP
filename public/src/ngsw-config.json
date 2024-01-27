@@ -1,0 +1,38 @@
+{
+    "index": "/index.html",
+    "assetGroups": [{
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/favicon.ico",
+          "/index.html",
+          "/*.woff",
+          "/*.ttf",
+          "/*.woff2",
+          "/*.svg",
+          "/*.eot"
+        ],
+        "versionedFiles": [
+          "/*.bundle.css.gz",
+          "/*.bundle.js.gz",
+          "/*.chunk.js.gz"
+        ],
+        "urls":[
+          "https://fonts.googleapis.com/icon?family=Material+Icons",
+          "https://cdn.quilljs.com/1.3.6/quill.snow.css",
+          "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+        ]
+      }
+    }, {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/assets/**"
+        ]
+      }
+    }]
+}

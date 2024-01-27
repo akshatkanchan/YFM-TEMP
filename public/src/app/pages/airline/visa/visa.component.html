@@ -1,0 +1,111 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>
+        VISA
+        <div style="display:inline; padding-left: 5%;" *ngIf="screenWidth>=560">
+          <button class="booked" [disabled]="filterClicked=='Booked'" mat-button (click)="filter('Booked');">Booked</button>          
+          <button class="cancelled" [disabled]="filterClicked=='Cancelled'" mat-button color="warn" (click)="filter('Cancelled')">Cancelled</button>
+          <button class="completed" [disabled]="filterClicked=='Completed'" mat-button (click)="filter('Completed')">Completed</button>
+          <button class="billed" [disabled]="filterClicked=='Invoiced'" mat-button (click)="filter('Invoiced')">Invoiced</button>
+          <button class="all" [disabled]="filterClicked=='All'" mat-button (click)="filter('All')">All</button>
+        </div>
+        <div style="display:inline; padding-left: 5%;" *ngIf="screenWidth<=560">
+          <mat-form-field class="mobile-select">
+              <mat-select [value]="status" (selectionChange)="filter($event.value)">
+                <mat-option value="Booked">Booked</mat-option>                                
+                <mat-option value="Cancelled">Cancelled</mat-option>
+                <mat-option value="Completed">Completed</mat-option>
+                <mat-option value="Invoiced">Invoiced</mat-option>
+                <mat-option value='All'>All</mat-option>
+              </mat-select>
+          </mat-form-field>
+        </div>
+
+        <button style="float: right;margin-top: -10px;" mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>settings</mat-icon></button>
+        <mat-menu #menu="matMenu" class="mat-menu-panel">
+            <!-- <button mat-menu-item (click)="openImport()">Import</button> -->
+          <button mat-menu-item *ngIf="permission.exportDuty" (click)="openExport()">Export</button>
+        </mat-menu>
+      </nb-card-header>
+      <nb-card-body>
+        <div align="center">
+          <mat-form-field class="filter-field">
+            <input matInput   placeholder="Filter" [(ngModel)]="searchTerm" (keyup)="search($event.target.value)">
+          </mat-form-field>
+      
+          <button mat-icon-button><mat-icon class="filter-icon">search</mat-icon></button>
+          <button mat-icon-button (click)="clear()"><mat-icon class="filter-icon">highlight_off</mat-icon></button>
+        </div>
+
+        <mat-table #table [dataSource]="dataSource" matSort>
+
+          <ng-container matColumnDef="cname">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Customer Name</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.cname}} </mat-cell>
+          </ng-container>
+        
+          <ng-container matColumnDef="visaCost">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Visa Cost</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.visaCost}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="visaType">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Visa Type</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.visaType}} </mat-cell>
+          </ng-container>
+                    
+          <ng-container matColumnDef="from">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>From</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.from | date:'dd-MM-yyyy'}} </mat-cell>
+          </ng-container>
+        
+          <ng-container matColumnDef="to">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>To</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.to | date:'dd-MM-yyyy'}} </mat-cell>
+          </ng-container>          
+
+          <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <mat-chip-list>
+                <mat-chip color="primary" selected="true">{{element.status}}</mat-chip>
+              </mat-chip-list> 
+            </mat-cell>            
+          </ng-container>
+        
+          <ng-container matColumnDef="Options">
+            <mat-header-cell *matHeaderCellDef> Options</mat-header-cell>
+            <mat-cell *matCellDef="let element ;let row">
+              <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="viewDetails(row)">View Details</button>
+                <button mat-menu-item *ngIf="element.status == 'Booked'" (click)="createInvoice(row)">Create Invoice</button>
+                <button mat-menu-item *ngIf="element.status == 'Booked'" (click)="advancePayment(row)">Advance Payment</button>
+                <button *ngIf="permission.manageVisa && element.status == 'Booked'" mat-menu-item (click)="selectRow(row)">Edit</button>
+                <button *ngIf="permission.manageVisa && element.status == 'Booked' && permission.smsEmailCallVisa" mat-menu-item (click)="sendConfirmation(row)">Send Confirmation</button>
+                <button *ngIf="permission.manageVisa && element.status == 'Booked'" mat-menu-item (click)="completeBooking(row)">Complete Booking</button>
+                <button mat-menu-item (click)="uploadFiles(row)">Upload/View Files</button>
+                <button *ngIf="permission.manageVisa && element.status == 'Booked'" mat-menu-item (click)="cancelBooking(row)">Cancel</button>
+                <!-- <button (click)="deleteVisa(row)" mat-menu-item>Delete</button> -->
+              </mat-menu>
+            </mat-cell>
+          </ng-container>
+        
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row [ngStyle]="{'background-color':rowColors(row.to,row.status)}" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        
+        </mat-table>
+        <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+          <mat-progress-spinner color="warn" mode="indeterminate"></mat-progress-spinner>
+       </div>
+        <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-12">
+    <a *ngIf="permission.addVisa" (click)="selectRow(null)" class="float">
+      <i style="color: ghostwhite" class="fa fa-plus my-float"></i>
+    </a>      
+  </div>
+</div>

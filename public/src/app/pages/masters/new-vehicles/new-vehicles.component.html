@@ -1,0 +1,469 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card style="margin-bottom: 2px;">
+      <nb-card-header>Vehicle</nb-card-header>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              Model Name*
+              <input matInput [(ngModel)]="vehicle.modelname">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              Vehicle Number*
+              <input matInput [(ngModel)]="vehicle.number">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              Color
+              <input matInput [(ngModel)]="vehicle.vcolor">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              Fuel Type*
+              <mat-select [(ngModel)]="vehicle.fuelType">
+                <mat-option value="petrol">Petrol</mat-option>
+                <mat-option value="diesel">Diesel</mat-option>
+                <mat-option value="cng">CNG</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              Seating Capacity*
+            <input matInput [(ngModel)]="vehicle.seating">
+          </mat-form-field>
+          </div>
+          <div class="col-lg-6 col-12">
+            <mat-form-field *ngIf="!supplierVehicle">
+              Assigned Driver
+              <input matInput  [formControl]="driverCtrl" [matAutocomplete]="autoDrivers">
+              <mat-autocomplete #autoDrivers="matAutocomplete">
+                  <mat-option *ngFor="let item of driver | async" [value]="item.name" (onSelectionChange)="setAssignedDriver(item,$event)">
+                    {{ item.name }}
+                  </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field *ngIf="supplierVehicle">
+              Assigned Driver
+              <input matInput [(ngModel)]="vehicle.assignedDriver">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              Vehicle Group
+              <input matInput  [formControl]="vehicleGroupCtrl" [matAutocomplete]="autoVehicleGroups">
+              <mat-autocomplete #autoVehicleGroups="matAutocomplete">
+                <mat-option *ngFor="let item of vehicleGroup | async" [value]="item.name" (onSelectionChange)="setVehicleGroup(item,$event)">
+                  {{ item.name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              Branches
+              <input matInput [formControl]="branchesCtrl" [matAutocomplete]="autobranch">
+              <mat-autocomplete #autobranch="matAutocomplete">
+                <mat-option *ngFor="let item of branch | async" [value]="item.name" (onSelectionChange)="setBranches(item,$event)">
+                  {{ item.name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+        </div>        
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-6">
+    <nb-card class="cardheight">
+      <nb-card-header>Insurance</nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              Company Name
+              <input matInput [(ngModel)]="vehicle.companyName">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              Policy Number
+              <input matInput [(ngModel)]="vehicle.policyNumber">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <mat-form-field class="w-100">
+              Issue Date
+              <input matInput [matDatepicker]="issueDate" [(ngModel)]="vehicle.issueDate" readonly (click)="issueDate.open()">   
+              <mat-datepicker-toggle matSuffix [for]="issueDate"></mat-datepicker-toggle>
+              <mat-datepicker #issueDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6 col-12">
+            <mat-form-field class="w-100">
+              Due Date
+              <input matInput [matDatepicker]="dueDate" [(ngModel)]="vehicle.dueDate" readonly (click)="dueDate.open()">    
+              <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
+              <mat-datepicker #dueDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              Premium Amount
+              <input matInput [(ngModel)]="vehicle.premiumAmount">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              Cover Amount
+              <input matInput [(ngModel)]="vehicle.coverAmount">
+            </mat-form-field>
+          </div>
+        </div>          
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-header>Parts</nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              Chassis Number
+              <input matInput [(ngModel)]="vehicle.chassisNumber">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              Engine Number
+              <input matInput [(ngModel)]="vehicle.engineNumber">
+            </mat-form-field>
+          </div>
+        </div>        
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-header>Registration</nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              Registered Owner Name
+              <input matInput [(ngModel)]="vehicle.regName">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              Registration Date
+              <input matInput [matDatepicker]="regDate" readonly (click)="regDate.open()" [(ngModel)]="vehicle.regDate">
+              <mat-datepicker-toggle matSuffix [for]="regDate"></mat-datepicker-toggle>
+              <mat-datepicker #regDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>        
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>RTO</nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <mat-form-field class="w-100">
+              Address
+              <textarea matInput [(ngModel)]="vehicle.RTOAddress"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 col-12">
+            <mat-form-field>
+              Tax Efficiency
+              <input matInput [(ngModel)]="vehicle.taxEfficiency">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 col-12">
+            <mat-form-field>
+              Expiry Date
+              <input matInput [matDatepicker]="expiryDate" readonly (click)="expiryDate.open()" [(ngModel)]="vehicle.expiryDateRTO">
+              <mat-datepicker-toggle matSuffix [for]="expiryDate"></mat-datepicker-toggle>
+              <mat-datepicker #expiryDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>        
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-header>Authorization</nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              Authorization Number
+              <input matInput [(ngModel)]="vehicle.authorizationNumber">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              Expiry Date
+              <input matInput [matDatepicker]="expiryDateAuth" [(ngModel)]="vehicle.expiryDateAuth" readonly (click)="expiryDateAuth.open()">
+              <mat-datepicker-toggle matSuffix [for]="expiryDateAuth"></mat-datepicker-toggle>
+              <mat-datepicker #expiryDateAuth></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>        
+      </nb-card-body>
+    </nb-card>
+  </div>      
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-header>PUC</nb-card-header>
+      <nb-card-body>
+        <div class="row">
+            <div class="col-lg-6 col-12">
+              <mat-form-field>
+                Number
+                <input matInput [(ngModel)]="vehicle.PUCNumber">
+              </mat-form-field>
+            </div>
+            <div class="col-lg-6 col-12">
+              <mat-form-field>
+                Expiry Date
+                <input matInput [matDatepicker]="expiryDatePUC" [(ngModel)]="vehicle.expiryDatePUC" readonly (click)="expiryDatePUC.open()">
+                <mat-datepicker-toggle matSuffix [for]="expiryDatePUC"></mat-datepicker-toggle>
+                <mat-datepicker #expiryDatePUC></mat-datepicker>
+              </mat-form-field>
+            </div>
+        </div>        
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>Loan</nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-lg-4 col-12">
+            <mat-form-field>
+              EMI Amount
+              <input matInput [(ngModel)]="vehicle.EMIAmount">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4 col-12">
+            <mat-form-field>
+              Start Date
+              <input matInput [matDatepicker]="startDate" [(ngModel)]="vehicle.startDate" readonly (click)="startDate.open()">   
+              <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+              <mat-datepicker #startDate></mat-datepicker>   
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4 col-12">
+            <mat-form-field>
+              End Date
+              <input matInput [matDatepicker]="endDate" [(ngModel)]="vehicle.endDate" readonly (click)="endDate.open()"/>  
+              <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+              <mat-datepicker #endDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-12">
+            <mat-form-field>
+              Bank Name
+              <input matInput [(ngModel)]="vehicle.bankName">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4 col-12">
+            <mat-form-field>
+              EMI Day
+              <mat-select [(ngModel)]="vehicle.EMIDay">
+                <mat-option *ngFor="let element of emiDay" [value]="element">{{element}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4 col-12"></div>
+        </div>        
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>Fitness</nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <mat-form-field>
+              Fitness Number
+              <input matInput [(ngModel)]="vehicle.fitnessNumber">
+            </mat-form-field>
+          </div>        
+          <div class="col-lg-6 col-12" style="text-align: center;margin:auto;">
+            <mat-form-field>
+              Expiry Date
+              <input matInput [matDatepicker]="expiryDateFitness" [(ngModel)]="vehicle.expiryDateFitness" readonly (click)="expiryDateFitness.open()">
+              <mat-datepicker-toggle matSuffix [for]="expiryDateFitness"></mat-datepicker-toggle>
+              <mat-datepicker #expiryDateFitness></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>Vehicle Photo</nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-lg-6 col-12" style="margin:auto;">
+            <button (click)="profilePhoto.click()" mat-raised-button color="primary"> <mat-icon>cloud_upload</mat-icon>Browse</button>
+            <input type = "file" accept="image/*" #profilePhoto hidden (change)="selectFile($event)"/>
+          </div>        
+          <div class="col-lg-6 col-12" style="text-align: center;margin:auto;">
+            <img alt="" *ngIf="imgUrl!=''" [src]="imgUrl" width="200px" height="200px"><br><button mat-icon-button *ngIf="imgUrl!=''" (click)="removeImage()"><mat-icon>clear</mat-icon></button>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card class="permitCard">
+      <nb-card-header>Permits</nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="myForm">
+          <div formArrayName="rows">
+            <div class="row" *ngFor="let aRow of vehicleForms.controls; let i=index" [formGroupName]="i">
+              <div class="col-lg-3 col-12">
+                <mat-form-field>
+                  Type
+                  <!-- <input mayInput [(ngModel)]="vehicle.permitType"> -->
+                  <input matInput formControlName="permitType">
+                </mat-form-field>
+              </div>
+              <div class="col-lg-3 col-12">
+                <mat-form-field>
+                  Expiry Date
+                  <input matInput formControlName="permitExpiryDate" [matDatepicker]="permitExpiryDate" readonly (click)="permitExpiryDate.open()">
+                  <mat-datepicker-toggle matSuffix [for]="permitExpiryDate"></mat-datepicker-toggle>
+                  <mat-datepicker #permitExpiryDate></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-lg-1 col-12">
+                <button (click)="permitImages.click()" mat-icon-button color="primary" matTooltip="Upload"><mat-icon>cloud_upload</mat-icon></button>
+                <input hidden type="file" formControlName="fileName" #permitImages (change)="imageSelect($event,aRow,i)">
+              </div>
+              <div class="col-lg-4 col-12">
+                <div *ngIf="permitImgUrl[i]!=null">
+                  <img alt="" *ngIf="permitImgUrl[i]!=null && permitImgUrl[i].includes('data:image')" style="padding-left:10px;" [src]="permitImgUrl[i]" height="100px" width="100px" />
+                  <p style="margin: 2rem;" *ngIf="!permitImgUrl[i].includes('data:image')">{{permitFileName[i]}}</p>
+                </div>
+              </div>
+              <div class="col-lg-1 col-2">
+                <button mat-icon-button color="primary" (click)="deleteRow(i, aRow)"><mat-icon>clear</mat-icon></button>
+              </div>
+            </div>
+          </div>
+        </form> 
+        <div class="row ptb-10">
+          <div class="col-lg-12 col-12">
+            <button mat-raised-button color="primary" style="margin-top:15px;" (click)="addRow()">Add Row</button>
+          </div>          
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card class="permitCard">
+      <nb-card-header>Files</nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="fileForm">
+          <div formArrayName="rows">
+            <div class="row" *ngFor="let aRow of fileForms.controls; let i=index" [formGroupName]="i">
+              <div class="col-lg-4 col-12">
+                <mat-form-field>
+                  Type
+                  <!-- <input mayInput [(ngModel)]="vehicle.permitType"> -->
+                  <input matInput formControlName="fileType">
+                </mat-form-field>
+              </div>
+              <!-- <div class="col-lg-4 col-12">
+                <mat-form-field>
+                  Expiry Date
+                  <input matInput formControlName="fileExpiryDate" [matDatepicker]="fileExpiryDate" readonly (click)="fileExpiryDate.open()">
+                  <mat-datepicker-toggle matSuffix [for]="fileExpiryDate"></mat-datepicker-toggle>
+                  <mat-datepicker #fileExpiryDate></mat-datepicker>
+                </mat-form-field>
+              </div> -->
+              <div class="col-lg-2 col-12">
+                <button (click)="fileImages.click()" mat-icon-button color="primary" matTooltip="Upload"><mat-icon>cloud_upload</mat-icon></button>
+                <input hidden type="file" #fileImages (change)="fileImageSelect($event,aRow,i)">
+              </div>
+              <div class="col-lg-4 col-12">
+                <div *ngIf="fileImgUrl[i]!=null">
+                  <img alt="" *ngIf="fileImgUrl[i]!=null && fileImgUrl[i].includes('data:image')" style="padding-left:10px;" [src]="fileImgUrl[i]" height="100px" width="100px" />
+                  <p style="margin: 2rem;" *ngIf="!fileImgUrl[i].includes('data:image')">{{otherFileName[i]}}</p>
+                </div>
+              </div>
+              <div class="col-lg-1 col-2">
+                <button mat-icon-button color="primary" (click)="deleteFileRow(i, aRow)"><mat-icon>clear</mat-icon></button>
+              </div>
+            </div>
+          </div>
+        </form> 
+        <div class="row ptb-10">
+          <div class="col-lg-12 col-12">
+            <button mat-raised-button color="primary" style="margin-top:15px;" (click)="addFileRow()">Add Row</button>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row ptb-10">
+  <div class="col-lg-12">
+    <mat-checkbox [(ngModel)]="vehicle.active">Active</mat-checkbox><br>
+    <button mat-raised-button color="primary" *ngIf="!editState" (click)="saveVehicle()">Add</button>
+    <button mat-raised-button color="primary" *ngIf="editState" (click)="editVehicle()">Save</button>
+    <button (click)="closeDialog()" mat-raised-button color="warn">Close</button>
+  </div>
+</div>

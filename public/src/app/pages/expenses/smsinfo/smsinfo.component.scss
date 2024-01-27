@@ -1,0 +1,29 @@
+.booked.mat-button[disabled]
+{
+  color: white !important;
+  background-color: gray !important;
+}
+
+.booked.mat-button{
+  color: black !important;
+}
+
+.allotted.mat-button[disabled]
+{
+  color: white !important;
+  background-color: gray !important;
+}
+
+.allotted.mat-button
+{
+  color: black !important;
+}
+
+.billed.mat-button[disabled]{
+    color: white !important;
+    background-color: gray !important;
+}
+
+.billed.mat-button{
+    color: black !important;
+}

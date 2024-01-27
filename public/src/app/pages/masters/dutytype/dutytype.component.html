@@ -1,0 +1,87 @@
+<div class="row" >
+    <div class="col-lg-12">
+        <nb-card>
+            <nb-card-header>New Duty Type</nb-card-header>
+            <nb-card-body>
+                <p align="left"><br>
+                <!--Type<sup>*</sup>:<br>-->
+                <mat-form-field>
+                    <mat-select [(ngModel)]="dutyType.dType" (ngModelChange)="onDutyTypeChange($event)" #dType placeholder="Select Duty Type">
+                        <mat-option value="Day-KM(Outstation)">Day-KM(Outstation)</mat-option>
+                        <mat-option value="Flat Rate">Flat Rate</mat-option>
+                        <mat-option value="Long Duration-Total KM Daily HR(Monthly Bookings)">Long Duration-Total KM Daily HR(Monthly Bookings)</mat-option>
+                        <mat-option value="HR-KM(Local)">HR-KM(Local)</mat-option>
+                        <mat-option value="Long Duration-Total KM and HR(Monthly Bookings)">Long Duration-Total KM and HR(Monthly Bookings)</mat-option>
+                        <mat-option value="Self Drive">Self Drive</mat-option>
+                    </mat-select></mat-form-field><br><br>
+                    Duty type Name<sup>*</sup>:<br><br>
+                    <mat-form-field><input matInput style="width:250px" [readonly]="dutyType.dType=='Self Drive'" [(ngModel)]="dutyType.name"></mat-form-field><br>
+                </p>
+                     
+                <ng-container *ngIf="dutyType.dType=='Day-KM(Outstation)'">
+                    <div>
+                        <p align="left">
+                            Max Kilometers per day<br>
+                            <mat-form-field><input matInput style="width:400px"  [(ngModel)]="dutyType.maxKms"></mat-form-field><br>
+                        </p>
+                    </div>
+                </ng-container>
+                    
+                <ng-container *ngIf="dutyType.dType=='HR-KM(Local)'">
+                    <p align="left">
+                        Max Hours<br>
+                        <mat-form-field><input matInput style="width:400px" [(ngModel)]="dutyType.maxHrs"></mat-form-field><br>
+                        Max Kilometers<br>
+                        <mat-form-field><input matInput style="width:400px" [(ngModel)]="dutyType.maxKms"></mat-form-field><br><br>
+                    </p>
+                </ng-container>
+                    
+                    
+                <ng-container *ngIf="dutyType.dType=='Long Duration-Total KM Daily HR(Monthly Bookings)'">
+                    <p align="left">    
+                        Max Hours per day<br>
+                        <mat-form-field><input matInput style="width:400px" [(ngModel)]="dutyType.maxHrs"></mat-form-field><br>
+                        Total Kilometers<br>
+                        <mat-form-field><input matInput style="width:400px" [(ngModel)]="dutyType.totalKms"></mat-form-field> <br>
+                        Maximum days<br>
+                        <mat-form-field><input matInput style="width:400px" [(ngModel)]="dutyType.maxDays"></mat-form-field><br><br>
+                    </p>
+                </ng-container>
+                    
+                <ng-container *ngIf="dutyType.dType=='Long Duration-Total KM and HR(Monthly Bookings)'">
+                    <p align="left">    
+                        Total hours<br>
+                        <mat-form-field><input matInput style="width:400px" [(ngModel)]="dutyType.totalHrs"></mat-form-field><br>
+                        Total Kilometers<br>
+                        <mat-form-field><input matInput style="width:400px" [(ngModel)]="dutyType.totalKms"></mat-form-field><br>
+                        Maximum days<br>    
+                        <mat-form-field><input matInput style="width:400px"  [(ngModel)]="dutyType.maxDays"></mat-form-field><br><br>
+                    </p>
+                </ng-container>
+
+                <ng-container *ngIf="dutyType.dType=='Self Drive'">
+                    <p align="left">
+                        Max Hours<br>
+                        <mat-form-field><input matInput style="width:400px" [(ngModel)]="dutyType.maxHrs"></mat-form-field><br>                        
+                    </p>
+                </ng-container>
+
+                <div align="left">                         
+                    <mat-checkbox name="p2p" (change)="checkP2P($event)" [(ngModel)]="dutyType.p2p" value="P2P"> is Point to Point(Reporting to drop address)?-For use with YourFleetMan driver mobile app only.</mat-checkbox><br>
+                    <mat-checkbox name="c2" (change)="checkG2G($event)" [(ngModel)]="dutyType.g2g" value="G2G"> is Garage to Garage(Garage to garage)?-For use with YourFleetMan driver mobile app only.</mat-checkbox>
+                </div>
+                <div *ngIf="isG2GChecked===true" align="left">
+                    <mat-checkbox name="p2p" [(ngModel)]="dutyType.dontCalculateGarageStartKmTime" value="P2P"> Dont calculate garage start Km and Time</mat-checkbox><br>
+                    <mat-checkbox name="c2" [(ngModel)]="dutyType.dontCalculateGarageEndKmTime" value="G2G"> Dont calculate garage end Km and Time</mat-checkbox>
+                </div>
+            </nb-card-body>
+        </nb-card>
+        <div class="row ptb-10">
+            <div class="col-lg-12">
+                <button *ngIf="!editState" (click)="saveDuty()" mat-raised-button color="primary">Save</button>                         
+                <button *ngIf="editState" (click)="updateDuty()" mat-raised-button color="primary">Update</button>
+                <button (click)="closeDialog()" mat-raised-button color="warn">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

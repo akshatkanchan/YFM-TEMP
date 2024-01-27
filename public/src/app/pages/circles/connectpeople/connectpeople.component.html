@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>
+        Add People
+      </nb-card-header>
+      <nb-card-body>
+        <table class="table">
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>&#10004; x</th>
+          </tr>
+          <tr *ngFor="let element of users">
+            <td>
+              <!-- <mat-list>
+                <mat-list-item> -->
+                  {{element.name}}
+                <!-- </mat-list-item>
+              </mat-list> -->
+            </td>
+            <td>
+              <!-- <mat-list>
+                <mat-list-item> -->
+                  {{element.phone}} <ng-container *ngIf="element.alternatephone">, {{element.alternatephone}}</ng-container>
+                <!-- </mat-list-item>
+              </mat-list> -->
+            </td>
+            <td>
+              <!-- <mat-list>
+                <mat-list-item> -->
+                  {{element.email}}
+                <!-- </mat-list-item>
+              </mat-list> -->
+            </td>
+            <td class="fit-address">
+              <!-- <mat-list>
+                <mat-list-item> -->
+                  {{element.address}}
+                <!-- </mat-list-item>
+              </mat-list> -->
+            </td>
+            <td>
+              <!-- <mat-list>
+                <mat-list-item> -->
+                  {{element.headofficecity}}
+                <!-- </mat-list-item>
+              </mat-list> -->
+            </td>
+            <td *ngIf="element.status == 'Accepted'">
+              <mat-chip-list>
+                <mat-chip style="margin-top:10px" class="green-color" selected>Accepted</mat-chip>
+              </mat-chip-list>
+            </td>
+            <td *ngIf="element.status == 'Pending'">
+              <mat-chip-list>
+                <mat-chip style="margin-top:10px" color="warn" selected>Pending</mat-chip>
+              </mat-chip-list>
+            </td>
+            <td *ngIf="element.status == null">
+              <button mat-raised-button color="primary" (click)="confirmRequest(element)">Send Request</button>
+            </td>
+            <td *ngIf="element.status == 'Declined'">
+              <button mat-raised-button color="primary" (click)="confirmRequestAgain(element)">Send Request Again</button>
+            </td>
+          </tr>
+        </table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

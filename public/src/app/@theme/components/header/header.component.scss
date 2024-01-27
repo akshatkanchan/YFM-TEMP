@@ -1,0 +1,208 @@
+@import '../../styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/bootstrap/breakpoints';
+
+.mat-icon
+{
+  font-size: 24px;
+}
+
+@include nb-install-component() {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  .left {
+    display: flex;
+    width: 100%;
+    order: 0;
+    flex-direction: row;
+  }
+  .right {
+    order: 1;
+    flex-direction: row-reverse;
+  }
+
+  .logo-containter {
+    display: flex;
+    align-items: center;
+  }
+
+  .control-item {
+    display: block;
+  }
+
+  .header-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    .navigation {
+      padding-right: nb-theme(padding);
+      font-size: 2.5rem;
+      text-decoration: none;
+
+      i {
+        display: block;
+      }
+
+    }
+
+    .logo {
+      padding: 0 nb-theme(padding);
+      font-size: 1.75rem;
+      font-weight: nb-theme(font-weight-bolder);
+      border-left: 1px solid nb-theme(separator);
+      white-space: nowrap;
+
+      span {
+        font-weight: nb-theme(font-weight-normal);
+      }
+    }
+  }
+
+  .toggle-layout /deep/ a {
+    display: block;
+    text-decoration: none;
+    line-height: 1;
+
+    i {
+      color: nb-theme(color-fg-highlight);
+      font-size: 2.25rem;
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+
+    nb-action:not(.toggle-layout) {
+      border: none;
+    }
+
+    .control-item {
+      display: none;
+    }
+
+    .toggle-layout {
+      padding: 0;
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+
+    nb-user /deep/ .user-name {
+      display: none;
+    }
+  }
+
+  @include media-breakpoint-down(is) {
+
+    .header-container {
+      .logo {
+        font-size: 1.25rem;
+      }
+    }
+
+    .toggle-layout {
+      display: none;
+    }
+
+    nb-action:not(.toggle-layout) {
+      padding: 0;
+    }
+  }
+
+  @include media-breakpoint-down(xs) {
+    .right /deep/ {
+      display: none;
+    }
+  }
+}
+
+.button-badge {
+  align-items: flex-end;
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  border-radius: 50%;
+  transition: all ease 1s;
+}
+
+.button-badge:hover {
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.badge {
+  position: absolute;
+  top: -15px;
+  right: -20px;
+  font-size: 14px;
+  color: red
+}
+
+button.mat-menu-item.full-button {
+    user-select: none;
+    cursor: pointer;
+    outline: 0;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+    white-space: inherit;
+    overflow: hidden;
+    text-overflow: unset;
+    display: block;
+    height: auto;
+    padding: 20px;
+    text-align: left;
+    text-decoration: none;
+    max-width: 100%;
+    position: relative;
+    border-bottom: 1px solid lightgray;
+}
+
+::ng-deep .mat-menu-content {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+button.mat-menu-item.full-button {
+  font-size: 15px !important;
+  height: auto !important;
+  line-height: inherit !important;
+  width: auto !important;
+}
+
+::ng-deep .mat-menu-panel.my-full-width-menu{
+  min-width: 280px !important;
+  max-height: 45vw !important;
+}
+
+::ng-deep .no-line .mat-form-field-underline {
+  display: none !important;
+}
+
+::ng-deep .no-line .mat-form-field-wrapper {
+  padding-bottom: 0.8em;
+}
+
+::ng-deep .my-class > .mat-select-panel {
+  max-height: unset !important;
+}
+
+::ng-deep .nb-theme-cosmic nb-popover
+{
+  border: 2px solid #509c42 !important;
+  box-shadow: 0 2px 12px 0 #838790 !important;
+}
+
+::ng-deep .nb-theme-cosmic nb-popover .arrow {
+  border-bottom: 11px solid #28a745 !important;
+}
+
+::ng-deep nb-menu ul.menu-items
+{
+  padding: 0 !important;
+}
+
+::ng-deep .nb-theme-cosmic nb-menu.context-menu .menu-items .menu-item a:hover {
+  color: #ffffff !important;
+  background: #28a745 !important;
+}

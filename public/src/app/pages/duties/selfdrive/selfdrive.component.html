@@ -1,0 +1,30 @@
+<div class="row" style="min-width:60vw;">
+  <div class="col-lg-12 col-12">
+    <div style="margin: 15px;">
+        <b>Video:</b>
+      <a *ngIf="videoUrl!=''" [href]="videoUrl" target="_blank">Click here to view the video</a>
+    </div>
+    <div style="margin: 15px;">
+      <b>Images:</b><br>
+      <div *ngIf="imgUrl.length==0">
+          <mat-progress-spinner
+          color="primary"
+          mode="indeterminate">
+        </mat-progress-spinner>
+      </div>
+      <div *ngIf="imgUrl.length>0">
+        <div *ngFor="let url of imgUrl; let i=index" style="display: inline-block;">
+            <img class="invoice-button" [src]=url height="150px" width="150px" alt="" style="cursor: pointer" (click)="open(i)"/>
+        </div>
+      </div>
+    </div>
+    <div style="margin: 15px;">
+      <b>Remarks:</b>
+      <p>{{remarks}}</p>
+    </div>
+    <div class="col-lg-12 col-12">
+        <button mat-raised-button color="primary" (click)="save()">Approve</button>
+      <button mat-raised-button color="warn" (click)="closeDialog()">Close</button>
+    </div>
+  </div>
+</div>

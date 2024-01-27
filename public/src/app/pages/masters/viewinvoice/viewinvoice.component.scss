@@ -1,0 +1,48 @@
+th
+{
+    text-align: center
+}
+
+.box2{
+    display: flex;
+    flex-direction: row;
+    border-bottom: 0.1px solid;
+    border-bottom-color: darkgrey;
+}
+
+.vl{
+    border-right: 0.1px solid;
+    border-right-color: darkgrey;
+}
+
+.tdleft{
+    text-align: left;
+}
+.tdright{
+    text-align: right;
+    align-content: right;
+    place-content: right;
+}
+.trcenter{
+    text-align: center;
+}
+
+.invoiceTable{
+    border-bottom:1px solid;
+    border-bottom-color: lightblue;
+}
+
+@media print
+{
+    header nav, footer {
+        display: none;
+    }
+}
+
+::ng-deep .mat-tab-body-content {
+    overflow: hidden !important;
+}
+
+.dutyTable {
+    font-size: 11px;
+}

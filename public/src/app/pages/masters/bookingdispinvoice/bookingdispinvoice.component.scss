@@ -1,0 +1,20 @@
+.example-container {
+    display: flex;
+    flex-direction: column;
+    max-height: 500px;
+    min-width: 300px;
+  }
+  
+  button.mat-menu-item
+  {
+    font-size:14px;
+    height: 30px;
+    line-height: 30px;
+  }
+  
+  .mat-chip
+  {
+    height: 30px;
+    line-height: 30px
+  }
+  

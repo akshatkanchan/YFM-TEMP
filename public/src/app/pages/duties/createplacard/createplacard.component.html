@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-body>
+        <h2>Create Placard</h2>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-body>
+        <table>
+          <tr>
+            <td>Title</td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field>
+                <input matInput [(ngModel)]="duty.title1">
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td>Title 2</td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field>
+                <input matInput [(ngModel)]="duty.title2">
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td>Subtitle</td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field>
+                <input matInput [(ngModel)]="duty.subTitle">
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row ptb-10">
+  <div class="col-lg-12 col-12">
+    <button mat-raised-button color="primary" (click)="createPlacard()">Create Placard</button>
+    <button mat-raised-button color="warn" (click)="closeDialog()">Close</button>
+  </div>
+</div>  

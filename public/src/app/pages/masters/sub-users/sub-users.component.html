@@ -1,0 +1,1644 @@
+<div class="row">  
+
+  <!-- <div class="col-lg-12">
+    <nb-card>
+      <nb-card-body>
+        <h4 style="display: inline; padding-right: 5%">
+          Permission
+        </h4>
+        <mat-form-field style="float:right">
+            <mat-select [(ngModel)]="predefined" (selectionChange)="predefinedRoles(predefined)" placeholder="Predefined Permissions">
+              <mat-option value="predefined1">
+                Predefined1
+              </mat-option>
+              <mat-option value="predefined2">
+                Predefined1
+              </mat-option>
+              <mat-option value="predefined3">
+                Predefined3
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+            
+      </nb-card-body>
+    </nb-card> 
+  </div>-->  
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>
+        Permissions
+        <mat-form-field>
+          <mat-select [(ngModel)]="predefined"  placeholder="Predefined Permissions" >
+            <mat-option *ngFor="let element of presets" [value]="element.name" (click)="predefinedRoles(element)"> 
+              {{element.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <form class="form" [formGroup]="preset">
+          <mat-form-field>
+            <input matInput placeholder="Permission Name" formControlName="permissionName">
+            <mat-error>
+              Enter a Permission Name to save as a preset
+            </mat-error>  
+          </mat-form-field>
+          <button mat-raised-button color="primary" [disabled]="preset.invalid" (click)="savePreset()">Save Preset</button>
+        </form>
+        <button mat-icon-button class="close-button" color="warn" (click)="close()"><mat-icon style="font-size: 25px;">close</mat-icon></button>
+      </nb-card-header>
+      <nb-card-body>
+        <mat-tab-group>
+          <mat-tab label="Duties">
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Edit Duty</b>                
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="editDuties" [(ngModel)]="SubUser.editDuties"></mat-checkbox>                
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Allot Vehicles & drivers to duty</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="allotVehiclesDriver" [(ngModel)]="SubUser.allotVehiclesDriver"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Close Duty</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="cancelDuty" [(ngModel)]="SubUser.closeDuty"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Dispatch Duty</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="cancelDuty" [(ngModel)]="SubUser.dispatchDuty"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Cancel Duty</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="cancelDuty" [(ngModel)]="SubUser.cancelDuty"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Send Duty Information to Supplier</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="sendInfoDuty" [(ngModel)]="SubUser.sendInfoDuty">
+                </mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Duty slip</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewDutySlip" [(ngModel)]="SubUser.viewDutySlip" matTooltip="Ability to view duty slips"
+                  [matTooltipPosition]="position.value"
+                  aria-label="Button that displays a tooltip in various positions">
+                </mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Generate Duty slip</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="generateDutySlip" [(ngModel)]="SubUser.generateDutySlip"  matTooltip="Ability to manually Generate and edit duty slips"
+                  [matTooltipPosition]="position.value"
+                  aria-label="Button that displays a tooltip in various positions">
+                </mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Send Sms/Email or make Calls</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="generateDutySlip" [(ngModel)]="SubUser.smsEmailCallDuties">
+                </mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Export Duties</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="exportDuty" [(ngModel)]="SubUser.exportDuty"></mat-checkbox>
+              </div>
+            </div>            
+          </mat-tab>
+          <mat-tab label="Bookings">
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Bookings</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageBookings" [(ngModel)]="SubUser.manageBooking"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Bookings</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewBookings" [(ngModel)]="SubUser.viewBookings"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Bookings</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewBookings" [(ngModel)]="SubUser.addBookings"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Export Bookings</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox  name="exportBookings" [(ngModel)]="SubUser.exportBookings"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Send Sms/Email or make Calls</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="generateDutySlip" [(ngModel)]="SubUser.smsEmailCallBookings">
+                </mat-checkbox>
+              </div>
+            </div>
+          </mat-tab>
+          <mat-tab label="Masters">
+            <hr>
+            <h4>Receipts for Car Booking</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Receipts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageReceipts" [(ngModel)]="SubUser.manageCabReceipts"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Receipts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewReceipts" [(ngModel)]="SubUser.viewCabReceipts"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Receipts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewReceipts" [(ngModel)]="SubUser.addCabReceipts"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Export Receipts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="exportReceipts" [(ngModel)]="SubUser.exportCabReceipts"></mat-checkbox>
+              </div>
+            </div> 
+            <!-- <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Request Receipts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="requestReceipts" [(ngModel)]="SubUser.requestCabReceipts"  matTooltip="Ability to request payments using payment gateway"
+                  [matTooltipPosition]="position.value"
+                  aria-label="Button that displays a tooltip in various positions">
+                </mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Cancel Receipts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="cancelReceipts" [(ngModel)]="SubUser.cancelCabReceipts"></mat-checkbox>
+              </div>
+            </div> -->  
+            
+            <hr>
+            <h4>Receipts for Flight Booking</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Receipts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageReceipts" [(ngModel)]="SubUser.manageFlightReceipts"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Receipts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewReceipts" [(ngModel)]="SubUser.viewFlightReceipts"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Receipts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewReceipts" [(ngModel)]="SubUser.addFlightReceipts"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Export Receipts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="exportReceipts" [(ngModel)]="SubUser.exportFlightReceipts"></mat-checkbox>
+              </div>
+            </div> 
+            <!-- <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Request Receipts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="requestReceipts" [(ngModel)]="SubUser.requestFlightReceipts"  matTooltip="Ability to request payments using payment gateway"
+                  [matTooltipPosition]="position.value"
+                  aria-label="Button that displays a tooltip in various positions">
+                </mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Cancel Receipts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="cancelReceipts" [(ngModel)]="SubUser.cancelFlightReceipts"></mat-checkbox>
+              </div>
+            </div> -->  
+            
+            <hr>
+            <h4>Receipts for Hotel Booking</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Receipts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageReceipts" [(ngModel)]="SubUser.manageHotelReceipts"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Receipts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewReceipts" [(ngModel)]="SubUser.viewHotelReceipts"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Receipts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewReceipts" [(ngModel)]="SubUser.addHotelReceipts"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Export Receipts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="exportReceipts" [(ngModel)]="SubUser.exportHotelReceipts"></mat-checkbox>
+              </div>
+            </div> 
+            <!-- <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Request Receipts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="requestReceipts" [(ngModel)]="SubUser.requestHotelReceipts"  matTooltip="Ability to request payments using payment gateway"
+                  [matTooltipPosition]="position.value"
+                  aria-label="Button that displays a tooltip in various positions">
+                </mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Cancel Receipts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="cancelReceipts" [(ngModel)]="SubUser.cancelHotelReceipts"></mat-checkbox>
+              </div>
+            </div> -->   
+            
+            
+            <hr>
+            <h4>Receipts for Visa Booking</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Receipts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageReceipts" [(ngModel)]="SubUser.manageVisaReceipts"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Receipts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewReceipts" [(ngModel)]="SubUser.viewVisaReceipts"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Receipts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewReceipts" [(ngModel)]="SubUser.addVisaReceipts"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Export Receipts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="exportReceipts" [(ngModel)]="SubUser.exportVisaReceipts"></mat-checkbox>
+              </div>
+            </div> 
+            <!-- <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Request Receipts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="requestReceipts" [(ngModel)]="SubUser.requestVisaReceipts"  matTooltip="Ability to request payments using payment gateway"
+                  [matTooltipPosition]="position.value"
+                  aria-label="Button that displays a tooltip in various positions">
+                </mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Cancel Receipts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="cancelReceipts" [(ngModel)]="SubUser.cancelVisaReceipts"></mat-checkbox>
+              </div>
+            </div> -->
+            <br>              
+            <hr>
+            <h4>Drivers</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Drivers</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageDrivers" [(ngModel)]="SubUser.manageDrivers"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Drivers</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="addDrivers" [(ngModel)]="SubUser.addDrivers"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Basic Drivers Information</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewDriverInfo" [(ngModel)]="SubUser.viewDriver"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Driver Users</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageDriverUsers" [(ngModel)]="SubUser.manageDriverUsers" matTooltip="Ability to change passwords of driver userIds"
+                [matTooltipPosition]="position.value"
+                aria-label="Button that displays a tooltip in various positions"></mat-checkbox>
+              </div>
+            </div>            
+            <hr>
+            <!-- <h4>Duty Supporters</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Supporters</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageDutySupporters" [(ngModel)]="SubUser.manageSupporters"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Duty Supporters</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewDutySupporters" [(ngModel)]="SubUser.viewDutySupporters"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Basic Duty Supporters</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewBasicDutySupporters" [(ngModel)]="SubUser.viewBasicDutySupporters"  matTooltip="User Would be able to view only supporter name,primary and alternate phone numbers"
+                  [matTooltipPosition]="position.value"
+                  aria-label="Button that displays a tooltip in various positions">
+                </mat-checkbox>
+              </div>
+            </div>            
+            <hr> -->
+            <h4>Vehicles</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Vehicles</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageVehicles" [(ngModel)]="SubUser.manageVehicles"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Vehicles</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewVehicles" [(ngModel)]="SubUser.viewVehicles"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Vehicles</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewBasicVehicles" [(ngModel)]="SubUser.addVehicles"></mat-checkbox>
+              </div>
+            </div>            
+            <hr>
+            <h4>Vehicles Groups</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Vehicles Group</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageVehiclesGroup" [(ngModel)]="SubUser.manageVehicleGroup"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Vehicles Group</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewVehiclesGroup" [(ngModel)]="SubUser.viewVehicleGroup"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+                <div class="col-lg-11 col-9">
+                  <b>Add Vehicles Group</b>
+                </div>
+                <div class="col-lg-1 col-3">
+                  <mat-checkbox name="viewVehiclesGroup" [(ngModel)]="SubUser.addVehicleGroup"></mat-checkbox>
+                </div>
+              </div>            
+            <hr>
+            <h4>Customer Groups</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Customer Group</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageCustomerGroup" [(ngModel)]="SubUser.manageCustomerGroup"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Customer Group</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewCustomerGroup" [(ngModel)]="SubUser.viewCustomerGroup"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+                <div class="col-lg-11 col-9">
+                  <b>View Customer Group</b>
+                </div>
+                <div class="col-lg-1 col-3">
+                  <mat-checkbox name="addCustomerGroup" [(ngModel)]="SubUser.addCustomerGroup"></mat-checkbox>
+                </div>
+              </div>           
+            <hr>
+            <h4>Customers</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Customer</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageCustomer" [(ngModel)]="SubUser.manageCustomer"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Customer</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewCustomer" [(ngModel)]="SubUser.viewCustomer"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Customer</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewCustomer" [(ngModel)]="SubUser.addCustomer"></mat-checkbox>
+              </div>
+            </div>           
+            <hr>
+            <h4>Pricing</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Pricing</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="managePricing" [(ngModel)]="SubUser.managePricing"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Pricing</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewPricing" [(ngModel)]="SubUser.viewPricing"></mat-checkbox>
+              </div>
+            </div>            
+            <hr>
+            <h4>Duty Type</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Duty Type</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageDutyType" [(ngModel)]="SubUser.manageDutyType"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Duty Type</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="addDutyType" [(ngModel)]="SubUser.addDutyType"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Duty Type</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewDutyType" [(ngModel)]="SubUser.viewDutyType"></mat-checkbox>
+              </div>
+            </div>            
+            <hr>
+            <h4>Labels</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Labels</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="ViewLabels" [(ngModel)]="SubUser.viewLabels"></mat-checkbox>
+              </div>
+            </div>  
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Labels</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="AddLabels" [(ngModel)]="SubUser.addLabels"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Labels</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageLabels" [(ngModel)]="SubUser.manageLabels"></mat-checkbox>
+              </div>
+            </div>    
+            <hr>        
+            <h4>Taxes</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Taxes</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageTaxes" [(ngModel)]="SubUser.manageTaxes"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Taxes</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewTaxes" [(ngModel)]="SubUser.viewTaxes"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Taxes</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewTaxes" [(ngModel)]="SubUser.addTaxes"></mat-checkbox>
+              </div>
+            </div>           
+            <hr>
+            <h4>Billing Items</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Billing Items</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageBillingItems" [(ngModel)]="SubUser.manageBillingItems"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Billing Items</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewBillingItems" [(ngModel)]="SubUser.viewBillingItems"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Billing Items</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="addBillingItems" [(ngModel)]="SubUser.addBillingItems"></mat-checkbox>
+              </div>
+            </div>      
+            <hr>
+            <h4>Employees</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Employees</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageEmp" [(ngModel)]="SubUser.manageEmployees"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Employees</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="addEmp" [(ngModel)]="SubUser.addEmployees"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Employees</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewEmp" [(ngModel)]="SubUser.viewEmployees"></mat-checkbox>
+              </div>
+            </div>           
+          </mat-tab>
+          <mat-tab label="Expenses">
+            <h4>Vehicles Breakdowns</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Vehicles Breakdowns</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="addVehicleBreakdowns" [(ngModel)]="SubUser.addVehicleBreakDowns"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Vehicles Breakdowns</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewVehicleBreakdowns" [(ngModel)]="SubUser.viewVehicleBreakDowns"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Vehicles Breakdowns</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageVehicleBreakdowns" [(ngModel)]="SubUser.manageVehicleBreakDowns"></mat-checkbox>
+              </div>
+            </div>
+            <hr>
+            <h4>Vehicle Maintaince</h4>
+            <hr>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Vehicles maintenance</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="addVehicleMaintaince" [(ngModel)]="SubUser.addVehicleMaintenance"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Vehicles maintenance</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewVehicleMaintaince" [(ngModel)]="SubUser.viewVehicleMaintenance"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Vehicles maintenance</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageVehicleMaintaince" [(ngModel)]="SubUser.manageVehicleMaintenance"></mat-checkbox>
+              </div>
+            </div>
+            <hr>
+            <h4>Office Expenses</h4>
+            <hr>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Office Expenses</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="addOfficeExpenses" [(ngModel)]="SubUser.addOfficeExpenses"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Office Expenses</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewOfficeExpenses" [(ngModel)]="SubUser.viewOfficeExpenses"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage OfficeExpenses</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageOfficeExpenses" [(ngModel)]="SubUser.manageOfficeExpenses"></mat-checkbox>
+              </div>
+            </div>
+            <hr>
+            <h4>Petty Cash</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Petty Cash</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="managePettyCash" [(ngModel)]="SubUser.managePettyCash"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Petty Cash</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="addPettyCash" [(ngModel)]="SubUser.addPettyCash"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Petty Cash</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewPettyCash" [(ngModel)]="SubUser.viewPettyCash">
+                </mat-checkbox>
+              </div>
+            </div>                   
+            <hr>
+            <h4>Vehicle Fuel</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Vehicle Fuel</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageVehicleFuel" [(ngModel)]="SubUser.manageVehicleFuel"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Vehicle Fuel</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="addVehicleFuel" [(ngModel)]="SubUser.addVehicleFuel"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Vehicle Fuel</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewVehicleFuel" [(ngModel)]="SubUser.viewVehicleFuel"></mat-checkbox>
+              </div>
+            </div>   
+            <hr>
+            <h4>SMS,Call & Whatsapp Expenses</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View </b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewSms" [(ngModel)]="SubUser.viewSms"></mat-checkbox>
+              </div>
+            </div>
+
+          </mat-tab>
+          <mat-tab label="Operation"> 
+            <h4>Invoices for Car Booking</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageInvoices" [(ngModel)]="SubUser.manageCabInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewInvoices" [(ngModel)]="SubUser.viewCabInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewInvoices" [(ngModel)]="SubUser.addCabInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Download invoices(PDF)</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="downloadInvoices" [(ngModel)]="SubUser.downloadCabInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Email invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="emailInvoices" [(ngModel)]="SubUser.emailCabInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Cancel invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="cancelInvoices" [(ngModel)]="SubUser.cancelCabInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Export invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="exportInvoices" [(ngModel)]="SubUser.exportCabInvoices"></mat-checkbox>
+              </div>
+            </div>          
+            <hr>
+            <h4>Invoices for Hotel Booking</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageInvoices" [(ngModel)]="SubUser.manageHotelInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewInvoices" [(ngModel)]="SubUser.viewHotelInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewInvoices" [(ngModel)]="SubUser.addHotelInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Download invoices(PDF)</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="downloadInvoices" [(ngModel)]="SubUser.downloadHotelInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Email invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="emailInvoices" [(ngModel)]="SubUser.emailHotelInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Cancel invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="cancelInvoices" [(ngModel)]="SubUser.cancelHotelInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Export invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="exportInvoices" [(ngModel)]="SubUser.exportHotelInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <hr>
+            <h4>Invoices for Flight Booking</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageInvoices" [(ngModel)]="SubUser.manageFlightInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewInvoices" [(ngModel)]="SubUser.viewFlightInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewInvoices" [(ngModel)]="SubUser.addFlightInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Download invoices(PDF)</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="downloadInvoices" [(ngModel)]="SubUser.downloadFlightInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Email invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="emailInvoices" [(ngModel)]="SubUser.emailFlightInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Cancel invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="cancelInvoices" [(ngModel)]="SubUser.cancelFlightInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Export invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="exportInvoices" [(ngModel)]="SubUser.exportFlightInvoices"></mat-checkbox>
+              </div>
+            </div>  
+            <hr>
+            <h4>Invoices for Visa Booking</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageInvoices" [(ngModel)]="SubUser.manageVisaInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewInvoices" [(ngModel)]="SubUser.viewVisaInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewInvoices" [(ngModel)]="SubUser.addVisaInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Download invoices(PDF)</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="downloadInvoices" [(ngModel)]="SubUser.downloadVisaInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Email invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="emailInvoices" [(ngModel)]="SubUser.emailVisaInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Cancel invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="cancelInvoices" [(ngModel)]="SubUser.cancelVisaInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Export invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="exportInvoices" [(ngModel)]="SubUser.exportVisaInvoices"></mat-checkbox>
+              </div>
+            </div> 
+            <hr>
+            <h4>Branches</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Branches</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageBranches" [(ngModel)]="SubUser.manageBranches"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Branches</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewBranches" [(ngModel)]="SubUser.viewBranches"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Branches</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="addBranches" [(ngModel)]="SubUser.addBranches"></mat-checkbox>
+              </div>
+            </div>            
+            <hr>
+            <h4>Bank Accounts</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Bank Accounts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageBankAccounts" [(ngModel)]="SubUser.manageBankAccounts"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Bank Accounts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewBankAccounts" [(ngModel)]="SubUser.viewBankAccounts"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Bank Accounts</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="addBankAccounts" [(ngModel)]="SubUser.addBankAccounts"></mat-checkbox>
+              </div>
+            </div>            
+          </mat-tab>
+          <mat-tab label="Circles">
+            <h4>Purchase Invoices</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Purchase Invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="managePurchasesInvoices" [(ngModel)]="SubUser.managePurchasesInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Purchase Invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewPurchasesInvoices" [(ngModel)]="SubUser.viewPurchasesInvoices"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Purchase Invoices</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="addPurchasesInvoices" [(ngModel)]="SubUser.addPurchasesInvoices"></mat-checkbox>
+              </div>
+            </div>             
+            <hr>
+            <h4>Purchase Duties</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Purchase Duties</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="managePurchasesDuties" [(ngModel)]="SubUser.managePurchasesDuties"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Purchase Duties</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewPurchasesDuties" [(ngModel)]="SubUser.viewPurchasesDuties"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Purchase Duties</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="addPurchasesDuties" [(ngModel)]="SubUser.addPurchasesDuties"></mat-checkbox>
+              </div>
+            </div>    
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Request Invoice</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="addPurchasesDuties" [(ngModel)]="SubUser.requestInvoice"></mat-checkbox>
+              </div>
+            </div> 
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Request Duty Slip</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="addPurchasesDuties" [(ngModel)]="SubUser.requestDutySlip"></mat-checkbox>
+              </div>
+            </div>         
+            <hr>
+            <h4>Purchase Payments</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Purchase Payments</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="managePurchasePayments" [(ngModel)]="SubUser.managePurchasePayments"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Purchase Payments</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewPurchasesPayments" [(ngModel)]="SubUser.viewPurchasesPayments"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Purchase Payments</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="addPurchasesPayments" [(ngModel)]="SubUser.addPurchasesPayments"></mat-checkbox>
+              </div>
+            </div>            
+            <hr>
+            <h4>Supplier Group</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Supplier Group</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageSupplierGroup" [(ngModel)]="SubUser.manageSupplierGroup"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Supplier Group</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewSupplierGroup" [(ngModel)]="SubUser.viewSupplierGroup"></mat-checkbox>
+              </div>
+            </div>      
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Supplier Group</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewSupplierGroup" [(ngModel)]="SubUser.addSupplierGroup"></mat-checkbox>
+              </div>
+            </div>       
+            <hr>
+            <h4>Suppliers</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Suppliers</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageSuppliers" [(ngModel)]="SubUser.manageSuppliers"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Suppliers</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewSuppliers" [(ngModel)]="SubUser.viewSuppliers"></mat-checkbox> 
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Suppliers</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="addSupplier" [(ngModel)]="SubUser.addSupplier"></mat-checkbox>
+              </div>
+            </div>        
+            <hr>
+            <h4>Sister Companies</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Sister Companies</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageSisterCompanies" [(ngModel)]="SubUser.manageSisterCompanies"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Sister Companies</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewSisterCompanies" [(ngModel)]="SubUser.viewSisterCompanies"></mat-checkbox>
+              </div>
+            </div>            
+            <hr>
+            <h4>Circles</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Circle</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewCircle" [(ngModel)]="SubUser.viewCircle"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Circle</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="addToCircle" [(ngModel)]="SubUser.addToCircle"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Circle</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageCircle" [(ngModel)]="SubUser.manageCircle"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Incoming Circle Requests</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewIncomingCircleRequests" [(ngModel)]="SubUser.viewIncomingCircleRequests"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Accept/Decline Circle Requests</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="acceptDeclineCircleRequests" [(ngModel)]="SubUser.acceptDeclineCircleRequests"></mat-checkbox>
+              </div>
+            </div>
+            <hr>
+            <h4>Duties from circles</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Accept/Decline Incoming Duty Requests</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="acceptDeclineDutyRequests" [(ngModel)]="SubUser.acceptDeclineDutyRequests"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Circle</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewCircle" [(ngModel)]="SubUser.viewCircle"></mat-checkbox>
+              </div>
+            </div>            
+            <hr>
+            <h4>Export Profiles</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Export Profiles</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageExportProfiles" [(ngModel)]="SubUser.manageExportProfiles"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Edit Export Profiles</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewExportProfiles" [(ngModel)]="SubUser.viewExportProfiles"></mat-checkbox> 
+              </div>
+            </div>            
+          </mat-tab>
+          <mat-tab label="Contact">
+            <h4>Booked By</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Recurring Booked By</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="addRecurringBookedBy" [(ngModel)]="SubUser.addRecurringBookedBy">
+                </mat-checkbox>
+              </div>
+            </div> 
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Recurring Booked By</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewRecurringBookedBy" [(ngModel)]="SubUser.viewRecurringBookedBy">
+                </mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Recurring Booked By</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageRecurringBookedBy" [(ngModel)]="SubUser.manageRecurringBookedBy">
+                </mat-checkbox>
+              </div>
+            </div>
+            <hr>
+            <h4>Passenger</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Recurring Passenger</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="addRecurringPassenger" [(ngModel)]="SubUser.addRecurringPassenger">
+                </mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Recurring Passenger</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewRecurringPassenger" [(ngModel)]="SubUser.viewRecurringPassenger">
+                </mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Recurring Passenger</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageRecurringPassenger" [(ngModel)]="SubUser.manageRecurringPassenger">
+                </mat-checkbox>
+              </div>
+            </div>
+          </mat-tab>
+          <mat-tab label="General">
+            <h4>Company</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Edit Information</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="editInfo" [(ngModel)]="SubUser.editCompanyInfo" matTooltip="Ability to edit allowances,email and other settings.Also user will be able to change company Information"
+                  [matTooltipPosition]="position.value"
+                  aria-label="Button that displays a tooltip in various positions">
+                </mat-checkbox>
+              </div>
+            </div>  
+            <h4>Business Setting</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Edit business setting</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="editBusinessSettings" [(ngModel)]="SubUser.editBusinessSetting">
+                </mat-checkbox>
+              </div>
+            </div>    
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View business setting</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewBusinessSettings" [(ngModel)]="SubUser.viewBusinessSetting">
+                </mat-checkbox>
+              </div>
+            </div>                  
+            <hr>
+            <h4>SMSes</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View SMS</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewSms" [(ngModel)]="SubUser.viewSms"></mat-checkbox>
+              </div>
+            </div>            
+          </mat-tab>
+          <mat-tab label="Hotels">
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Hotels</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageHotels" [(ngModel)]="SubUser.manageHotels"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Hotels</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewHotels" [(ngModel)]="SubUser.viewHotels"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Hotel</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="addHotels" [(ngModel)]="SubUser.addHotels"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Hotels Bookings</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageHotelsBookings" [(ngModel)]="SubUser.manageHotelsBookings"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Hotels Bookings</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewHotelsBookings" [(ngModel)]="SubUser.viewHotelsBookings"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Hotel Bookings</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="addHotelsBookings" [(ngModel)]="SubUser.addHotelsBookings"></mat-checkbox>
+              </div>
+            </div>  
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Send Sms/Email or make Calls</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="generateDutySlip" [(ngModel)]="SubUser.smsEmailCallHotels">
+                </mat-checkbox>
+              </div>
+            </div>          
+          </mat-tab>
+          <mat-tab label="Visa">
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Visa</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageVisa" [(ngModel)]="SubUser.manageVisa"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Visa</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewVisa" [(ngModel)]="SubUser.viewVisa"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Visa</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="addVisa" [(ngModel)]="SubUser.addVisa"></mat-checkbox>
+              </div>
+            </div>    
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Send Sms/Email or make Calls</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="generateDutySlip" [(ngModel)]="SubUser.smsEmailCallVisa">
+                </mat-checkbox>
+              </div>
+            </div>        
+          </mat-tab>
+          <mat-tab label="Flights">
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Manage Flights</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="manageFlights" [(ngModel)]="SubUser.manageFlights"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Flights</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewFlights" [(ngModel)]="SubUser.viewFlights"></mat-checkbox>
+              </div>
+            </div>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Add Flights</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="addFlights" [(ngModel)]="SubUser.addFlights"></mat-checkbox>
+              </div>
+            </div>  
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>Send Sms/Email or make Calls</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="generateDutySlip" [(ngModel)]="SubUser.smsEmailCallFlights">
+                </mat-checkbox>
+              </div>
+            </div>          
+          </mat-tab>
+          <mat-tab label="Vehicle Tracking">
+            <h4>Vehicle Tracking</h4>
+            <div class="row pt-10">
+              <div class="col-lg-11 col-9">
+                <b>View Tracking</b>
+              </div>
+              <div class="col-lg-1 col-3">
+                <mat-checkbox name="viewTracking" [(ngModel)]="SubUser.viewTracking"></mat-checkbox>
+              </div>
+            </div> 
+          </mat-tab>
+        </mat-tab-group>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row ptb-10">
+  <div class="col-lg-12">
+    <button mat-raised-button color="primary" (click)="updateSubUser()">Update</button>
+    <button mat-raised-button color="warn" (click)="close()">Close</button>
+  </div>
+</div>  

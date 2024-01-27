@@ -1,0 +1,87 @@
+<div class="row">
+  <div class="col-lg-12">
+    <!-- Editable table -->
+    <div style="width: max-content" class="card">
+      <h4 class="card-header text-center">Duties</h4>
+      <div class="card-body" style="padding: 0;">
+        <div id="table" class="table-editable">
+          <table class="table table-bordered table-responsive-md table-striped text-center" style="margin-bottom: 0;">
+            <tr>
+              <th class="text-center">Date</th>
+              <!-- <th class="text-center">Customer</th> -->
+              <!-- <th class="text-center">Booked By</th> -->
+              <th class="text-center">Duty Type</th>
+              <th class="text-center">Vehicle Group</th>
+              <!-- <th class="text-center">Vehicle</th>
+              <th class="text-center">Reporting Address</th>
+              <th class="text-center">Drop Address</th>
+              <th class="text-center">Passenger</th> -->
+              <th class="text-center">Clear</th>
+            </tr>
+            <tr *ngFor="let dutyArray of dutyArray; let id = index">
+              <td>
+                <!-- <span (keyup)="changeValue(id, 'name', $event)" (blur)="updateList(id, 'name', $event)" contenteditable="true">{{dutyArray.startDate}}</span> -->
+                <mat-form-field>
+                  <input matInput [matDatepicker]="picker" [(ngModel)]="dutyArray.startDate" [min]="bookings.startDate" [max]="bookings.endDate" (dateChange)="changeDate(id,'startDate',dutyArray.startDate);" (click)="picker.open();"  placeholder="Choose a date">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker  #picker></mat-datepicker>
+                </mat-form-field>
+              </td>
+              <!-- <td>
+                <span contenteditable="true" (keyup)="changeValue(id, 'cname', $event)" (blur)="updateList(id, 'cname', $event)">{{dutyArray.cname}}</span>
+              </td> -->
+              <!-- <td>
+                <span contenteditable="true" (keyup)="changeValue(id, 'bookBy', $event)" (blur)="updateList(id, 'bookBy', $event)">{{dutyArray.bookBy}}</span>
+              </td> -->
+              <td [formGroup]="dutyTypeForm">
+                <!-- <span contenteditable="true" (keyup)="changeValue(id, 'dutyType', $event)" (click)="openDutyType()" (blur)="updateList(id, 'dutyType', $event)">{{dutyArray.dutyType}}</span> -->
+                <mat-form-field>
+                  <input matInput placeholder="Duty Type" formControlName="dutyType" [formControl]="dutyTypeCtrl"  [matAutocomplete]="autoDT">
+                  <mat-autocomplete #autoDT="matAutocomplete">
+                    <mat-option *ngFor="let option of dutyType | async" [value]="option.name" (onSelectionChange)="setDutyType(option,id,'dutyType')">
+                      {{ option.name }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </td>
+              <td [formGroup]="vehicleGroupForm">
+                <!-- <span readonly contenteditable="true" (keyup)="changeValue(id, 'vehicleGroup', $event)" (click)="openVehicleGroup()" (blur)="updateList(id, 'vehicleGroup', $event)">{{dutyArray.vehicleGroup}}</span> -->
+                <mat-form-field>
+                  <input matInput [formControl]="vehicleGroupCtrl" formControlName="vehicleGroup" placeholder="Vehicle Group" [matAutocomplete]="autoVG">
+                  <mat-autocomplete #autoVG="matAutocomplete">
+                    <mat-option *ngFor="let option of vehicleGroup | async" [value]="option.name" (onSelectionChange)="setVehicleGroup(option,id,'vehicleGroup')">
+                      {{ option.name }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </td>
+              <!-- <td>
+                <span contenteditable="true" (keyup)="changeValue(id, 'vehicle', $event)" (blur)="updateList(id, 'vehicle', $event)">{{dutyArray.vehicle}}</span>
+              </td>
+              <td>
+                <span contenteditable="true" (keyup)="changeValue(id, 'fromLoc', $event)" (blur)="updateList(id, 'fromLoc', $event)">{{dutyArray.reportingAddress}}</span>
+              </td>
+              <td>
+                <span contenteditable="true" (keyup)="changeValue(id, 'toLoc', $event)" (blur)="updateList(id, 'toLoc', $event)">{{dutyArray.dropAddress}}</span>
+              </td>
+              <td>
+                <span contenteditable="true" (keyup)="changeValue(id, 'passenger', $event)" (blur)="updateList(id, 'passenger', $event)">{{dutyArray.passenger}}</span>
+              </td> -->
+              <td style="vertical-align: middle;">
+                <button mat-icon-button (click)="clear(id)"><mat-icon>clear</mat-icon></button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+      <!-- Editable table -->
+  </div>
+</div>
+<div class="row ptb-10">
+  <div class="col-lg-12">
+    <button mat-raised-button color="primary" (click)="closeDialog()">Save & Close</button>
+    <button mat-raised-button color="warn" (click)="addMoreDuties()">Add more duties</button>
+    <button mat-raised-button color="warn" (click)="close()">Exit</button>
+  </div>
+</div>

@@ -1,0 +1,243 @@
+<div class="row">
+  <div class="col-lg-12" >
+    <nb-card>
+      <nb-card-header>Driver Profile</nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-lg-12 col-12">
+            <div style="margin-bottom: 10px;">
+              <img class="center" [src]="imgUrl" alt="" height="150px" (click)="open(_albums)">
+            </div>
+          </div>          
+        </div>
+        <div class="row pb-10">
+          <div class="col-lg-3 col-12">
+            <b>Name: </b>
+            <br>
+            {{driver.name}}
+          </div>
+          <div class="col-lg-3 col-12">
+            <b>Mobile Number: </b>
+            <br>
+            {{driver.mobileNumber}}
+          </div>
+          <div class="col-lg-3 col-12">
+            <b>Alternate Number: </b>
+            <br>
+            {{driver.alternateNumber}}
+          </div>
+          <div class="col-lg-3 col-12">
+            <b>Email: </b>
+            <br>
+            {{driver.email}}
+          </div>          
+        </div>
+        <div class="row pb-10">
+          <div class="col-lg-3 col-12">              
+            <b>PAN Card Number: </b>
+            <br>
+            {{driver.panCardNumber}}
+          </div>
+          <div class="col-lg-3 col-12">              
+            <b>Aadhar Card Number: </b>
+            <br>
+            {{driver.aadharCardNumber}}                
+          </div>
+          <div class="col-lg-3 col-12">            
+            <b>Birth Date: </b>
+            <br>
+            <p style="margin: auto" *ngIf="driver.birthDate != 'Invalid date' && driver.birthDate != null">{{driver.birthDate | date: 'dd-MM-yyyy'}}</p>
+          </div>
+          <div class="col-lg-3 col-12">            
+            <b>Joining Date: </b>
+            <br>
+            <p style="margin: auto" *ngIf="driver.joiningDate != 'Invalid date' && driver.joiningDate != null">{{driver.joiningDate | date: 'dd-MM-yyyy'}}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-12">
+            <b>Salary Per Month: </b>
+            <br>
+            &#x20B9; {{driver.salaryPerMonth}}
+          </div>
+          <div class="col-lg-3 col-12">
+            <b>Daily Wages: </b>
+            <br>
+            &#x20B9; {{driver.dailyWages}}
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-lg-12">            
+            <h5>Address</h5>
+            <div class="row">
+              <div class="col-lg-6 col-12">                    
+                <b>Permanent Address: </b>
+                <br>
+                {{driver.permanentAddress}}                                  
+              </div>
+              <div class="col-lg-6 col-12">                
+                <b>Current Address: </b>
+                <br>
+                {{driver.currentAddress}}                  
+              </div>
+            </div>                    
+          </div>    
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-lg-12">            
+            <h5>Allowances</h5>              
+            <div class="row">
+              <div class="col-lg-3">                    
+                <b>Daily Allowances: </b> &#x20B9; {{driver.dailyAllowance}}                      
+              </div>
+              <div class="col-lg-3">                    
+                <b>Over time per hour: </b> &#x20B9; {{driver.overTimeAllowance}}                      
+              </div>
+              <div class="col-lg-3">                    
+                <b>OutStation Allowances per day: </b> &#x20B9; {{driver.outstationAllowancePerDay}}                      
+              </div>
+              <div class="col-lg-3">                    
+                <b>Outstation overnight Allowances: </b> &#x20B9; {{driver.outstationOvernightAllowance}}                      
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-3">                    
+                <b>Sunday Allowances: </b> &#x20B9; {{driver.sundayAllowance}}                      
+              </div>
+              <div class="col-lg-3">                    
+                <b>Early Start Allowances: </b> &#x20B9; {{driver.earlyStartAllowance}}                      
+              </div>
+              <div class="col-lg-3">                    
+                <b>Night Allowances: </b> &#x20B9; {{driver.nightAllowancePerDay}}                      
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-lg-12">            
+            <h5>Extra Duty Allowances</h5>
+            <div class="row">
+              <div class="col-lg-3 col-12">                    
+                <b>Second duty: </b> &#x20B9; {{driver.secondDuty}}                                 
+              </div>
+              <div class="col-lg-3 col-12">                    
+                <b>Third Duty: </b> &#x20B9; {{driver.thirdDuty}}                                     
+              </div>        
+              <div class="col-lg-3 col-12">     
+                <b>Fourth Duty: </b> &#x20B9; {{driver.fourthDuty}}
+              </div>
+              <div class="col-lg-3 col-12">                    
+                <b>Fifth Duty: </b> &#x20B9; {{driver.fifthDuty}}
+              </div>
+            </div>              
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-lg-6">            
+            <h4>Working Hours</h4>              
+            <div class="row">
+              <div class="col-lg-6 col-12">
+                <b>Start: </b> {{driver.workingHoursStart}}                    
+              </div>
+              <div class="col-lg-6 col-12">
+                <b>End: </b> {{driver.workingHoursEnd}}                    
+              </div>
+            </div>            
+          </div>
+          <div class="col-lg-6">            
+            <h4>License Information</h4>              
+            <div class="row">
+              <div class="col-lg-6 col-12">                    
+                <b>Number: </b> {{driver.licenseNumber}}                                 
+              </div>
+              <div class="col-lg-6 col-12">                    
+                <b>Valid Upto: </b>
+                <p style="margin: auto" *ngIf="driver.licenseValidUpto != 'Invalid date' && driver.licenseValidUpto != null">{{driver.licenseValidUpto | date: 'dd-MM-yyyy'}}</p>
+              </div>
+            </div>              
+          </div>    
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-lg-12">
+            <h5>Documents</h5>
+            <div class="row" *ngIf="imgLicenseUrl != ''">
+              <div class="col-lg-3 col-12">
+                <mat-list>
+                  <mat-list-item> <a target="_blank" href="{{imgLicense}}">License</a> </mat-list-item>
+                </mat-list>
+              </div>
+              <div class="col-lg-9 col-12">
+                <img *ngIf="imgLicenseUrl!=null" [src]="imgLicenseUrl" alt="" height="150px" (click)="open(_licenseAlbums)">
+                <mat-list *ngIf="imgLicenseUrl==null">
+                  <mat-list-item> No Preview Available </mat-list-item>
+                </mat-list>
+              </div>
+            </div>
+            <div class="row" *ngIf="imgAadharUrl != ''">
+              <div class="col-lg-3 col-12">
+                <mat-list>
+                  <mat-list-item> <a target="_blank" href="{{imgAadhar}}">Aadhar Card</a> </mat-list-item>
+                </mat-list>
+              </div>
+              <div class="col-lg-9 col-12">
+                <img *ngIf="imgAadharUrl!=null" [src]="imgAadharUrl" alt="" height="150px" (click)="open(_aadharAlbums)">
+                <mat-list *ngIf="!imgAadharUrl==null">
+                  <mat-list-item> No Preview Available </mat-list-item>
+                </mat-list>                
+              </div>
+            </div>
+            <div class="row" *ngIf="imgPanUrl != ''">
+              <div class="col-lg-3 col-12">
+                <mat-list>
+                  <mat-list-item> <a target="_blank" href="{{imgPan}}">PAN Card</a> </mat-list-item>
+                </mat-list>
+              </div>
+              <div class="col-lg-9 col-12">
+                <img *ngIf="imgPanUrl!=null" [src]="imgPanUrl" alt="" height="150px" (click)="open(_panAlbums)">
+                <mat-list *ngIf="!imgPanUrl==null">
+                  <mat-list-item> No Preview Available </mat-list-item>
+                </mat-list>
+              </div>
+            </div>
+            <div class="row" *ngIf="imgLicenseUrl == '' && imgAadharUrl == '' && imgPanUrl == ''">
+              <mat-list>
+                <mat-list-item> No Images Uploaded </mat-list-item>
+              </mat-list>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-lg-12 col-12">
+            <b>Notes: </b>
+            <br>
+            {{driver.additionalInfo}}
+          </div>
+        </div>
+        <div class="row ptb-10">
+          <div class="col-lg-12">
+            <mat-checkbox disabled [(ngModel)]="driver.isContractor">Is Contractor?</mat-checkbox><br>          
+            <mat-checkbox disabled [(ngModel)]="driver.active">Active</mat-checkbox><br>          
+          </div>
+        </div>
+        <!-- <div class="row ptb-10">
+          <div class="col-lg-12">
+            <a (click)="edit()"><mat-icon>edit</mat-icon>Edit</a> -->
+            <!-- <a (click)="delete()"><mat-icon>delete</mat-icon>Delete</a> -->
+          <!-- </div>                          
+        </div> -->
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <button mat-raised-button color="primary" (click)="edit()">Edit</button>
+    <button mat-raised-button color="warn" (click)="closeDialog()">Close</button>
+  </div>
+</div>

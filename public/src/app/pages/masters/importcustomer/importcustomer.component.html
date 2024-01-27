@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div style="margin-bottom:15px; color: brown;">Please use the following format to import bookings: <a style="color:#14902b;" (click)="getDownloadFormat()">Customer Import Format</a> </div>
+    <input type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style="display: inline-block;" (change)="incomingfile($event)" placeholder="Upload file" accept=".xlsx">
+    <button mat-raised-button style="float:right" [disabled]="disable" (click)="Upload()">Upload</button>
+    <div *ngIf="totalRows>0" style="padding-top:5px;">
+      <mat-progress-bar color="primary" mode="determinate" [value]="progressBarValue"></mat-progress-bar>
+      <p style="float:right;">{{rowsCompleted}}/{{totalRows}} Completed</p>
+    </div>
+    <div *ngIf="invalidData.length>0" style="padding-top:5px;">
+      Invalid Data in Rows:
+      <ul>
+        <li *ngFor="let rows of invalidData">
+          {{rows}}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="row ptb-10">
+  <div class="col-lg-12">
+    <button mat-raised-button color="warn" (click)="closeDialog()">Close</button>
+  </div>
+</div>

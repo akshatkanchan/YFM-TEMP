@@ -1,0 +1,20 @@
+<div class="row" >
+    <div class="col-lg-12">
+        <nb-card>
+            <nb-card-header>Vehicle Groups</nb-card-header>
+                <nb-card-body>
+                    Enter Vehicle Group: 
+                    <mat-form-field>
+                        <input [(ngModel)]="vehicleGroup.name" matInput>
+                    </mat-form-field>
+                </nb-card-body>   
+        </nb-card> 
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <button mat-raised-button color="primary" *ngIf="editState==false" (click)="saveVehicleGroup()">Submit</button>
+        <button mat-raised-button color="primary" *ngIf="editState==true" (click)="editVehicleGroup()">Edit</button>
+        <button mat-raised-button color="warn"(click)="closeDialog()">Close</button>
+    </div>
+</div>

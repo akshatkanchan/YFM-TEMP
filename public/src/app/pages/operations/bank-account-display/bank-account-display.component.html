@@ -1,0 +1,89 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+
+        <nb-card-header>Bank Accounts
+          <!-- <button style="float: right;" mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>settings</mat-icon></button>
+          <mat-menu #menu="matMenu" class="mat-menu-panel">
+            <button mat-menu-item (click)="openImport()">Import</button>
+            <button mat-menu-item>Export</button>
+          </mat-menu> -->
+        </nb-card-header>
+          <nb-card-body>
+          <div align="center">
+            <mat-form-field class="filter-field">
+              <input matInput   placeholder="Filter"   [(ngModel)]="searchTerm" (keyup)="search($event.target.value)">
+            </mat-form-field>
+    
+            <button mat-icon-button><mat-icon class="filter-icon">search</mat-icon></button>
+            <button mat-icon-button (click)="clear()"><mat-icon class="filter-icon">highlight_off</mat-icon></button>
+          </div>
+        <mat-table #table [dataSource]="dataSource" matSort>
+          <!-- Name Column -->
+          <ng-container matColumnDef="accountName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Account Name</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+          </ng-container>
+      
+          <!-- Weight Column -->
+          <ng-container matColumnDef="accountNumber">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Account Number </mat-header-cell>
+            <mat-cell *matCellDef="let element" [matTooltip]="element.bookByNo"> {{element.number}} </mat-cell>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="bankName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Bank Name</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.bankName}} </mat-cell>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="bankBranch">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Bank Branch </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.branch}} </mat-cell>
+          </ng-container>
+          
+          <!-- Weight Column -->
+          <ng-container matColumnDef="ifscCode">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> IFSC Code </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.ifscCode}} </mat-cell>
+          </ng-container>
+          <!-- Weight Column -->
+          <ng-container matColumnDef="chequeInTheNameOf">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Cheques in the name of  </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.chequeInTheNameOf}} </mat-cell>
+            </ng-container>
+
+          <ng-container matColumnDef="Options">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Options</mat-header-cell>
+            <mat-cell style="line-height: 2px;" *matCellDef="let element ;let row" (click)="$event.stopPropagation()">
+              <button mat-icon-button *ngIf="permission.manageBankAccounts==1" [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
+              <mat-menu #menu="matMenu">
+                <!-- <button (click)="addBankAccount(row)" mat-menu-item>Edit</button> -->
+                <button (click)="deleteBankAccount(row)" mat-menu-item>Delete</button>
+              </mat-menu>
+            </mat-cell>
+          </ng-container>
+      
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="addBankAccount(row)"></mat-row>
+        </mat-table>
+        <mat-paginator [length]="length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        ></mat-paginator>
+
+    </nb-card-body>
+  </nb-card>
+  </div>
+  <div class="col-lg-12" align="right">
+    
+    <a *ngIf="permission.addBankAccounts==1" (click)="addBankAccount(null)" class="float">
+        <i style="color: ghostwhite" class="fa fa-plus my-float"></i>
+        </a>
+    <!-- <button mat-raised-button (click)="add(null)" color="primary" >
+        Add Bank Account
+    </button> -->
+  </div>
+</div>
+

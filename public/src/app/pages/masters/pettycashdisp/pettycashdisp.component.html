@@ -1,0 +1,82 @@
+<div class="row">
+  <div class="col-lg-12" >
+    <nb-card>
+      <nb-card-header>Petty Cash</nb-card-header>
+      <nb-card-body>
+          <div align="center">
+              <mat-form-field class="filter-field">
+                <input matInput   placeholder="Filter"   [(ngModel)]="searchTerm" (keyup)="search($event.target.value)">
+              </mat-form-field>
+      
+              <button mat-icon-button><mat-icon class="filter-icon">search</mat-icon></button>
+              <button mat-icon-button (click)="clear()"><mat-icon class="filter-icon">highlight_off</mat-icon></button>
+          </div>
+    <mat-table #table [dataSource]="dataSource" matSort>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="driver">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Driver </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.driver}} </mat-cell>
+      </ng-container>
+  
+      <!-- Weight Column -->
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Date </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.date}} </mat-cell>
+      </ng-container>
+  
+      <!-- Symbol Column --> 
+      <ng-container matColumnDef="amount">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Amount</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.amount}} </mat-cell>
+      </ng-container>
+
+        <!-- Symbol Column --> 
+      <ng-container matColumnDef="supplier">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Supplier </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.supplier}} </mat-cell>
+        </ng-container>
+        <!-- Symbol Column --> 
+      <ng-container matColumnDef="transactionType">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Type </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.transactionType}} </mat-cell>
+        </ng-container>
+        <!-- Symbol Column --> 
+      <ng-container matColumnDef="voucherNumber">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Voucher Number </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.voucherNumber}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Options">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Options</mat-header-cell>
+          <mat-cell *matCellDef="let element ;let row" (click)="$event.stopPropagation()">
+            <button mat-icon-button *ngIf="permission.managePettyCash==1" [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
+            <mat-menu #menu="matMenu">
+            <!-- <button mat-menu-item (click)="selectRow(row)">Edit</button> -->
+            <button (click)="deletePettyCash(row)" mat-menu-item>Delete</button>
+            </mat-menu>
+          </mat-cell>
+        </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></mat-row>
+    </mat-table>
+    
+    <mat-paginator [length]="length"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+        
+  </nb-card-body>
+</nb-card>
+  </div>
+  <div class="col-lg-12" align="right">
+    
+      <a *ngIf="permission.addPettyCash==1" (click)="selectRow(null)" class="float">
+          <i style="color: ghostwhite" class="fa fa-plus my-float"></i>
+      </a>
+    
+  </div>
+</div>
+
+
+  

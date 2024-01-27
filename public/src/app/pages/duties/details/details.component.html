@@ -1,0 +1,120 @@
+<div class="row">
+  <div style="margin-bottom:-12px;" class="col-lg-12">
+    <nb-card>
+      <nb-card-header>
+        Duty Details
+        <mat-chip-list style="float: right">
+          <mat-chip color="primary" selected="true">{{detailsT.status}}</mat-chip>
+        </mat-chip-list>  
+      </nb-card-header>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-body>
+        <mat-list>
+          <mat-list-item role="listitem" class="list-height"><b>Customer:</b> &nbsp;{{detailsT.cname}}</mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item role="listitem"><b>Booked By:</b> &nbsp;{{detailsT.bookBy}}</mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item role="listitem"><b>Passenger:</b>&nbsp; {{detailsT.passenger}}</mat-list-item>
+          <!-- <mat-divider></mat-divider>
+          <mat-list-item role="listitem"><b>ID: </b> &nbsp;{{detailsT.id}}</mat-list-item>  -->
+        </mat-list>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-body>
+        <mat-list>
+          <mat-list-item role="listitem"><b>Start from Garage:</b>&nbsp;{{detailsT.startFromGarage}}</mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item role="listitem"><b>Reporting Time:</b>&nbsp;{{detailsT.reportingTime}}</mat-list-item>  
+          <mat-divider></mat-divider>
+          <mat-list-item role="listitem"><b>Start Date:</b>&nbsp;{{detailsT.startDate}}</mat-list-item>  
+        </mat-list>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-body>
+        <mat-list>
+          <mat-list-item role="listitem"><b>From:</b>&nbsp;{{detailsT.fromLoc}}</mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item role="listitem"><b>To:</b>&nbsp;{{detailsT.toLoc}}</mat-list-item>
+          <!-- <mat-divider></mat-divider> -->
+          <!-- <mat-list-item role="listitem"><b>Bill To:</b>&nbsp;{{detailsT.billTo}}</mat-list-item> -->
+        </mat-list>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-body>
+        <mat-list>
+          <mat-list-item role="listitem"><b>Duty Type:</b>&nbsp;{{detailsT.dutyType}}</mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item role="listitem"><b>Vehicle Group:</b>&nbsp;{{detailsT.vehicleGroup}}</mat-list-item>
+          <!-- <mat-divider></mat-divider> -->
+          <!-- <mat-list-item role="listitem" class="list-height"><b>Customer:</b>&nbsp;{{detailsT.cname}}</mat-list-item> -->
+        </mat-list>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-body>
+        <mat-list>
+          <!-- <mat-list-item role="listitem"><b>Booked By:</b>&nbsp;{{detailsT.bookBy}}</mat-list-item>
+          <mat-divider></mat-divider> -->
+          <mat-list-item role="listitem" class="list-height"><b>Reporting Address:</b>&nbsp;{{detailsT.reportingAddress}}</mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item role="listitem" class="list-height"><b>Drop Address:</b> &nbsp;{{detailsT.dropAddress}}</mat-list-item>
+        </mat-list>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-body>
+        <mat-list>
+          <mat-list-item role="listitem"><b>Price:</b>&nbsp; {{detailsT.price}}</mat-list-item>
+          <!-- <mat-divider></mat-divider>
+          <mat-list-item role="listitem"><b>Passenger:</b>&nbsp; {{detailsT.passenger}}</mat-list-item> -->
+          <mat-divider></mat-divider>
+          <mat-list-item role="listitem" class="list-height"><b>Remarks:</b>&nbsp; {{detailsT.remarks}}</mat-list-item>
+        </mat-list>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-body>
+        <mat-list>
+          <mat-list-item role="listitem" class="list-height"><b>Operator Notes:</b>&nbsp; {{detailsT.operatorNotes}}</mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item role="listitem"><b>Driver:</b>&nbsp; {{detailsT.driver}}</mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item role="listitem"><b>Vehicle:</b>&nbsp; {{detailsT.vehicle}}</mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item role="listitem"><b>Dispatch Center:</b>&nbsp; {{detailsT.dispatchCenter}}</mat-list-item>
+        </mat-list>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+      <button mat-raised-button color="warn" style="float:right;" (click)="closeDialog()">Close</button>
+  </div>
+</div>

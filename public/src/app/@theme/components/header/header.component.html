@@ -1,0 +1,74 @@
+<div class="header-container"
+     [class.left]="position === 'normal'"
+     [class.right]="position === 'inverse'">
+  <div class="logo-containter">
+    <a (click)="toggleSidebar()" href="#" class="navigation"><i class="nb-menu"></i></a>
+    <div style="cursor: pointer;" class="logo" (click)="goToHome()"><span>YourFleetMan</span></div>
+    <mat-form-field *ngIf="screenWidth>=480" style="text-align: center;margin-left: 25px;" class="no-line">
+      <mat-select [(ngModel)]="selectValue" #mySelect (mouseover)="mySelect.open()" class="my-class">
+        <span (mouseleave)="mySelect.close()">
+        <mat-option style="text-align: center;color: black;" value="Quick Links" disabled>Quick Links</mat-option>
+        <mat-option value="Duties" (click)="quickRoute('/pages/duties')">Duties</mat-option>
+        <mat-optgroup label="Bookings">
+          <mat-option value="Add Booking" *ngIf="permission.addBooking" (click)="quickRoute('/pages/operations/addbooking')">
+            Add Booking
+          </mat-option>
+          <mat-option value="View Bookings"  *ngIf="permission.viewBookings" (click)="quickRoute('/pages/operations/bookingsdisp')">
+            View Bookings
+          </mat-option>
+        </mat-optgroup>
+        <mat-optgroup label="Hotels" *ngIf="permission.addHotelsBookings || permission.viewHotelsBookings">
+          <mat-option value="Add Hotel Booking" *ngIf="permission.addHotelsBookings" (click)="quickRoute('/pages/hotels/displayhotelbookings')">
+            Add Hotel Booking
+          </mat-option>
+          <mat-option value="View Hotel Bookings"  *ngIf="permission.viewHotelsBookings" (click)="quickRoute('/pages/hotels/displayhotelbookings')">
+            View Hotel Bookings
+          </mat-option>
+        </mat-optgroup>
+        <mat-optgroup label="Flights" *ngIf="permission.addFlights || permission.viewFlights">
+          <mat-option value="Add Flight Booking"  *ngIf="permission.addFlights" (click)="quickRoute('/pages/airline/airlinedisp')">
+            Add Flight Booking
+          </mat-option>
+          <mat-option value="View Flight Bookings" *ngIf="permission.viewFlights" (click)="quickRoute('/pages/airline/airlinedisp')">
+            View Flight Bookings
+          </mat-option>
+        </mat-optgroup>
+        </span>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
+<button *ngIf="screenWidth<=480" class="button-badge" mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>notifications</mat-icon><span class="badge alert">{{notificationCount}}</span></button>
+    <mat-menu #menu="matMenu" yPosition="below" overlapTrigger="false">
+      <button mat-menu-item (click)="route(item.route,item.id)" *ngFor="let item of notifications" [ngStyle]="{'background-color':rowColor(item.status)}">
+          {{ item.Content }}
+      </button>
+      <button *ngIf="notifications.length==0" style="border-bottom: 1px solid lightgray;" disabled mat-menu-item>You do not have any new notifications</button>
+      <button style="text-align:center;border-top: 1px solid lightgray;width: 100% !important;" (click)="showAllNotifications()" mat-menu-item>Show all</button>
+</mat-menu>
+
+<nb-actions
+  style="padding-right:40px"
+  size="medium"
+  class="header-container"
+  [class.right]="position === 'normal'"
+  [class.left]="position === 'inverse'"
+  *ngIf="screenWidth>=480">
+
+  <nb-action>
+    <nb-user [nbContextMenu]="items" [name]="user?.name" style="cursor:pointer;"></nb-user>
+  </nb-action>
+
+  <nb-action>
+    <button class="button-badge" mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>notifications</mat-icon><span class="badge alert">{{notificationCount}}</span></button>
+    <mat-menu #menu="matMenu" yPosition="below" overlapTrigger="false" class="my-full-width-menu">
+      <button mat-menu-item (click)="route(item.route,item.id)" *ngFor="let item of notifications" [ngStyle]="{'background-color':rowColor(item.status)}" class="full-button">
+        {{ item.Content }} <i *ngIf="item.status=='Read'" class="fa fa-check" style="margin-left:10px;" aria-hidden="true"></i>
+      </button>
+      <button *ngIf="notifications.length==0" style="border-bottom: 1px solid lightgray;" disabled mat-menu-item class="full-button">You do not have any new notifications</button>
+      <button style="text-align:center;border-top: 1px solid lightgray;width: 100% !important;" (click)="showAllNotifications()" mat-menu-item class="full-button">Show all</button>
+    </mat-menu>
+  </nb-action>
+  
+</nb-actions>

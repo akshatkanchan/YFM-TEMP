@@ -1,0 +1,321 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>
+        Create Hotel Invoice
+        <b style="float: right; font-size: 12px; font-weight: 100;">*All figures in Rs.</b>
+      </nb-card-header>
+      <nb-card-body class="box">
+        <div class="col-lg-12" style="padding:10px;"> 
+          <table>
+            <tr>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+        <div class="box2">
+          <div class="col-lg-6 vl">
+            <table cellpadding=8px>
+              <tr>
+                <td>
+                  <b>Customer Name:</b>
+                </td>
+                <td>
+                  {{selectedCustomer.name}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>Customer No:</b>
+                </td>
+                <td>
+                  {{selectedCustomer.phone}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>State:</b>
+                </td>
+                <td>
+                  {{selectedCustomer.state}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>Pan:</b>
+                </td>
+                <td>
+                  {{selectedCustomer.panNo}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>GSTIN:</b>
+                </td>
+                <td>
+                  {{selectedCustomer.gstin}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>Billing Address:</b>
+                </td>
+                <td>
+                  {{selectedCustomer.billingAddress}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <button mat-raised-button color="primary" (click)="selectCustomer()">Add Customer</button>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-lg-6">
+            <table>
+              <tr>
+                <td>
+                  <b>Invoice Number:</b>
+                </td>
+                <td *ngIf="businessSettings.invoiceDatesAndNumbering == 'Manual'">
+                  <mat-form-field>
+                    <input matInput type="text" [(ngModel)]="newInvoiceNumber">
+                  </mat-form-field>                  
+                </td>
+                <td *ngIf="businessSettings.invoiceDatesAndNumbering == 'Automatic'">
+                  {{newInvoiceNumber}}
+                </td>
+              </tr>
+              <tr *ngIf="businessSettings.invoiceDatesAndNumbering == 'Manual'">
+                <td>
+                  <b>Invoice Date:</b>
+                </td>
+                <td>
+                  <mat-form-field>
+                    <input matInput type="date" name="date" [(ngModel)]="invoice.invoiceDate">
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr *ngIf="businessSettings.invoiceDatesAndNumbering == 'Automatic'">
+                <td>
+                  <b>Invoice Date:</b>
+                </td>
+                <td>
+                  <mat-form-field>
+                    <input matInput type="date" name="date" [(ngModel)]="invoice.invoiceDate" readonly>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>Invoice Period:</b>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <mat-form-field>
+                    <input matInput type="date" placeholder="from" [(ngModel)]="invoice.invoicePeriodFrom" name="date">
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field>
+                    <input matInput type="date" placeholder="to" [(ngModel)]="invoice.invoicePeriodTo" name="date">
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>CC Number</b>
+                </td>
+                <td>
+                  <b>PO Number</b>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <mat-form-field>
+                    <input matInput [(ngModel)]="invoice.PONumber">
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field>
+                    <input matInput [(ngModel)]="invoice.CCNumber">
+                  </mat-form-field>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <h4></h4>
+          <form [formGroup]="myForm">
+            <div formArrayName="rows">
+              <table style="width:100%;margin-top:10px;" cellpadding="10">
+                <tr class="invoiceTable">
+                  <th>Sr.</th>
+                  <th>Description</th>
+                  <th>Rate</th>
+                  <th>Quantity</th>
+                  <th>Amount</th>
+                  <th></th>
+                </tr>                
+                <tr *ngFor="let temp of selectedHotelBookings; let i=index" 
+                  [formGroupName]="i" style=" text-align:center;" class="invoiceTable">                      
+                  <td>
+                    {{i+1}}
+                  </td>
+                  <td class="tdleft">
+                    <b>Hotel Name:</b>{{temp.hotelName}}<br>
+                    <b>Guest Name:</b>{{temp.guestName}}<br>
+                    <b>Room Type:</b>{{temp.roomType}}<br>
+                    <b>Checkout Date:</b>{{temp.checkOutDate}}
+                  </td>
+                  <td>
+                    {{temp.intTotal}}
+                  </td>
+                  <td>
+                    1
+                  </td>
+                  <td>
+                    {{temp.intTotal}}
+                  </td>
+                  <td>
+                    <button mat-icon-button (click)="deleteHotel(i)"><mat-icon style="font-size: 20px">clear</mat-icon></button>
+                  </td>
+                </tr>                
+                <tr *ngFor="let aRow of invoiceForms.controls; let i=index" 
+                  [formGroupName]="i" class="invoiceTable">                  
+                  <td>
+                    {{i+1}}
+                  </td>
+                  <td>
+                    <mat-form-field>
+                      <input matInput formControlName="description" placeholder="Charges">
+                    </mat-form-field>
+                    <i *ngIf="aRow.controls.taxable.value">(taxable)</i>
+                    <i *ngIf="!aRow.controls.taxable.value">(non-taxable)</i>
+                  </td>
+                  <td>
+                    <mat-form-field>
+                      <input matInput type="number" formControlName="rate" (change)="calculateCharges(aRow)" >
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <mat-form-field>
+                      <input matInput type="number" formControlName="quantity" (change)="calculateCharges(aRow)">
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <mat-form-field>
+                      <input matInput type="number" formControlName="amount" disabled>
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <button mat-icon-button (click)="deleteRow(i)"><mat-icon style="font-size: 20px">clear</mat-icon></button>
+                  </td>
+                </tr>
+                <tr *ngIf="isDiscounted">
+                  <td></td>
+                  <td>
+                    <mat-form-field>
+                      <input matInput placeholder="Discount">
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-select [(value)]="invoice.discountType" placeholder="Select Type">
+                        <mat-option value="Amount" (click)="getDiscount(1)">
+                          by Amount
+                        </mat-option>
+                        <mat-option value="Percentage" (click)="getDiscount(2)">
+                          by %
+                        </mat-option>
+                        <mat-option value="PercentByHireCharges" (click)="getDiscount(3)">
+                          by % on Car Hire Charges
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <mat-form-field>
+                      <input matInput type="number" (change)="discountRates($event.target.value)">
+                    </mat-form-field>
+                  </td>
+                  <td></td>
+                  <td>
+                    {{invoice.discountAmount}}
+                  </td>
+                  <td>
+                    <button mat-icon-button (click)="isDiscount()"><mat-icon style="font-size: 20px">clear</mat-icon></button>
+                  </td>
+                </tr>
+                <tr class="trcenter"><td colspan="4">Taxable Amount</td>
+                  <td>
+                    {{totalTaxablePrice}}
+                  </td>
+                </tr>
+                <tr class="trcenter" *ngIf="tax">
+                  <td>
+                    <mat-form-field>
+                      <mat-select [value]="custTax">
+                        <mat-option *ngFor="let element of tax" [value]="element.name" (onSelectionChange)="getTax(element.name, element.percent)">
+                          {{element.name}}
+                        </mat-option>
+                      </mat-select>                                            
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <p *ngIf="invoice.taxType == 'CGST+SGST'">CGST</p>
+                    <p *ngIf="invoice.taxType == 'CGST+SGST'">SGST</p>
+                    <p *ngIf="invoice.taxType == 'IGST'">IGST</p>
+                  </td>
+                  <td>
+                    <p *ngIf="invoice.taxType == 'CGST+SGST'">{{invoice.taxRate/2}}</p>
+                    <p *ngIf="invoice.taxType == 'CGST+SGST'">{{invoice.taxRate/2}}</p>
+                    <p *ngIf="invoice.taxType == 'IGST'">{{invoice.taxRate}}</p>
+                  </td>
+                  <td>
+                    <p *ngIf="invoice.taxType == 'CGST+SGST'">1</p>
+                    <p *ngIf="invoice.taxType == 'CGST+SGST'">1</p>
+                    <p *ngIf="invoice.taxType == 'IGST'">1</p>
+                  </td>
+                  <td>
+                    <p *ngIf="invoice.taxType == 'CGST+SGST'">{{invoice.taxAmount/2}}</p>
+                    <p *ngIf="invoice.taxType == 'CGST+SGST'">{{invoice.taxAmount/2}}</p>
+                    <p *ngIf="invoice.taxType == 'IGST'">{{invoice.taxAmount}}</p>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr class="trcenter"><td colspan="4">Non-Taxable Amount</td>
+                  <td>
+                    {{totalNonTaxablePrice}}
+                  </td>
+                </tr>
+                <tr class="trcenter"><td colspan="4">Gross Total(Rounded Off to nearest whole number):</td>
+                  <td>
+                    {{totalPrice}}
+                  </td>
+                </tr>
+                <tr class="trcenter"><td colspan="4">Advance Paid:</td>
+                  <td>
+                    {{advanceReceived}}
+                  </td>
+                </tr>   
+                <tr class="trcenter"><td colspan="4">Net Total Amount:</td>
+                  <td>
+                    {{totalPrice - advanceReceived}}
+                  </td>
+                </tr>              
+              </table>              
+            </div>
+          </form>
+        </div>
+        <div class="invoice-button-container">          
+          <button class="invoice-button" mat-raised-button color="primary" (click)="viewHotels()">Select Booking</button>          
+          <button class="invoice-button" mat-raised-button color="primary" (click)="addRow(true)">Add Row</button>
+          <button class="invoice-button" mat-raised-button color="primary" (click)="addRow(false)">Add Row(NON-TAXABLE)</button>
+          <button class="invoice-button" *ngIf="!isDiscounted" mat-raised-button color="primary" (click)="isDiscount()">Add Discount</button>
+          <button class="invoice-button" mat-raised-button color="primary" (click)="addInvoice()">Save</button>            
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>  
+</div>
