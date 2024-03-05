@@ -11,9 +11,9 @@ var path = require('path');
 
 
 const s3 = new AWS.S3({
-      accessKeyId: 'AKIAJFYKHTS4CRIO4FHA',
-      secretAccessKey: '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',
-      region: 'us-east-2',
+      accessKeyId: 'AKIAXUQCJIP5XFFDPSPT',
+      secretAccessKey: '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',
+      region: 'ap-south-1',
       apiVersion:'2006-03-01'
     });
 
